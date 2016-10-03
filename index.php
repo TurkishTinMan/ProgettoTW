@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +43,16 @@
         <li><a data-toggle="tab" href="#contact">Contact</a></li>
       </ul>
        <ul class="nav navbar-nav navbar-right">
-           <li><a data-toggle="modal" data-target="#LoginModal">Reader</a></li>
+           <li>
+               <a data-toggle="modal" data-target="#LoginModal" style="cursor: pointer;">
+               <?php if($_SESSION["userrole"] != null){
+                        echo $_SESSION["name"]." : ".$_SESSION["userrole"]; 
+                }else{
+                        echo "Utente : Reader";
+                }
+               ?>
+               </a>
+           </li>
        </ul>
     </div>
   </div>
@@ -139,17 +152,14 @@
         <h4 class="modal-title">Login</h4>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="./PHP/login.php" method="post">
           <div class="form-group">
             <label for="email">Email address:</label>
-            <input type="email" class="form-control" id="email">
+            <input name="email" type="email" class="form-control" id="email">
           </div>
           <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd">
-          </div>
-          <div class="checkbox">
-            <label><input type="checkbox"> Remember me</label>
+            <input name ="password" type="password" class="form-control" id="pwd">
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
