@@ -1,5 +1,21 @@
 <?php
     session_start();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $string = file_get_contents("./Dataset/project-files/users.json");
+        $json_a = json_decode($string,true);
+        $_SESSION["userrole"] = "Reader";
+        $_SESSION["name"] = "Utente";
+        foreach ($json_a as $person_name) {
+            if($person_name['email'] == $_POST['email']){
+                if($person_name['pass'] == $_POST['password']){
+                    $_SESSION["userrole"] = "Annotator";
+                    $_SESSION["name"] = $person_name["given_name"];
+                    $_SESSION["famname"] = $person_name["family_name"];
+                    $_SESSION["userrole"] = "Annotator";
+                }
+            }
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +33,8 @@
     
     
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="js/script.js" type="text/javascript"></script>
     
 <link href='https://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
@@ -45,7 +63,7 @@
        <ul class="nav navbar-nav navbar-right">
            <li>
                <a data-toggle="modal" data-target="#LoginModal" style="cursor: pointer;">
-               <?php if($_SESSION["userrole"] != null){
+               <?php if(isset($_SESSION['userrole']) && $_SESSION["userrole"] != null){
                         echo $_SESSION["name"]." : ".$_SESSION["userrole"]; 
                 }else{
                         echo "Utente : Reader";
@@ -67,7 +85,7 @@
                        <div class="panel-heading">
                            DocArea
                        </div>
-                       <div class="panel-body">
+                       <div class="panel-body" id="DocAreaBody">
                             Qui funzione Ajax che chiama tutti i documenti
                        </div>
                     </div>
@@ -152,7 +170,7 @@
         <h4 class="modal-title">Login</h4>
       </div>
       <div class="modal-body">
-        <form action="./PHP/login.php" method="post">
+        <form action="index.php" method="post">
           <div class="form-group">
             <label for="email">Email address:</label>
             <input name="email" type="email" class="form-control" id="email">
@@ -161,15 +179,14 @@
             <label for="pwd">Password:</label>
             <input name ="password" type="password" class="form-control" id="pwd">
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>
       </div>
       <div class="modal-footer">
+        <button type="submit" class="btn btn-default">Submit</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </form>
       </div>
     </div>
 
   </div>
 </div>
-
 </html>
