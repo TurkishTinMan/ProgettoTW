@@ -80,13 +80,14 @@
   <div id="main" class="tab-pane fade in active">
         <div class="container">
             <div class="row">
-                <div class="col-xs-3 fixed">
+                <div class="col-xs-2 fixed">
                    <div class="panel panel-default">
                        <div class="panel-heading">
                            DocArea
                        </div>
-                       <div class="panel-body" id="DocAreaBody">
-                            Qui funzione Ajax che chiama tutti i documenti
+                       <div class="panel-body">
+                           <ul id="DocAreaBody">
+                           </ul>
                        </div>
                     </div>
                     <div class="panel panel-default">
