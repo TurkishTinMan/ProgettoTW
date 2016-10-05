@@ -4,10 +4,9 @@ $( document ).ready(function() {
       type: "GET",
       dataType: 'json',
       success: function(json_data){
-        console.log(json_data);
         result = "";
         $.each(json_data,function(k,v){
-            result=result+"<li><a href="+k+">"+v+"</a></li>";
+            result=result+"<li><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
         });
         $("#DocAreaBody").html(result);
       },
@@ -16,3 +15,18 @@ $( document ).ready(function() {
       }
     });  
 }); 
+
+function LoadDocument(urlDocument){   
+    $.ajax({
+        url:"./PHP/loaderDocument.php",
+        type:"POST",
+        data: {localUrl : urlDocument},
+        dataType:'html',
+        success: function(html_data){
+            $("#doc").html(html_data);
+        },
+        error:function(){
+            console.log("errore");
+        }
+    });
+}
