@@ -2,7 +2,7 @@
 include('simple_html_dom.php');
 $output = array();
 chdir('../Dataset/project-files/dataset');
-$files = scandir('.');
+$files = preg_grep('/^([^.])/', scandir('.'));
 foreach($files as $file){
     if(!is_dir($file)){
         $html = file_get_html(basename($file));
