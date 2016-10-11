@@ -62,7 +62,7 @@
       </ul>
        <ul class="nav navbar-nav navbar-right">
            <li>
-               <a data-toggle="modal" data-target="#LoginModal" style="cursor: pointer;">
+               <a data-toggle="modal" data-target="#LoginModal" class="pointer">
                <?php if(isset($_SESSION['userrole']) && $_SESSION["userrole"] != null){
                         echo $_SESSION["name"]." : ".$_SESSION["userrole"]; 
                 }else{
@@ -80,26 +80,37 @@
   <div id="main" class="tab-pane fade in active">
         <div class="container">
             <div class="row">
-                <div class="col-xs-2 fixed">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 fixed">
                    <div class="panel panel-default">
-                       <div class="panel-heading">
+                       <div class="panel-heading pointer" onclick="ShowHideArea('#DocArea')">
                            DocArea
                        </div>
-                       <div class="panel-body">
+                       <div class="panel-body" id="DocArea">
                            <ul id="DocAreaBody">
                            </ul>
                        </div>
                     </div>
+                    
                     <div class="panel panel-default">
-                       <div class="panel-heading">
+                       <div class="panel-heading pointer" onclick="ShowHideArea('#EventArea')">
+                           EventArea
+                       </div>
+                       <div class="panel-body" id="EventArea">
+                           <ul id="EventAreaBody">
+                           </ul>
+                       </div>
+                    </div>
+                    
+                    <div class="panel panel-default">
+                       <div class="panel-heading pointer" onclick="ShowHideArea('#MetaArea')">
                            MetaArea
                        </div>
-                       <div class="panel-body">
+                       <div class="panel-body" id="MetaArea">
                             Inizialmente vuota, verr&aacute; riempita al caricamento del paper in analisi
                        </div>
                     </div>
                 </div>
-                <div class="col-xs-8 col-xs-offset-4">
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
                     <ul class="nav nav-tabs">
                       <li class="active"><a data-toggle="tab" href="#guide">Guida</a></li>
                       <li><a data-toggle="tab" href="#doc">Documento caricato</a></li>
