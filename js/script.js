@@ -78,14 +78,5 @@ function ShowHideArea(idshow){
 }
 
 function ChangeEvent(json_data_event){
-<<<<<<< HEAD
     loaderDocArea(json_data_event);
 }
-=======
-    if(json_data_event == -1){
-        loaderDocArea();
-    }else{
-        //da vedere
-    }
-}
->>>>>>> c1f50db33a35e885d4b9ee4426137d379be0f209
