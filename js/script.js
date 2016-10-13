@@ -1,12 +1,13 @@
 $( document ).ready(function(){
-    loaderDocArea();
+    loaderDocArea("-1");
     loaderEventArea();
 });
 
-function loaderDocArea() {
+function loaderDocArea(numberEvent) {
     $.ajax({
       url: "./PHP/loaderDocArea.php",
-      type: "GET",
+      type: "POST",
+      data: {numberEvent : numberEvent},
       dataType: 'json',
       success: function(json_data){
         result = "";
@@ -31,11 +32,11 @@ function loaderEventArea() {
         for(var i=0; i<=json_data.length;i++){
             $.each(json_data[i],function(k,v){
                 if(k=="conference"){
-                    result=result+"<li><a onclick='ChangeEvent("+i+")'>"+v+"</a></li>";
+                    result=result+"<li><a onclick='ChangeEvent(\""+i+"\")'>"+v+"</a></li>";
                 }
             });
         }
-        result = result+"<li><a onclick='ChangeEvent(-1)'> All Event </a></li>"
+        result = result+"<li><a onclick='ChangeEvent(\"-1\")'> All Event </a></li>"
         $("#EventAreaBody").html(result);
       },
       error: function() {
@@ -69,9 +70,5 @@ function ShowHideArea(idshow){
 }
 
 function ChangeEvent(json_data_event){
-    if(json_data_event == -1){
-        loaderDocArea();
-    }else{
-        //da vedere
-    }
+    loaderDocArea(json_data_event);
 }

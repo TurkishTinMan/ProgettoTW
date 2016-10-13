@@ -80,7 +80,7 @@
   <div id="main" class="tab-pane fade in active">
         <div class="container">
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 fixed">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                    <div class="panel panel-default">
                        <div class="panel-heading pointer" onclick="ShowHideArea('#DocArea')">
                            DocArea
@@ -110,7 +110,7 @@
                        </div>
                     </div>
                 </div>
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                     <ul class="nav nav-tabs">
                       <li class="active"><a data-toggle="tab" href="#guide">Guida</a></li>
                       <li><a data-toggle="tab" href="#doc">Documento caricato</a></li>
