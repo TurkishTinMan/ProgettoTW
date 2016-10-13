@@ -45,19 +45,27 @@ function loaderEventArea() {
 }
 
 
-function LoadDocument(urlDocument){   
-    $.ajax({
+function LoadDocument(urlDocument) {  
+    
+    $.ajax({ 
         url:"./PHP/loaderDocument.php",
         type:"POST",
         data: {localUrl : urlDocument},
-        dataType:'html',
-        success: function(html_data){
-            $("#doc").html(html_data);
+        dataType:'json',
+        success: function(paper_json) {
+            
+        	paper = "";
+            $.each(paper_json, function(paper_title, paper_body) {
+                paper = "<h3>" + paper_title + "</h3><div>" + paper_body + "</div>";
+            });
+            $("#doc").html(paper);
+                    
         },
         error:function(){
-            console.log("errore");
+            console.log("Error!");
         }
     });
+    
 }
 
 function ShowHideArea(idshow){
