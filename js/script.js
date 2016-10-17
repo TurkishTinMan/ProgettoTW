@@ -57,13 +57,13 @@ function LoadDocument(urlDocument) {
             
         	paper = "";
             $.each(paper_json, function(paper_title, paper_body) {
-                paper = "<h3>" + paper_title + "</h3><div>" + paper_body + "</div>";
+                paper = "<h1>" + paper_title + "</h1><div>" + paper_body + "</div>";
             });
             $("#doc").html(paper);
                     
         },
         error:function(){
-            console.log("Error!");
+            console.log('Error!');
         }
     });
     

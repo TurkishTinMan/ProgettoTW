@@ -4,10 +4,19 @@ include('simple_html_dom.php');
 
 $document = array();
 
-$doc_body = new simple_html_dom();
-$doc_body -> load_file($_POST['localUrl']);
+$doc = new simple_html_dom();
+$doc -> load_file($_POST['localUrl']);
 
-$doc_title = $doc_body -> find('title',0) -> innertext;
+$doc_body = $doc -> find('body', 0);
+
+$doc_title = $doc -> find('title', 0) -> innertext;
+
+$tags = $doc_body -> find('img');
+    foreach ($tags as $tag) {
+        $old_src = $tag -> src;
+        $new_src_url = './Dataset/project-files/dataset/'.$old_src;
+        $tag -> src = $new_src_url;
+    }
 
 $document[$doc_title] = $doc_body -> innertext;
 

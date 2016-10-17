@@ -1,6 +1,6 @@
 body{
     padding-top: 70px;
-    font-family: 'Muli', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .fixed{
@@ -8,13 +8,54 @@ body{
 }
 
 h1,h2,h3,h4,h5,h6,.navbar{
-    font-family: 'Philosopher', sans-serif;
+    font-family: 'Roboto Slab', sans-serif;
 }
 
-.pointer{
+.pointer, a {
     cursor: pointer;
 }
 
 .panel-body{
     display: none;
+}
+
+#DocArea, #EventArea {
+    padding: 0;
+
+}
+#DocAreaBody, #EventAreaBody, #MetaAreaBody {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+#DocAreaBody li, #EventAreaBody li, #MetaAreaBody li {
+    padding: 8px 8px; 
+    border-bottom: 1px solid #ddd;
+}
+
+img {
+    max-width:90%;
+    height:auto;
+}
+
+figure {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    text-align:center;
+}
+
+figure > p:not(mathml|math) {
+    margin-bottom:0px;
+}
+
+figure img:not([role=math]), figure svg {
+    border: 1px solid black;
+}
+
+figure > pre {
+    text-align:left;
+}
+
+figcaption {
+    margin-top:5px;
 }
