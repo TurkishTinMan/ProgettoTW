@@ -115,8 +115,8 @@
                 </div>
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                     <ul class="nav nav-tabs">
-                      <li class="active"><a data-toggle="tab" href="#guide">Guida</a></li>
-                      <li><a data-toggle="tab" href="#doc">Documento caricato</a></li>
+                      <li class="active"><a data-toggle="tab" href="#guide"  id="guidClick">Guida</a></li>
+                      <li><a data-toggle="tab" href="#doc"  id="docClick">Documento caricato</a></li>
                     </ul>
 
                     <div class="tab-content">

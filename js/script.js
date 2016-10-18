@@ -61,6 +61,7 @@ function LoadDocument(urlDocument) {
             
         	paper = "";
             $.each(paper_json, function(paper_title, paper_body) {
+                $("#docClick").html(paper_title);
                 paper = "<h1>" + paper_title + "</h1><div>" + paper_body + "</div>";
             });
             $("#doc").html(paper);
@@ -70,6 +71,8 @@ function LoadDocument(urlDocument) {
             console.log('Error!');
         }
     });
+    
+    $("#docClick").click();
     
 }
 
