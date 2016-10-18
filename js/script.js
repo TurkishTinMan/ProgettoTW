@@ -12,7 +12,11 @@ function loaderDocArea(numberEvent) {
       success: function(json_data){
         result = "";
         $.each(json_data,function(k,v){
-            result=result+"<li><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
+            if(k=="0"){
+                $("#Role").html(v);
+            }else{
+                result=result+"<li><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
+            }
         });
         $("#DocAreaBody").html(result);
       },

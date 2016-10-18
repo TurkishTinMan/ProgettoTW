@@ -5,12 +5,11 @@
         $json_a = json_decode($string,true);
         $_SESSION["userrole"] = "Reader";
         $_SESSION["name"] = "Utente";
-        foreach ($json_a as $person_name) {
+        foreach ($json_a as $key => $person_name) {
             if($person_name['email'] == $_POST['email']){
                 if($person_name['pass'] == $_POST['password']){
                     $_SESSION["userrole"] = "Annotator";
-                    $_SESSION["name"] = $person_name["given_name"];
-                    $_SESSION["famname"] = $person_name["family_name"];
+                    $_SESSION["name"] = $key;
                     $_SESSION["userrole"] = "Annotator";
                 }
             }
@@ -68,9 +67,9 @@
            <li>
                <a data-toggle="modal" data-target="#LoginModal" class="pointer">
                <?php if(isset($_SESSION['userrole']) && $_SESSION["userrole"] != null){
-                        echo $_SESSION["name"]." : ".$_SESSION["userrole"]; 
+                        echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION["userrole"]."</span>"; 
                 }else{
-                        echo "Utente : Reader";
+                        echo "<span id='Name'>Utente</span> : <span id='Role'>Reader</span>";
                 }
                ?>
                </a>
