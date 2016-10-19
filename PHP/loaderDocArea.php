@@ -15,14 +15,14 @@ $json_users = json_decode($json_users, true);
 
 $files = preg_grep('/^([^.])/', scandir('.'));    
 
-
+$_SESSION["eventrole"] = "None";
 $a = (int)$_POST['numberEvent'];
 if($a >= 0){
     $documentToLoad = array();
 
     foreach($json_event[$a]["chairs"] as $chair){
         if (strcmp($chair, $_SESSION["name"]) == 0) {
-            $_SESSION["userrole"] = "Chairs";
+            $_SESSION["eventrole"] = "Chair";
         }
     }
     
@@ -46,6 +46,6 @@ if($a >= 0){
         }
     }
 }
-$output[0] = $_SESSION["userrole"];
+$output[0] = $_SESSION["eventrole"];
 echo json_encode($output);
 ?>

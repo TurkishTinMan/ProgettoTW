@@ -1,16 +1,17 @@
 <?php
     session_start();
+    $_SESSION["userrole"] = "Reader";
+    $_SESSION["name"] = "Utente";
+    $_SESSION["eventrole"] = "None";
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $string = file_get_contents("./Dataset/project-files/users.json");
         $json_a = json_decode($string,true);
-        $_SESSION["userrole"] = "Reader";
-        $_SESSION["name"] = "Utente";
         foreach ($json_a as $key => $person_name) {
             if($person_name['email'] == $_POST['email']){
                 if($person_name['pass'] == $_POST['password']){
                     $_SESSION["userrole"] = "Annotator";
                     $_SESSION["name"] = $key;
-                    $_SESSION["userrole"] = "Annotator";
                 }
             }
         }
@@ -66,11 +67,8 @@
        <ul class="nav navbar-nav navbar-right">
            <li>
                <a data-toggle="modal" data-target="#LoginModal" class="pointer">
-               <?php if(isset($_SESSION['userrole']) && $_SESSION["userrole"] != null){
-                        echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION["userrole"]."</span>"; 
-                }else{
-                        echo "<span id='Name'>Utente</span> : <span id='Role'>Reader</span>";
-                }
+               <?php
+echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION["userrole"]."</span> : <span id='eventRole'>".$_SESSION["eventrole"]."</span>"; 
                ?>
                </a>
            </li>

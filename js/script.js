@@ -13,7 +13,7 @@ function loaderDocArea(numberEvent) {
         result = "";
         $.each(json_data,function(k,v){
             if(k=="0"){
-                $("#Role").html(v);
+                $("#eventRole").html(v);
             }else{
                 result=result+"<li><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
             }
