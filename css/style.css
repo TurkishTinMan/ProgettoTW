@@ -59,3 +59,10 @@ figure > pre {
 figcaption {
     margin-top:5px;
 }
+
+
+#notification{
+    padding-left: 10%;
+    padding-right: 10%;
+}
+}

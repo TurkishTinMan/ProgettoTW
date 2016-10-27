@@ -87,3 +87,26 @@ function ShowHideArea(idshow){
 function ChangeEvent(json_data_event){
     loaderDocArea(json_data_event);
 }
+
+
+function ChangePage(idpagebutton){
+    $( document ).ready(function(){
+        $(idpagebutton).click();
+    });
+}
+
+function Notify(type,text){
+    $( document ).ready(function(){
+        output = "<div class='alert alert-";
+        switch(type){
+            case 'error':
+                output = output + "danger";
+            break;
+            case 'success' :
+                output = output + "success";
+            break;
+        }
+        output = output + "'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+ text +"</div>";
+        $('#notification').append(output);
+    });
+}
