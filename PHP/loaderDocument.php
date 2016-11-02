@@ -7,7 +7,7 @@ $document = array();
 $doc = new simple_html_dom();
 $doc -> load_file($_POST['localUrl']);
 
-$doc_body = $doc;
+$doc_body = $doc -> find('body',0);
 
 $doc_title = $doc -> find('title', 0) -> innertext;
 
