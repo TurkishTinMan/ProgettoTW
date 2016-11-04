@@ -247,7 +247,18 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                            MetaArea
                        </div>
                        <div class="panel-body" id="MetaArea">
-                            Inizialmente vuota, verr&aacute; riempita al caricamento del paper in analisi
+                           <div id="div-metaarea-events">
+                                <h4>Evento</h4>
+                                <ul id="ul-metaarea-events">
+                                -
+                                </ul>
+                           </div>
+                           <div id="div-metaarea-documents">
+                                <h4>Documento</h4>
+                                <ul id="ul-metaarea-documents">
+                                -
+                                </ul>
+                           </div>
                        </div>
                     </div>
                 </div>

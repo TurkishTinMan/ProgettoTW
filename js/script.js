@@ -12,7 +12,7 @@ function loaderDocArea(numberEvent) {
       success: function(json_data){
         result = "";
         $.each(json_data,function(k,v){
-            if(k=="0"){
+            if(k=="Ruolo"){
                 $("#eventRole").html(v);
             }else{
                 result=result+"<li><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
@@ -25,6 +25,33 @@ function loaderDocArea(numberEvent) {
       }
     });  
 }
+
+function loaderMetaEventArea(numberEvent){
+    if(numberEvent <= 0){
+        $("#ul-metaarea-events").html("-");
+    }else{
+        $.ajax({
+          url: "./PHP/loaderMetaEventArea.php",
+          type: "POST",
+          data: {numberEvent : numberEvent},
+          dataType: 'json',
+          success: function(json_data){
+            result = "";
+            $.each(json_data,function(k,v){
+                if(k != "submissions"){
+                    result=result+"<li>"+k+":"+v+"</li>";
+                }
+            });
+            console.log(result);
+            $("#ul-metaarea-events").html(result);
+          },
+          error: function() {
+            $("#ul-metaarea-events").html("-");
+          }
+        });  
+    }
+}
+
 
 function loaderEventArea() {
     $.ajax({
@@ -86,6 +113,7 @@ function ShowHideArea(idshow){
 
 function ChangeEvent(json_data_event){
     loaderDocArea(json_data_event);
+    loaderMetaEventArea(json_data_event);
 }
 
 

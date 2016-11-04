@@ -46,6 +46,6 @@ if($a >= 0){
         }
     }
 }
-$output[0] = $_SESSION["eventrole"];
+$output["Role"] = $_SESSION["eventrole"];
 echo json_encode($output);
 ?>
