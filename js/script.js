@@ -1,4 +1,11 @@
+function reset(){
+    $("#docClick").html("Documento caricato");
+    $("#doc").html("<h3>Documento</h3><p>----</p>");
+    $("#ul-metaarea-documents").html("-");
+}
+
 $( document ).ready(function(){
+    reset();
     loaderDocArea("-1");
     loaderEventArea();
 });
@@ -12,7 +19,7 @@ function loaderDocArea(numberEvent) {
       success: function(json_data){
         result = "";
         $.each(json_data,function(k,v){
-            if(k=="Ruolo"){
+            if(k=="Role"){
                 $("#eventRole").html(v);
             }else{
                 result=result+"<li><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
@@ -27,7 +34,7 @@ function loaderDocArea(numberEvent) {
 }
 
 function loaderMetaEventArea(numberEvent){
-    if(numberEvent <= 0){
+    if(numberEvent < 0){
         $("#ul-metaarea-events").html("-");
     }else{
         $.ajax({
@@ -42,7 +49,6 @@ function loaderMetaEventArea(numberEvent){
                     result=result+"<li>"+k+":"+v+"</li>";
                 }
             });
-            console.log(result);
             $("#ul-metaarea-events").html(result);
           },
           error: function() {
@@ -78,21 +84,38 @@ function loaderEventArea() {
 
 
 function LoadDocument(urlDocument) {  
-    
     $.ajax({ 
         url:"./PHP/loaderDocument.php",
         type:"POST",
         data: {localUrl : urlDocument},
         dataType:'json',
         success: function(paper_json) {
-            
-        	paper = "";
-            $.each(paper_json, function(paper_title, paper_body) {
-                $("#docClick").html(paper_title);
-                paper = "<h1>" + paper_title + "</h1><div>" + paper_body + "</div>";
-            });
+            $("#docClick").html(paper_json["title"]);
+            paper = "<h1>" + paper_json["title"] + "</h1><div>" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
-                    
+            
+            startmetadati = "<li>";
+            endmetadati="</li>";
+            metadati = startmetadati + "keywords :";
+
+            $.each(paper_json["keyword"],function(k,v){
+                metadati = metadati + v + "<br>";
+            });
+            
+            metadati = metadati + endmetadati;
+            
+            metadati = metadati + startmetadati + "Autori: "
+            
+            $.each(paper_json["Autori"],function(k,v){
+                if(v["linked"] == "false"){
+                    metadati = metadati + startmetadati;
+                    metadati = metadati + v["name"] +v["email"] +v["affiliation"];
+                    metadati = metadati + endmetadati;
+                }
+            });
+            metadati = metadati + endmetadati;
+            $("#ul-metaarea-documents").html(metadati);
+            
         },
         error:function(){
             console.log('Error!');
@@ -112,6 +135,7 @@ function ShowHideArea(idshow){
 }
 
 function ChangeEvent(json_data_event){
+    reset();
     loaderDocArea(json_data_event);
     loaderMetaEventArea(json_data_event);
 }

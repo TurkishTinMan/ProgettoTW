@@ -11,6 +11,8 @@ $doc -> load_file($_POST['localUrl']);
 
 $doc_body = $doc -> find('body',0);
 
+
+
 $doc_title = $doc -> find('title', 0) -> innertext;
 
 $tags = $doc_body -> find('img');
@@ -39,13 +41,40 @@ foreach ($styles as $style) {
     }
 }
 
-$headers = $doc_body -> find('header');
-foreach($headers as $header){
-    $header->innertext = "cacca";
+$metas = $doc -> find('meta');
+$document["keyword"] = array();
+$document["Autori"] = array();
+$counterkey = 0;
+foreach($metas as $meta){
+    if($meta -> property == "prism:keyword"){
+        $document["keyword"][$counterkey] = $meta -> content;
+        $counterkey = $counterkey+1;
+    }
+    if($meta -> property == "schema:name"){
+        $document["Autori"][$meta -> about]["name"] = $meta -> content;
+        $document["Autori"][$meta -> about]["linked"] = "false";
+        $document["Autori"][$meta -> about]["about"] = $meta -> about;
+    }
+    if($meta -> property == "schema:email"){
+        $document["Autori"][$meta -> about]["email"] = $meta -> content;
+    }
 }
 
+$links = $doc -> find('link');
+foreach($links as $link){
+    if($link -> property == "schema:affiliation"){
+        $linkedto = $link -> href;
+        foreach($document["Autori"] as $key =>$autore){
+            if($autore["about"] == $linkedto ){
+                $document["Autori"][$link -> about]["affiliation"] = $autore["name"];
+                $document["Autori"][$key]["linked"] = "true";
+            }
+        }
+    }   
+}
 
-$document[$doc_title] = $doc_body -> innertext;
+$document["title"] =$doc_title;
+$document["body"] = $doc_body -> innertext;
 
 echo json_encode($document);
 
