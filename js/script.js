@@ -162,3 +162,10 @@ function Notify(type,text){
         $('#notification').append(output);
     });
 }
+
+function AddAnnotation(){
+    $("#Annotation-content").val(window.getSelection().toString());
+    $("#AnnotationModal").modal({
+        show: 'true'
+    }); 
+}
