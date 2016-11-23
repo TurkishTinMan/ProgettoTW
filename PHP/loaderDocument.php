@@ -65,7 +65,7 @@ foreach($links as $link){
     if($link -> property == "schema:affiliation"){
         $linkedto = $link -> href;
         foreach($document["Autori"] as $key =>$autore){
-            if($autore["about"] == $linkedto ){
+            if(!empty($linkedto) && !empty($autore["about"]) && $autore["about"] == $linkedto ){
                 $document["Autori"][$link -> about]["affiliation"] = $autore["name"];
                 $document["Autori"][$key]["linked"] = "true";
             }

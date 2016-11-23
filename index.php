@@ -413,7 +413,6 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
           <label for="Annotation-content">Annotation:</label>
           <textarea class="form-control" rows="5" id="Annotation-content"></textarea>
         </div>
-          
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

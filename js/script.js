@@ -96,29 +96,32 @@ function LoadDocument(urlDocument) {
             
             startmetadati = "<li>";
             endmetadati="</li>";
-            metadati = startmetadati + "keywords :";
+            metadati = startmetadati + "keywords :<ul>";
 
             $.each(paper_json["keyword"],function(k,v){
-                metadati = metadati + v + "<br>";
+                metadati = metadati + startmetadati + v + endmetadati;
             });
             
-            metadati = metadati + endmetadati;
+            metadati = metadati + "</ul>"
             
-            metadati = metadati + startmetadati + "Autori: "
+            metadati = metadati + startmetadati + "Autori:<ul>"
             
             $.each(paper_json["Autori"],function(k,v){
                 if(v["linked"] == "false"){
                     metadati = metadati + startmetadati;
-                    metadati = metadati + v["name"] +v["email"] +v["affiliation"];
+                    metadati = metadati + "<a href =\""+v["email"]+"\">"+v["name"]+"</a><p>"+v["affiliation"]+"</p>";
                     metadati = metadati + endmetadati;
                 }
             });
+            metadati = metadati + "</ul>";
             metadati = metadati + endmetadati;
             $("#ul-metaarea-documents").html(metadati);
             
         },
-        error:function(){
-            console.log('Error!');
+        error:function(jqXHR, status, errorThrown) {
+            console.log(jqXHR.responseText);
+            console.log(status);
+            console.log(errorThrown);
         }
     });
     
@@ -164,8 +167,25 @@ function Notify(type,text){
 }
 
 function AddAnnotation(){
-    $("#Annotation-content").val(window.getSelection().toString());
-    $("#AnnotationModal").modal({
-        show: 'true'
-    }); 
+    var selection = window.getSelection();
+    var range = selection.getRangeAt(0);
+    var tempContainer = range.startContainer;
+    var check = false;
+    while(tempContainer.nodeName != "BODY"){
+        tempContainer = tempContainer.parentNode;
+        if(tempContainer.id == "doc"){
+            check = true;
+            break;
+        }
+    }
+    
+    if(check){
+        range.startContainer.parentElement.innerHTML = range.startContainer.nodeValue.toString().substring(0,range.startOffset) + "<span id=\"funzia\" style=\"background-color:yellow;\">" + range.startContainer.nodeValue.toString().substring(range.startOffset);
+        range.endContainer.parentElement.innerHTML = range.endContainer.nodeValue.toString().substring(0,range.endOffset) + "</span>" + range.endContainer.nodeValue.toString().substring(range.endOffset);
+        
+        $("#Annotation-content").val(selection.toString());
+        $("#AnnotationModal").modal({
+            show: 'true'
+        });
+    }
 }
