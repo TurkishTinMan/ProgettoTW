@@ -186,6 +186,66 @@
         }
     }
 ?>
+    
+    
+<!-- Login Modal -->
+<div id="LoginModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Login</h4>
+      </div>
+      <div class="modal-body">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+          <input type="hidden" name="type" value="login">
+          <div class="form-group">
+            <label for="email">Email address:</label>
+            <input name="email" type="email" class="form-control" id="email">
+          </div>
+          <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input name ="password" type="password" class="form-control" id="pwd">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="ChangePage('#registrazionebutton')">Registrazione</button>
+        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+    
+<!-- Annotation Modal -->
+<div id="AnnotationModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Annotation</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="Annotation-content">Annotation:</label>
+          <textarea class="form-control" rows="5" id="Annotation-content"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+    
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -362,64 +422,4 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
     </div>
 </div>
 </body>
-    
-    
-    
-<!-- Login Modal -->
-<div id="LoginModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Login</h4>
-      </div>
-      <div class="modal-body">
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-          <input type="hidden" name="type" value="login">
-          <div class="form-group">
-            <label for="email">Email address:</label>
-            <input name="email" type="email" class="form-control" id="email">
-          </div>
-          <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input name ="password" type="password" class="form-control" id="pwd">
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="ChangePage('#registrazionebutton')">Registrazione</button>
-        <button type="submit" class="btn btn-default">Submit</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </form>
-      </div>
-    </div>
-
-  </div>
-</div>
-    
-<!-- Annotation Modal -->
-<div id="AnnotationModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Annotation</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="Annotation-content">Annotation:</label>
-          <textarea class="form-control" rows="5" id="Annotation-content"></textarea>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </form>
-      </div>
-    </div>
-
-  </div>
-</div>
 </html>

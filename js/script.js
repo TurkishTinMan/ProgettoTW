@@ -166,24 +166,28 @@ function Notify(type,text){
     });
 }
 
+
 function AddAnnotation(){
     var selection = window.getSelection();
+    var selectedText = selection.toString();
     var range = selection.getRangeAt(0);
     var tempContainer = range.startContainer;
     var check = false;
-    while(tempContainer.nodeName != "BODY"){
-        tempContainer = tempContainer.parentNode;
-        if(tempContainer.id == "doc"){
-            check = true;
-            break;
+    if(range.startContainer == range.endContainer){
+        while(tempContainer.nodeName != "BODY"){
+            tempContainer = tempContainer.parentNode;
+            if(tempContainer.id == "doc"){
+                check = true;
+                break;
+            }
         }
     }
-    
     if(check){
-        range.startContainer.parentElement.innerHTML = range.startContainer.nodeValue.toString().substring(0,range.startOffset) + "<span id=\"funzia\" style=\"background-color:yellow;\">" + range.startContainer.nodeValue.toString().substring(range.startOffset);
-        range.endContainer.parentElement.innerHTML = range.endContainer.nodeValue.toString().substring(0,range.endOffset) + "</span>" + range.endContainer.nodeValue.toString().substring(range.endOffset);
-        
-        $("#Annotation-content").val(selection.toString());
+        range.startContainer.parentElement.innerHTML = 
+            range.startContainer.substringData(0,selection.baseOffset)+ 
+            "<span style=\"background-color:yellow\">"+     range.startContainer.substringData(selection.baseOffset,selection.toString().length) + 
+            "</span>"+      range.startContainer.substringData(selection.baseOffset+selection.toString().length, range.startContainer.length);
+        $("#Annotation-content").val(selectedText);
         $("#AnnotationModal").modal({
             show: 'true'
         });
