@@ -82,6 +82,32 @@ function loaderEventArea() {
     });  
 }
 
+function LoadAnnotation(urlDocument){
+    console.log("Entry point");
+    $.ajax({
+        url:"./PHP/loadAnnotation.php",
+        type:"POST",
+        data:{localUrl : urlDocument},
+        dataType:'json',
+        success:function(paper_json){
+            $.each(paper_json,function(k,v){
+                console.log(v);
+                console.log(v["Path"]);
+                var html = $(v["Path"]).html();
+                html = html.substring(0, v["OffsetFromStart"]) + "<span style='background-color:yellow;'>" + html.substring(v["OffsetFromStart"],v["LenghtAnnotation"])+"</span>";
+                $(v["Path"]).html(html);
+            });
+        },
+        error:function(jqXHR, status, errorThrown) {
+            console.log(jqXHR.responseText);
+            console.log(status);
+            console.log(errorThrown);
+        }
+
+    });
+}
+
+
 
 function LoadDocument(urlDocument) {  
     $.ajax({ 
@@ -116,7 +142,8 @@ function LoadDocument(urlDocument) {
             metadati = metadati + "</ul>";
             metadati = metadati + endmetadati;
             $("#ul-metaarea-documents").html(metadati);
-            
+            $("#Doc").val(urlDocument);
+            LoadAnnotation(urlDocument);
         },
         error:function(jqXHR, status, errorThrown) {
             console.log(jqXHR.responseText);
@@ -167,29 +194,49 @@ function Notify(type,text){
 }
 
 
-function AddAnnotation(){
-    var selection = window.getSelection();
-    var selectedText = selection.toString();
-    var range = selection.getRangeAt(0);
-    var tempContainer = range.startContainer;
-    var check = false;
-    if(range.startContainer == range.endContainer){
-        while(tempContainer.nodeName != "BODY"){
-            tempContainer = tempContainer.parentNode;
-            if(tempContainer.id == "doc"){
-                check = true;
-                break;
+function AddAnnotation(checklog){
+    if(checklog){
+        var selection = window.getSelection();
+        if(selection.toString().length != 0){
+            var selectedText = selection.toString();
+            var range = selection.getRangeAt(0);
+            var tempContainer = range.startContainer;
+            var check = false;
+            if(range.startContainer == range.endContainer){
+                content = "";
+                while(tempContainer.nodeName != "BODY"){
+                    tempContainer = tempContainer.parentNode;
+                    if(tempContainer.id == "doc"){
+                        content = "div#doc" + content;
+                        check = true;
+                        break;
+                    }
+                    n = $(tempContainer).prevAll(""+tempContainer.tagName).length;
+                    content = ":eq("+n+")" + content;
+                    content = tempContainer.tagName.toLowerCase() + content;                    
+                    content = ">" + content;
+                }
             }
+            if(check){
+                $("#Annotation-content").val(selectedText);
+                $("#Path").val(content);
+                $("#OffsetFromStart").val(selection.baseOffset);
+                $("#LenghtAnnotation").val(selection.toString().length);
+                $("#Data").val(Date.now());
+                range.startContainer.parentElement.innerHTML = 
+                    range.startContainer.substringData(0,selection.baseOffset)+ 
+                    "<span style=\"background-color:yellow\">"+     range.startContainer.substringData(selection.baseOffset,selection.toString().length) + 
+                    "</span>"+      range.startContainer.substringData(selection.baseOffset+selection.toString().length, range.startContainer.length);
+                $("#AnnotationModal").modal({
+                    show: 'true'
+                });
+            }else{
+                Notify("error", "Devi selezionare qualcosa all'interno di un documento caricato per creare un'annotazione");
+            }
+        }else{
+            Notify("error", "Devi selezionare qualcosa per creare un'annotazione");
         }
-    }
-    if(check){
-        range.startContainer.parentElement.innerHTML = 
-            range.startContainer.substringData(0,selection.baseOffset)+ 
-            "<span style=\"background-color:yellow\">"+     range.startContainer.substringData(selection.baseOffset,selection.toString().length) + 
-            "</span>"+      range.startContainer.substringData(selection.baseOffset+selection.toString().length, range.startContainer.length);
-        $("#Annotation-content").val(selectedText);
-        $("#AnnotationModal").modal({
-            show: 'true'
-        });
+    }else{
+        Notify("error", "Devi essere un Annotator per creare annotazioni");
     }
 }

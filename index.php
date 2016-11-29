@@ -35,6 +35,7 @@
         $_SESSION["userrole"] = "Reader";
         $_SESSION["name"] = "Utente";
         $_SESSION["eventrole"] = "None";
+        $_SESSION["email"] = "None";
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -42,6 +43,7 @@
             case 'login':
                 $_SESSION["userrole"] = "Reader";
                 $_SESSION["name"] = "Utente";
+                $_SESSION["eventrole"] = "None";
                 $_SESSION["eventrole"] = "None";
                 $user = true;
             
@@ -53,6 +55,7 @@
                         if($person_name['pass'] == $_POST['password']){
                             $_SESSION["userrole"] = "Annotator";
                             $_SESSION["name"] = $key;
+                            $_SESSION["email"] = $person_name['email'];
                         }else{
 ?>
                             <script>
@@ -183,6 +186,40 @@
 <?php                  
                 }
             break;
+            case 'addAnnotation':
+                if(!isset($_POST['Annotation']) || !isset($_POST['OffsetFromStart']) || !isset($_POST['Path']) || !isset($_POST['Data']) || !isset($_POST['Doc']) || !isset($_POST['LenghtAnnotation'])){
+?>
+                    <script>
+                        Notify('error',"Internal Error!");
+                    </script>  
+<?php              
+                }else{
+                    if(!file_exists("./Dataset/project-files/annotations.json")){
+                        file_put_contents("./Dataset/project-files/annotations.json", '');
+                    }
+                    $string = file_get_contents("./Dataset/project-files/annotations.json");
+                    $json_a = json_decode($string,true);
+
+                    $new_annotation["Author"] = $_SESSION["email"];
+                    $new_annotation["Annotation"] = $_POST['Annotation'];
+                    $new_annotation["Path"] = $_POST['Path'];
+                    $new_annotation["OffsetFromStart"] = $_POST['OffsetFromStart'];
+                    $new_annotation["LenghtAnnotation"] = $_POST['LenghtAnnotation'];
+                    $new_annotation["Data"] = $_POST['Data'];
+                    $new_annotation["Doc"] = $_POST['Doc'];
+                    
+                    if(empty($json_a)){
+                        $json_a = array();
+                    }
+                    array_push($json_a,$new_annotation);
+                    file_put_contents("./Dataset/project-files/annotations.json",json_encode($json_a));
+?>
+                    <script>
+                        Notify('success',"Annotazione aggiunta con successo!");
+                    </script>  
+<?php  
+                }
+                break;
         }
     }
 ?>
@@ -232,12 +269,29 @@
         <h4 class="modal-title">Annotation</h4>
       </div>
       <div class="modal-body">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+        <input type="hidden" name="type" value="addAnnotation">
         <div class="form-group">
           <label for="Annotation-content">Annotation:</label>
-          <textarea class="form-control" rows="5" id="Annotation-content"></textarea>
+          <textarea class="form-control" rows="3" id="Annotation-content" disabled></textarea>
         </div>
+        <div class="form-group">
+          <label for="User">User:</label>
+          <input name="User" type="text" class="form-control" value="<?php echo $_SESSION["email"] ?>" disabled>
+        </div>
+        <div class="form-group">
+          <label for="Annotation">Annotation:</label>
+          <input name="Annotation" type="text" class="form-control" value="" placeholder="Scrivi qui le tua considerazioni">
+        </div>
+            
+          <input name="Path" type="hidden" class="form-control" id="Path">
+          <input name="OffsetFromStart" type="hidden" class="form-control" id="OffsetFromStart">
+          <input name="LenghtAnnotation" type="hidden" class="form-control" id="LenghtAnnotation">
+          <input name="Data" type="hidden" class="form-control" id="Data">
+          <input name="Doc" type="hidden" class="form-control" id="Doc" value="">
       </div>
       <div class="modal-footer">
+        <button type="submit" class="btn btn-default">Submit</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </form>
       </div>
@@ -321,7 +375,7 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                            </div>
                        </div>
                     </div>
-                   <button type="button" class="btn btn-default" onclick="AddAnnotation()">
+                   <button type="button" class="btn btn-default" onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">
                        Aggiungi Annotazione
                    </button>
 
