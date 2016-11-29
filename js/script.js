@@ -94,8 +94,9 @@ function LoadAnnotation(urlDocument){
                 console.log(v);
                 console.log(v["Path"]);
                 var html = $(v["Path"]).html();
-                html = html.substring(0, v["OffsetFromStart"]) + "<span style='background-color:yellow;'>" + html.substring(v["OffsetFromStart"],v["LenghtAnnotation"])+"</span>";
+                html = html.substring(0, v["OffsetFromStart"]) + "<span style='background-color:yellow;' data-toggle='tooltip' title='"+v["Author"]+"'>" + html.substring(v["OffsetFromStart"],v["LenghtAnnotation"])+"</span>";
                 $(v["Path"]).html(html);
+                $('[data-toggle="tooltip"]').tooltip();   
             });
         },
         error:function(jqXHR, status, errorThrown) {
