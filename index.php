@@ -216,6 +216,9 @@
 ?>
                     <script>
                         Notify('success',"Annotazione aggiunta con successo!");
+                        $( document ).ready(function(){
+                            LoadDocument("<?php echo $_POST['Doc'] ?>");
+                        });
                     </script>  
 <?php  
                 }
