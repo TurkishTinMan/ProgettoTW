@@ -91,12 +91,8 @@ function LoadAnnotation(urlDocument){
         dataType:'json',
         success:function(paper_json){
             $.each(paper_json,function(k,v){
-                console.log(v);
-                console.log(v["Path"]);
                 var html = $(v["Path"]).html();
                 html = html.substring(0, parseInt(v["OffsetFromStart"])) + "<span style='background-color:yellow;' data-toggle='tooltip' title='"+v["Annotation"]+"'>" + html.substring(parseInt(v["OffsetFromStart"]),parseInt(v["LenghtAnnotation"])+parseInt(v["OffsetFromStart"]))+"</span>"+html.substring( parseInt(v["OffsetFromStart"]) + parseInt(v["LenghtAnnotation"]));
-                console.log(parseInt(v["LenghtAnnotation"]));
-                console.log(parseInt(v["OffsetFromStart"]));
                 $(v["Path"]).html(html);
                 $('[data-toggle="tooltip"]').tooltip();   
             });
