@@ -29,22 +29,18 @@
 </head>
 
 <body>
-    <?php
-    session_start();
-    if(!isset($_SESSION["userrole"])){
-        $_SESSION["userrole"] = "Reader";
-        $_SESSION["name"] = "Utente";
-        $_SESSION["eventrole"] = "None";
-        $_SESSION["email"] = "None";
-    }
 
+<div id="notification"></div>    
+    
+<?php
+session_start();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch($_POST["type"]){
-            case 'login':
+            case 'skiplogin':
                 $_SESSION["userrole"] = "Reader";
                 $_SESSION["name"] = "Utente";
-                $_SESSION["eventrole"] = "None";
-                $_SESSION["eventrole"] = "None";
+                break;
+            case 'login':
                 $user = true;
             
                 $string = file_get_contents("./Dataset/project-files/users.json");
@@ -59,6 +55,7 @@
                         }else{
 ?>
                             <script>
+                                console.log("error");
                                 Notify('error',"Wrong password!");
                             </script>
 <?php                        
@@ -66,20 +63,20 @@
                     }
                 }
             
-                if($_SESSION["name"] == "Utente"){
-                    if($user){
+                if($user){
 ?>
-                        <script>
-                            Notify('error',"User don't exist!");
-                        </script>
+                    <script>
+                        Notify('error',"User don't exist!");
+                    </script>
 <?php
-                    }
                 }else{
+                    if(isset($_SESSION["name"])){
 ?>
                     <script>
                         Notify('success',"Login Success!");
                     </script>
 <?php    
+                    }
                 }
             break;
             case 'registrazione':
@@ -225,8 +222,148 @@
                 break;
         }
     }
-?>
+
+if(!isset($_SESSION["userrole"])) :?>
+<script src="js/scriptlog.js" type="text/javascript"></script>    
     
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="flip">
+        <div class="card"> 
+          <div class="face front"> 
+            <div class="panel panel-default">
+              <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal customform">
+                <br>
+                <div align="center">
+                  <div class="image">
+                    <img src="image/logo.png"/>
+                  </div>
+                  <br>
+                </div>
+                <input type="hidden" name="type" value="login">
+                <input name="email" class="form-control" placeholder="Username"/>
+                <input name="password" type="password" class="form-control" placeholder="Password" required="" id="pass_s">
+                <br>
+                <input type="submit" class="btn btn-primary btn-block" value="LOG IN">
+              </form>
+                <hr>
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="hiddenform">
+                <input type="hidden" name="type" value="skiplogin">
+                <p class="blue">
+                <a onclick="$('#hiddenform').submit()"> Skip to EasyRASH </a>
+                </p>
+              </form>
+                <hr>
+                <p class="text-center">
+                  <a href="#" class="fliper-btn">Create new account?</a>
+                </p>
+            </div>
+          </div> 
+          <div class="face back"> 
+            <div class="panel panel-default">
+              <form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <br> 
+                <div align="center">
+                  <div class="image">
+                    <img src="image/logo.png"/>
+                  </div>
+                  <br>
+                <input type="hidden" name="type" value="registrazione">
+
+                <div class="form-group row">
+                  <label for="inputName" class="col-sm-2 col-sm-offset-2 col-form-label">Nome</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" id="inputName" placeholder="Nome" name="given_name">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="inputCogname" class="col-sm-2 col-sm-offset-2 col-form-label">Cognome</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" id="inputCogname" placeholder="Cognome" name="family_name">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="inputEmail" class="col-sm-2 col-sm-offset-2 col-form-label">Email</label>
+                  <div class="col-sm-6">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="inputPassword1" class="col-sm-2 col-sm-offset-2 col-form-label">Password</label>
+                  <div class="col-sm-6">
+                    <input type="password" class="form-control" id="inputPassword1" placeholder="Password" name="pass1">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="inputPassword2" class="col-sm-2 col-sm-offset-2 col-form-label">Conferma Password</label>
+                  <div class="col-sm-6">
+                    <input type="password" class="form-control" id="inputPassword2" placeholder="Password" name="pass2">
+                  </div>
+                </div>
+
+
+                <fieldset class="form-group row">
+                  <label class="col-form-legend col-sm-2 col-sm-offset-2">Radios</label>
+                  <div class="col-sm-6">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="sex" id="gridRadios1" value="male" checked>
+                        Male
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="sex" id="gridRadios2" value="female">
+                        Female                  
+                        </label>
+                    </div>
+                  </div>
+
+                    
+                    
+                    
+                  <input class="form-control" placeholder="Name"/>
+                  <input class="form-control" placeholder="Username"/>
+                  <input class="form-control" placeholder="Email"/>
+                  <input type="password" class="form-control" placeholder="Password" required="" id="pass_s">
+                  <select name="gender" class="form-control" id="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                  <button class="btn btn-primary btn-block">SIGN UP</button>
+
+
+                <p class="text-center">
+                  <a href="#" class="fliper-btn">Already have an account?</a>
+                </p>
+                </form>
+            </div>
+          </div>
+        </div>   
+      </div>
+
+
+
+
+        </div>
+        <div class="col-md-4"></div>
+
+      </div>
+
+    </div><!-- /.container -->
+
+<script type="text/javascript">
+$('.fliper-btn').click(function(){
+    $('.flip').find('.card').toggleClass('flipped');
+});
+</script>
+    
+<?php else: ?>
     
 <!-- Login Modal -->
 <div id="LoginModal" class="modal fade" role="dialog">
@@ -303,6 +440,47 @@
   </div>
 </div>
     
+    
+    <!-- List Annotation Modal -->
+<div id="ViewAnnotationModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">List Annotation</h4>
+      </div>
+      <div class="modal-body">
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>
+                    User
+                  </th>
+                  <th>
+                    Data
+                  </th>
+                  <th>
+                    Content
+                  </th>
+                  <th>
+                    Delete
+                  </th>
+                </tr>
+              </thead>
+                  
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -312,13 +490,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" >Logo</a>
+      <a class="navbar-brand" data-toggle="tab" href="#main" id="homebutton" style="padding:0;"><img id="logo" src="image/favicon.png"/></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse nav-tabs">
       <ul class="nav navbar-nav">
-        <li class="active"><a data-toggle="tab" href="#main" id="homebutton">Home</a></li>
         <li><a data-toggle="tab" href="#about" id="aboutbutton">About</a></li>
         <li><a data-toggle="tab" href="#registrazione" id="registrazionebutton">Registrazione</a></li>
+        <?php if ($_SESSION["userrole"] != "Reader") : ?>
+        <li><a id="addAnnotationlink" onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)"> Aggiungi annotazzione</a></li>
+        <?php endif ?>
+        <li><a  onclick="ViewAnnotation()">Controlla Annotazioni</a></li>
       </ul>
        <ul class="nav navbar-nav navbar-right">
            <li>
@@ -332,7 +513,6 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
     </div>
   </div>
 </nav>
-<div id="notification"></div>
 <div class="tab-content">
   <!---  MAIN  --->
   <div id="main" class="tab-pane fade in active">
@@ -378,15 +558,13 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                            </div>
                        </div>
                     </div>
-                   <button type="button" class="btn btn-default" onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">
-                       Aggiungi Annotazione
-                   </button>
+                   
 
                 </div>
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                     <ul class="nav nav-tabs">
                       <li class="active"><a data-toggle="tab" href="#guide"  id="guidClick">Guida</a></li>
-                      <li><a data-toggle="tab" href="#doc"  id="docClick">Documento caricato</a></li>
+                      <li><a data-toggle="tab" href="#doc"  id="docClick" class="truncate">Documento caricato</a></li>
                     </ul>
 
                     <div class="tab-content">
@@ -480,3 +658,5 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
 </div>
 </body>
 </html>
+    
+<?php endif; ?>

@@ -5,6 +5,7 @@ function reset(){
 }
 
 $( document ).ready(function(){
+    $("#addAnnotationlink").attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
     reset();
     loaderDocArea("-1");
     loaderEventArea();
@@ -95,6 +96,9 @@ function LoadAnnotation(urlDocument){
                 html = html.substring(0, parseInt(v["OffsetFromStart"])) + "<span style='background-color:yellow;' data-toggle='tooltip' title='"+v["Annotation"]+"'>" + html.substring(parseInt(v["OffsetFromStart"]),parseInt(v["LenghtAnnotation"])+parseInt(v["OffsetFromStart"]))+"</span>"+html.substring( parseInt(v["OffsetFromStart"]) + parseInt(v["LenghtAnnotation"]));
                 $(v["Path"]).html(html);
                 $('[data-toggle="tooltip"]').tooltip();   
+                
+                
+                
             });
         },
         error:function(jqXHR, status, errorThrown) {
@@ -102,7 +106,6 @@ function LoadAnnotation(urlDocument){
             console.log(status);
             console.log(errorThrown);
         }
-
     });
 }
 
@@ -235,3 +238,11 @@ function AddAnnotation(checklog){
         Notify("error", "Devi essere un Annotator per creare annotazioni");
     }
 }
+
+
+function ViewAnnotation(){
+    $("#ViewAnnotationModal").modal({
+        show: 'true'
+    });
+}
+
