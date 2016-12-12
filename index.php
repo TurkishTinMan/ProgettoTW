@@ -13,6 +13,7 @@
     <link rel="shortcut icon" type="image/png" href="image/favicon.png"/>
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styleh.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     
@@ -36,6 +37,8 @@
 session_start();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch($_POST["type"]){
+            case 'logout':
+                session_destroy();
             case 'skiplogin':
                 $_SESSION["userrole"] = "Reader";
                 $_SESSION["name"] = "Utente";
@@ -364,18 +367,42 @@ $('.fliper-btn').click(function(){
 </script>
     
 <?php else: ?>
+      
+<!--Info Modal-->
+<div id="ViewHelp" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true"></li>
+<div class="modal-dialog">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="panel-title" id="infoLabel"> Help <i class="glyphicon glyphicon-info-sign"></i></h3>
+    </div>
+    <form action="#" method="post" accept-charset="utf-8">
+    <div class="modal-body">
+                              <h3>How does EasyRASH work</h3>
+                        <p>Bacon ipsum dolor amet bacon prosciutto brisket, beef pancetta filet mignon alcatra meatloaf shoulder boudin pig shank. Pork strip steak turducken pork belly salami shank flank fatback capicola. Jowl beef ribs bresaola, drumstick short ribs andouille hamburger capicola tongue short loin kevin. Leberkas chuck beef turkey chicken. Doner ground round burgdoggen, frankfurter ribeye bresaola meatball. Chicken strip steak frankfurter swine kevin short ribs alcatra shoulder jerky hamburger short loin sausage jowl beef salami.
+
+
+        Shank bacon short ribs, doner picanha chuck drumstick salami ribeye ham hock sirloin. Ribeye spare ribs rump salami sausage, shoulder tail leberkas ham hock short loin jerky jowl. Landjaeger shank rump strip steak ham hock jerky cow. Alcatra turducken flank, shank pancetta tongue leberkas ground round sausage biltong strip steak drumstick.</p>
+    </div>
+        <div class="panel-footer">
+            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+    </div>
+</div>
+</div>
+  
     
 <!-- Login Modal -->
 <div id="LoginModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Login</h4>
-      </div>
-      <div class="modal-body">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="panel-title" id="infoLabel"> Login <i class="glyphicon glyphicon-log-in"></i></h3>
+    </div>
+    <form action="#" method="post" accept-charset="utf-8">
+    <div class="modal-body">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
           <input type="hidden" name="type" value="login">
           <div class="form-group">
@@ -386,29 +413,26 @@ $('.fliper-btn').click(function(){
             <label for="pwd">Password:</label>
             <input name ="password" type="password" class="form-control" id="pwd">
           </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="ChangePage('#registrazionebutton')">Registrazione</button>
-        <button type="submit" class="btn btn-default">Submit</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </form>
-      </div>
     </div>
-
-  </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+    </div>
+</div>
 </div>
     
 <!-- Annotation Modal -->
 <div id="AnnotationModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="panel-title" id="infoLabel"> Annotation <i class="glyphicon glyphicon-log-in"></i></h3>
+    </div>
+    <div class="modal-body">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Annotation</h4>
-      </div>
-      <div class="modal-body">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <input type="hidden" name="type" value="addAnnotation">
         <div class="form-group">
@@ -430,7 +454,8 @@ $('.fliper-btn').click(function(){
           <input name="Data" type="hidden" class="form-control" id="Data">
           <input name="Doc" type="hidden" class="form-control" id="Doc" value="">
       </div>
-      <div class="modal-footer">
+
+        <div class="panel-footer">
         <button type="submit" class="btn btn-default">Submit</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </form>
@@ -444,14 +469,13 @@ $('.fliper-btn').click(function(){
     <!-- List Annotation Modal -->
 <div id="ViewAnnotationModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="panel-title" id="infoLabel"> List Annotation <i class="glyphicon glyphicon-log-in"></i></h3>
+    </div>
+    <div class="modal-body">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">List Annotation</h4>
-      </div>
-      <div class="modal-body">
           <table class="table table-striped">
               <thead>
                 <tr>
@@ -472,7 +496,8 @@ $('.fliper-btn').click(function(){
                   
           </table>
       </div>
-      <div class="modal-footer">
+
+        <div class="panel-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -490,20 +515,25 @@ $('.fliper-btn').click(function(){
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" data-toggle="tab" href="#main" id="homebutton" style="padding:0;"><img id="logo" src="image/favicon.png"/></a>
+      <a class="navbar-brand" id="homebutton" style="padding:0;"><img id="logo" src="image/favicon.png"/></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse nav-tabs">
       <ul class="nav navbar-nav">
-        <li><a data-toggle="tab" href="#about" id="aboutbutton">About</a></li>
-        <li><a data-toggle="tab" href="#registrazione" id="registrazionebutton">Registrazione</a></li>
+        <li><a onclick="OpenHelp()">Help</a></li>
         <?php if ($_SESSION["userrole"] != "Reader") : ?>
-        <li><a id="addAnnotationlink" onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)"> Aggiungi annotazzione</a></li>
-        <?php endif ?>
+        <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)"> Aggiungi annotazzione</a></li>
+        <?php else: ?>
+        <li><a href="#" data-toggle="modal" data-target="#registrazione" data-original-title="">Registrazione</a></li>
+        <?php endif; ?>
         <li><a  onclick="ViewAnnotation()">Controlla Annotazioni</a></li>
       </ul>
        <ul class="nav navbar-nav navbar-right">
            <li>
+               <?php if ($_SESSION["userrole"] != "Reader") : ?>
+               <a class="pointer">
+               <?php else: ?>
                <a data-toggle="modal" data-target="#LoginModal" class="pointer">
+               <?php endif; ?>
                <?php
 echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION["userrole"]."</span> : <span id='eventRole'>".$_SESSION["eventrole"]."</span>"; 
                ?>
@@ -521,38 +551,38 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                    <div class="panel panel-default">
                        <div class="panel-heading pointer" onclick="ShowHideArea('#DocArea')">
-                           DocArea
+                           <i class="glyphicon glyphicon-folder-open"></i>
                        </div>
                        <div class="panel-body" id="DocArea">
-                           <ul class="list-unstyled" id="DocAreaBody">
+                           <ul class="list-group list-unstyled" id="DocAreaBody">
                            </ul>
                        </div>
                     </div>
                     
                     <div class="panel panel-default">
                        <div class="panel-heading pointer" onclick="ShowHideArea('#EventArea')">
-                           EventArea
+                            <i class="glyphicon glyphicon-calendar"></i>
                        </div>
                        <div class="panel-body" id="EventArea">
-                           <ul class="list-unstyled" id="EventAreaBody">
+                           <ul class="list-group list-unstyled" id="EventAreaBody">
                            </ul>
                        </div>
                     </div>
                     
                     <div class="panel panel-default">
                        <div class="panel-heading pointer" onclick="ShowHideArea('#MetaArea')">
-                           MetaArea
+                            <i class="glyphicon glyphicon-asterisk"></i>    
                        </div>
                        <div class="panel-body" id="MetaArea">
                            <div id="div-metaarea-events">
                                 <h4>Evento</h4>
-                                <ul id="ul-metaarea-events">
+                                <ul id="ul-metaarea-events" class="list-group list-unstyled">
                                 -
                                 </ul>
                            </div>
                            <div id="div-metaarea-documents">
                                 <h4>Documento</h4>
-                                <ul id="ul-metaarea-documents">
+                                <ul id="ul-metaarea-documents" class="list-group list-unstyled">
                                 -
                                 </ul>
                            </div>
@@ -584,11 +614,7 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
             </div>
         </div>
     </div>
-    <!---  ABOUT  --->
-    <div id="about" class="tab-pane fade">
-        Qui si possono aggiungere cose
-    </div>
-    <!---  Registrazione  --->
+  <!----
     <div id="registrazione" class="tab-pane fade">
         <div class="container">
             <form "<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -655,6 +681,7 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
             </form>
         </div>
     </div>
+---->
 </div>
 </body>
 </html>

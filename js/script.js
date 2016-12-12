@@ -5,7 +5,7 @@ function reset(){
 }
 
 $( document ).ready(function(){
-    $("#addAnnotationlink").attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
+    $("nav>div>div>ul>li").attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
     reset();
     loaderDocArea("-1");
     loaderEventArea();
@@ -23,7 +23,7 @@ function loaderDocArea(numberEvent) {
             if(k=="Role"){
                 $("#eventRole").html(v);
             }else{
-                result=result+"<li><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
+                result=result+"<li class='list-group-item'><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
             }
         });
         $("#DocAreaBody").html(result);
@@ -47,7 +47,7 @@ function loaderMetaEventArea(numberEvent){
             result = "";
             $.each(json_data,function(k,v){
                 if(k != "submissions"){
-                    result=result+"<li>"+k+":"+v+"</li>";
+                    result=result+"<li class='list-group-item'>"+k+":"+v+"</li>";
                 }
             });
             $("#ul-metaarea-events").html(result);
@@ -122,9 +122,9 @@ function LoadDocument(urlDocument) {
             paper = "<h1>" + paper_json["title"] + "</h1><div>" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
             
-            startmetadati = "<li>";
+            startmetadati = "<li class='list-group-item'>";
             endmetadati="</li>";
-            metadati = startmetadati + "keywords :<ul>";
+            metadati = startmetadati + "keywords :"+ endmetadati +"<ul class='list-group list-unstyled'>";
 
             $.each(paper_json["keyword"],function(k,v){
                 metadati = metadati + startmetadati + v + endmetadati;
@@ -132,7 +132,7 @@ function LoadDocument(urlDocument) {
             
             metadati = metadati + "</ul>"
             
-            metadati = metadati + startmetadati + "Autori:<ul>"
+            metadati = metadati + startmetadati + "Autori:"+ endmetadati +"<ul class='list-group list-unstyled'>";
             
             $.each(paper_json["Autori"],function(k,v){
                 if(v["linked"] == "false"){
@@ -246,3 +246,8 @@ function ViewAnnotation(){
     });
 }
 
+function OpenHelp(){
+    $("#ViewHelp").modal({
+        show: 'true'
+    });
+}
