@@ -38,7 +38,15 @@ session_start();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch($_POST["type"]){
             case 'logout':
-                session_destroy();
+                session_unset();
+                unset($_SESSION["userrole"]);
+?>
+                            <script>
+                                console.log("error");
+                                Notify('success',"Logout complete!");
+                            </script>
+<?php          
+                break;
             case 'skiplogin':
                 $_SESSION["userrole"] = "Reader";
                 $_SESSION["name"] = "Utente";
@@ -265,86 +273,32 @@ if(!isset($_SESSION["userrole"])) :?>
           </div> 
           <div class="face back"> 
             <div class="panel panel-default">
-              <form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <br> 
+                <form class="form-horizontal customform" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <div align="center">
                   <div class="image">
                     <img src="image/logo.png"/>
                   </div>
                   <br>
-                <input type="hidden" name="type" value="registrazione">
-
-                <div class="form-group row">
-                  <label for="inputName" class="col-sm-2 col-sm-offset-2 col-form-label">Nome</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputName" placeholder="Nome" name="given_name">
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label for="inputCogname" class="col-sm-2 col-sm-offset-2 col-form-label">Cognome</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="inputCogname" placeholder="Cognome" name="family_name">
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label for="inputEmail" class="col-sm-2 col-sm-offset-2 col-form-label">Email</label>
-                  <div class="col-sm-6">
-                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email">
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label for="inputPassword1" class="col-sm-2 col-sm-offset-2 col-form-label">Password</label>
-                  <div class="col-sm-6">
-                    <input type="password" class="form-control" id="inputPassword1" placeholder="Password" name="pass1">
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label for="inputPassword2" class="col-sm-2 col-sm-offset-2 col-form-label">Conferma Password</label>
-                  <div class="col-sm-6">
-                    <input type="password" class="form-control" id="inputPassword2" placeholder="Password" name="pass2">
-                  </div>
-                </div>
-
-
-                <fieldset class="form-group row">
-                  <label class="col-form-legend col-sm-2 col-sm-offset-2">Radios</label>
-                  <div class="col-sm-6">
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="sex" id="gridRadios1" value="male" checked>
-                        Male
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="sex" id="gridRadios2" value="female">
-                        Female                  
-                        </label>
-                    </div>
-                  </div>
 
                     
-                    
-                    
-                  <input class="form-control" placeholder="Name"/>
-                  <input class="form-control" placeholder="Username"/>
-                  <input class="form-control" placeholder="Email"/>
-                  <input type="password" class="form-control" placeholder="Password" required="" id="pass_s">
-                  <select name="gender" class="form-control" id="gender">
+                  <input type="hidden" name="type" value="registrazione">
+                  <input name="given_name" class="form-control" placeholder="Name"/>
+                  <input name="family_name" class="form-control" placeholder="Surname"/>
+                  <input class="form-control" placeholder="Email" name="email"/>
+                  <input type="password" class="form-control" placeholder="Password" required="" id="pass_s" name="pass1">
+                  <input type="password" class="form-control" placeholder="Password" required="" id="pass_s" name="pass2">
+                  <select name="sex" class="form-control" id="gender">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </select>
-                  <button class="btn btn-primary btn-block">SIGN UP</button>
-
+                    <input type="submit" class="btn btn-primary btn-block" value="LOG IN">
+                </form>
+                <br>
 
                 <p class="text-center">
                   <a href="#" class="fliper-btn">Already have an account?</a>
                 </p>
-                </form>
             </div>
           </div>
         </div>   
@@ -391,7 +345,30 @@ $('.fliper-btn').click(function(){
     </div>
 </div>
 </div>
+
+<!--Logout Modal-->
+<div id="LogoutModal" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true"></li>
+<div class="modal-dialog">
+<div class="panel panel-primary">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <div class="panel-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="panel-title" id="infoLabel"> Logout <i class="glyphicon glyphicon-info-sign"></i></h3>
+    </div>
+    <div class="modal-body">
+    </div>
+    <div class="panel-footer">
+        <input type="hidden" name="type" value="logout">
+        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+    </div>
+    </form>
+</div>
+</div>
+</div>
   
+    
+    
     
 <!-- Login Modal -->
 <div id="LoginModal" class="modal fade" role="dialog">
@@ -530,7 +507,7 @@ $('.fliper-btn').click(function(){
        <ul class="nav navbar-nav navbar-right">
            <li>
                <?php if ($_SESSION["userrole"] != "Reader") : ?>
-               <a class="pointer">
+               <a data-toggle="modal" data-target="#LogoutModal" class="pointer">
                <?php else: ?>
                <a data-toggle="modal" data-target="#LoginModal" class="pointer">
                <?php endif; ?>
