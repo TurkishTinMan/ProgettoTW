@@ -84,7 +84,6 @@ function loaderEventArea() {
 }
 
 function LoadAnnotation(urlDocument){
-    console.log("Entry point");
     $.ajax({
         url:"./PHP/loadAnnotation.php",
         type:"POST",
@@ -124,15 +123,15 @@ function LoadDocument(urlDocument) {
             
             startmetadati = "<li class='list-group-item'>";
             endmetadati="</li>";
-            metadati = startmetadati + "keywords :"+ endmetadati +"<ul class='list-group list-unstyled'>";
-
+            metadati = startmetadati + "keywords : <ul class='list-group list-unstyled'>";
+            console.log(metadati);
             $.each(paper_json["keyword"],function(k,v){
                 metadati = metadati + startmetadati + v + endmetadati;
             });
             
             metadati = metadati + "</ul>"
             
-            metadati = metadati + startmetadati + "Autori:"+ endmetadati +"<ul class='list-group list-unstyled'>";
+            metadati = metadati + startmetadati + "Autori:<ul class='list-group list-unstyled'>";
             
             $.each(paper_json["Autori"],function(k,v){
                 if(v["linked"] == "false"){

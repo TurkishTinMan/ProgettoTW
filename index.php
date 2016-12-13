@@ -367,9 +367,6 @@ $('.fliper-btn').click(function(){
 </div>
 </div>
   
-    
-    
-    
 <!-- Login Modal -->
 <div id="LoginModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -440,10 +437,9 @@ $('.fliper-btn').click(function(){
     </div>
 
   </div>
-</div>
+</div>  
     
-    
-    <!-- List Annotation Modal -->
+<!-- List Annotation Modal -->
 <div id="ViewAnnotationModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 <div class="panel panel-primary">
