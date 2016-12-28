@@ -488,13 +488,13 @@ $('.fliper-btn').click(function(){
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" id="homebutton" style="padding:0;"><img id="logo" src="image/logo.png"/></a>
+      <a class="navbar-brand" id="homebutton" style="padding:0;"><img id="logo" src="image/favicon.png"/></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse nav-tabs">
       <ul class="nav navbar-nav">
         <li><a onclick="OpenHelp()">Help</a></li>
         <?php if ($_SESSION["userrole"] != "Reader") : ?>
-        <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)"> Aggiungi annotazione</a></li>
+        <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)"> Aggiungi annotazzione</a></li>
         <?php else: ?>
         <li><a href="#" data-toggle="modal" data-target="#registrazione" data-original-title="">Registrazione</a></li>
         <?php endif; ?>

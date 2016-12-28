@@ -112,6 +112,12 @@ perspective: 800;
   .inner{margin:0px !important;}
 
 
+
+body{
+	background-color: antiquewhite;
+    padding-top: 100px;
+    
+}
 .customform{
     font-family: 'Roboto', sans-serif;
 	padding: 20px;
