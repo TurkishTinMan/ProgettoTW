@@ -22,7 +22,7 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <script src="js/script.js" type="text/javascript"></script>
+<script src="js/script.js" type="text/javascript"></script>
 
 
 
@@ -55,6 +55,9 @@
         <li class="active"><a data-toggle="tab" href="#main" id="homebutton">Home</a></li>
         <li>
         <a href="#" data-toggle="modal" data-target="#info" data-original-title>Help</a>
+        </li>
+        <li>
+        <a  href="#" data-toggle="modal" data-target="#ViewAnnotationModal">Controlla Annotazioni</a>
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contact<span class="caret"></span><i class="fa fa-caret-down"></i></a>
@@ -136,9 +139,9 @@
 
                        </div>
                     </div>
-                     <button type="button" class="btn btn-default" onclick="AddAnnotation()">
+                     <button type="button" class="btn btn-default" onclick="AddAnnotation(<?php echo (strcmp($_SESSION["userrole"],"Reader") != 0 ) ?>)">
                        Aggiungi Annotazione
-                   </button>
+                     </button>
                 </div>
                 <div class="content-container" id="top">
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -252,5 +255,47 @@
    </div>
 </div>
 
+<!-- List Annotation Modal -->
+<div id="ViewAnnotationModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="panel-title" id="infoLabel"> List Annotation <i class="glyphicon glyphicon-log-in"></i></h3>
+    </div>
+    <div class="modal-body">
+
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>
+                    User
+                  </th>
+                  <th>
+                    Data
+                  </th>
+                  <th>
+                    Content
+                  </th>
+                  <th>
+                    Delete
+                  </th>
+                </tr>
+              </thead>
+                  
+          </table>
+      </div>
+
+        <div class="panel-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 </body>
 </html>
+
+
