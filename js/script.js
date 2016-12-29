@@ -5,7 +5,6 @@ function reset(){
 }
 
 $( document ).ready(function(){
-    $("nav>div>div>ul>li").attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
     reset();
     loaderDocArea("-1");
     loaderEventArea();
@@ -23,7 +22,7 @@ function loaderDocArea(numberEvent) {
             if(k=="Role"){
                 $("#eventRole").html(v);
             }else{
-                result=result+"<li class='list-group-item'><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
+                result=result+"<li><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
             }
         });
         $("#DocAreaBody").html(result);
@@ -47,7 +46,7 @@ function loaderMetaEventArea(numberEvent){
             result = "";
             $.each(json_data,function(k,v){
                 if(k != "submissions"){
-                    result=result+"<li class='list-group-item'>"+k+":"+v+"</li>";
+                    result=result+"<li>"+k+":"+v+"</li>";
                 }
             });
             $("#ul-metaarea-events").html(result);
@@ -83,32 +82,6 @@ function loaderEventArea() {
     });  
 }
 
-function LoadAnnotation(urlDocument){
-    $.ajax({
-        url:"./PHP/loadAnnotation.php",
-        type:"POST",
-        data:{localUrl : urlDocument},
-        dataType:'json',
-        success:function(paper_json){
-            $.each(paper_json,function(k,v){
-                var html = $(v["Path"]).html();
-                html = html.substring(0, parseInt(v["OffsetFromStart"])) + "<span style='background-color:yellow;' data-toggle='tooltip' title='"+v["Annotation"]+"'>" + html.substring(parseInt(v["OffsetFromStart"]),parseInt(v["LenghtAnnotation"])+parseInt(v["OffsetFromStart"]))+"</span>"+html.substring( parseInt(v["OffsetFromStart"]) + parseInt(v["LenghtAnnotation"]));
-                $(v["Path"]).html(html);
-                $('[data-toggle="tooltip"]').tooltip();   
-                
-                
-                
-            });
-        },
-        error:function(jqXHR, status, errorThrown) {
-            console.log(jqXHR.responseText);
-            console.log(status);
-            console.log(errorThrown);
-        }
-    });
-}
-
-
 
 function LoadDocument(urlDocument) {  
     $.ajax({ 
@@ -121,17 +94,17 @@ function LoadDocument(urlDocument) {
             paper = "<h1>" + paper_json["title"] + "</h1><div>" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
             
-            startmetadati = "<li class='list-group-item'>";
+            startmetadati = "<li>";
             endmetadati="</li>";
-            metadati = startmetadati + "keywords : <ul class='list-group list-unstyled'>";
-            console.log(metadati);
+            metadati = startmetadati + "keywords :<ul>";
+
             $.each(paper_json["keyword"],function(k,v){
                 metadati = metadati + startmetadati + v + endmetadati;
             });
             
             metadati = metadati + "</ul>"
             
-            metadati = metadati + startmetadati + "Autori:<ul class='list-group list-unstyled'>";
+            metadati = metadati + startmetadati + "Autori:<ul>"
             
             $.each(paper_json["Autori"],function(k,v){
                 if(v["linked"] == "false"){
@@ -143,8 +116,7 @@ function LoadDocument(urlDocument) {
             metadati = metadati + "</ul>";
             metadati = metadati + endmetadati;
             $("#ul-metaarea-documents").html(metadati);
-            $("#Doc").val(urlDocument);
-            LoadAnnotation(urlDocument);
+            
         },
         error:function(jqXHR, status, errorThrown) {
             console.log(jqXHR.responseText);
@@ -195,58 +167,29 @@ function Notify(type,text){
 }
 
 
-function AddAnnotation(checklog){
-    if(checklog){
-        var selection = window.getSelection();
-        if(selection.toString().length != 0){
-            var selectedText = selection.toString();
-            var range = selection.getRangeAt(0);
-            var tempContainer = range.startContainer;
-            var check = false;
-            if(range.startContainer == range.endContainer){
-                content = "";
-                while(tempContainer.nodeName != "BODY"){
-                    tempContainer = tempContainer.parentNode;
-                    if(tempContainer.id == "doc"){
-                        content = "div#doc" + content;
-                        check = true;
-                        break;
-                    }
-                    n = $(tempContainer).prevAll(""+tempContainer.tagName).length;
-                    content = ":eq("+n+")" + content;
-                    content = tempContainer.tagName.toLowerCase() + content;                    
-                    content = ">" + content;
-                }
+function AddAnnotation(){
+    var selection = window.getSelection();
+    var selectedText = selection.toString();
+    var range = selection.getRangeAt(0);
+    var tempContainer = range.startContainer;
+    var check = false;
+    if(range.startContainer == range.endContainer){
+        while(tempContainer.nodeName != "BODY"){
+            tempContainer = tempContainer.parentNode;
+            if(tempContainer.id == "doc"){
+                check = true;
+                break;
             }
-            if(check){
-                $("#Annotation-content").val(selectedText);
-                $("#Path").val(content);
-                $("#OffsetFromStart").val(selection.baseOffset);
-                $("#LenghtAnnotation").val(selection.toString().length);
-                $("#Data").val(Date.now());
-                $("#AnnotationModal").modal({
-                    show: 'true'
-                });
-            }else{
-                Notify("error", "Devi selezionare qualcosa all'interno di un documento caricato per creare un'annotazione");
-            }
-        }else{
-            Notify("error", "Devi selezionare qualcosa per creare un'annotazione");
         }
-    }else{
-        Notify("error", "Devi essere un Annotator per creare annotazioni");
     }
-}
-
-
-function ViewAnnotation(){
-    $("#ViewAnnotationModal").modal({
-        show: 'true'
-    });
-}
-
-function OpenHelp(){
-    $("#ViewHelp").modal({
-        show: 'true'
-    });
+    if(check){
+        range.startContainer.parentElement.innerHTML = 
+            range.startContainer.substringData(0,selection.baseOffset)+ 
+            "<span style=\"background-color:yellow\">"+     range.startContainer.substringData(selection.baseOffset,selection.toString().length) + 
+            "</span>"+      range.startContainer.substringData(selection.baseOffset+selection.toString().length, range.startContainer.length);
+        $("#Annotation-content").val(selectedText);
+        $("#AnnotationModal").modal({
+            show: 'true'
+        });
+    }
 }
