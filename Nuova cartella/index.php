@@ -566,22 +566,15 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                 </div>
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                     <ul class="nav nav-tabs">
-                      <li class="active"><a data-toggle="tab" href="#guide"  id="guidClick">Guida</a></li>
                       <li><a data-toggle="tab" href="#doc"  id="docClick" class="truncate">Documento caricato</a></li>
                     </ul>
-
-                    <div class="tab-content">
-                      <div id="guide" class="tab-pane fade in active">
-                        <h3>Guida</h3>
-                        <p>Bacon ipsum dolor amet bacon prosciutto brisket, beef pancetta filet mignon alcatra meatloaf shoulder boudin pig shank. Pork strip steak turducken pork belly salami shank flank fatback capicola. Jowl beef ribs bresaola, drumstick short ribs andouille hamburger capicola tongue short loin kevin. Leberkas chuck beef turkey chicken. Doner ground round burgdoggen, frankfurter ribeye bresaola meatball. Chicken strip steak frankfurter swine kevin short ribs alcatra shoulder jerky hamburger short loin sausage jowl beef salami.
-
-
-        Shank bacon short ribs, doner picanha chuck drumstick salami ribeye ham hock sirloin. Ribeye spare ribs rump salami sausage, shoulder tail leberkas ham hock short loin jerky jowl. Landjaeger shank rump strip steak ham hock jerky cow. Alcatra turducken flank, shank pancetta tongue leberkas ground round sausage biltong strip steak drumstick.</p>
-                      </div>
-                      <div id="doc" class="tab-pane fade">
-                        <h3>Documento</h3>
-                        <p>----</p>
-                      </div>
+                        <div class="tab-content">
+                        <div class="well">
+                            <div id="doc" class="tab-pane fade">
+                            <h3>Documento</h3>
+                            <p>----</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

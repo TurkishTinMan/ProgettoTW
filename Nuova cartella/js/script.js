@@ -195,7 +195,7 @@ function Notify(type,text){
 }
 
 
-function AddAnnotation(){
+function AddAnnotation(checklog){
     if(checklog){
         var selection = window.getSelection();
         if(selection.toString().length != 0){
@@ -238,3 +238,15 @@ function AddAnnotation(){
     }
 }
 
+
+function ViewAnnotation(){
+    $("#ViewAnnotationModal").modal({
+        show: 'true'
+    });
+}
+
+function OpenHelp(){
+    $("#ViewHelp").modal({
+        show: 'true'
+    });
+}
