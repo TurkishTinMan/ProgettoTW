@@ -29,6 +29,9 @@
 </head>
 
 <body>
+<?php
+    session_start();
+?>
 
 
 <nav class="navbar navbar-default navbar-inverse" role="navigation">

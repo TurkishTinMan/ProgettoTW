@@ -27,7 +27,6 @@
 </head>
 <body>
 <?php
-
 if(isset($_GET['error_user']))
 {
 echo '<span style="color:white; font-size:18px;text-align:center;">Errore ,utente non registrato!</span>';

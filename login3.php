@@ -1,6 +1,6 @@
 <?php
 session_start();
-$page_to="page.html";
+$page_to="page.php";
 
 if(!isset($_SESSION["userrole"])){
     $_SESSION["userrole"] = "Reader";
@@ -25,27 +25,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SESSION["userrole"] = "Annotator";
                         $_SESSION["name"] = $key;
                     }else{
-
-
-                      header("Location:login.php?error_pass=1");
-
-
+                        header("Location:login.php?error_pass=1");
                     }
                 }
             }
 
             if($_SESSION["name"] == "Utente"){
                 if($user){
-
                     header("Location:login.php?error_user=1");
-
 
                 }
             }else{
-
                     header("Location:" .$page_to);
-}
-}
+            }
+        break;
+    }
 }
 
 ?>
