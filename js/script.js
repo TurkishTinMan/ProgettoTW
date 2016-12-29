@@ -238,3 +238,15 @@ function AddAnnotation(checklog){
     }
 }
 
+
+function ViewAnnotation(){
+    $("#ViewAnnotationModal").modal({
+        show: 'true'
+    });
+}
+
+function OpenHelp(){
+    $("#ViewHelp").modal({
+        show: 'true'
+    });
+}
