@@ -1,5 +1,10 @@
 var urlCurrentDoc = "";
 
+function randomCSS(){
+    return "background-color:#"+Math.floor(Math.random()*16777215).toString(16);
+}
+
+
 function reset(){
     $("#docClick").html("Documento caricato");
     $("#doc").html("<h3>Documento</h3><p>----</p>");
@@ -102,11 +107,11 @@ function LoadAnnotation(urlDocument){
         success:function(paper_json){
             $.each(paper_json,function(k,v){
                 var html = $(v["Path"]).html();
-                html = html.substring(0, parseInt(v["OffsetFromStart"])) + "<span style='background-color:yellow;' data-toggle='tooltip' title='"+v["Annotation"]+"'>" + html.substring(parseInt(v["OffsetFromStart"]),parseInt(v["LenghtAnnotation"])+parseInt(v["OffsetFromStart"]))+"</span>"+html.substring( parseInt(v["OffsetFromStart"]) + parseInt(v["LenghtAnnotation"]));
+                html = html.substring(0, parseInt(v["OffsetFromStart"])) + "<span id='comment"+v["Data"]+"' style='"+ randomCSS() +"' data-toggle='tooltip' title='"+v["Annotation"]+"'>" + html.substring(parseInt(v["OffsetFromStart"]),parseInt(v["LenghtAnnotation"])+parseInt(v["OffsetFromStart"]))+"</span>"+html.substring( parseInt(v["OffsetFromStart"]) + parseInt(v["LenghtAnnotation"]));
                 $(v["Path"]).html(html);
                 $('[data-toggle="tooltip"]').tooltip();  
                 dataAnn = new Date(parseInt(v["Data"]));
-                $('#Anntable').append("<tr><td>"+v['Author']+"</td><td>"+dataAnn.getDay() + "/"+(dataAnn.getMonth()+1)+"/"+dataAnn.getFullYear() +"<td>"+v['Annotation']+"</td></td><td onclick=deleteAnnotation(\""+v['Author']+"\",\""+v['Data']+"\") class='pointer'>delete</td></tr>");
+                $('#Anntable').append("<tr id='row"+v["Data"]+"'><td>"+v['Author']+"</td><td>"+dataAnn.getDay() + "/"+(dataAnn.getMonth()+1)+"/"+dataAnn.getFullYear() +"<td>"+v['Annotation']+"</td></td><td onclick=deleteAnnotation(\""+v['Author']+"\",\""+v['Data']+"\") class='pointer'>delete</td></tr>");
             });
         },
         error:function(jqXHR, status, errorThrown) {
@@ -127,7 +132,11 @@ function deleteAnnotation(author,data){
             if(paper_json["error"]){
                 Notify("error",paper_json["error"]);
             }else{
-                Notify("success","Da implementare, ma eliminata, bisogna rimuovere la riga nella tabella e ovviamente lo span!");
+                Notify("success","Annotazione eliminata!");
+                $('#row'+data).remove();
+                $span = $('#comment'+data);
+                $span.replaceWith($span.html());
+                
             }
         },
         error:function(jqXHR, status, errorThrown) {
