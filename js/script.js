@@ -1,3 +1,5 @@
+var urlCurrentDoc = "";
+
 function reset(){
     $("#docClick").html("Documento caricato");
     $("#doc").html("<h3>Documento</h3><p>----</p>");
@@ -12,6 +14,7 @@ $( document ).ready(function(){
 });
 
 function loaderDocArea(numberEvent) {
+    toReset = true;
     $.ajax({
       url: "./PHP/loaderDocArea.php",
       type: "POST",
@@ -23,10 +26,16 @@ function loaderDocArea(numberEvent) {
             if(k=="Role"){
                 $("#eventRole").html(v);
             }else{
+                if (k.localeCompare(urlCurrentDoc) == 0){
+                    toReset = false;
+                }
                 result=result+"<li class='list-group-item'><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
             }
         });
         $("#DocAreaBody").html(result);
+        if(toReset){
+            reset();
+        }
       },
       error: function() {
         $("#DocAreaBody").html("Error!");
@@ -171,9 +180,8 @@ function LoadDocument(urlDocument) {
             console.log(errorThrown);
         }
     });
-    
     $("#docClick").click();
-    
+    urlCurrentDoc = urlDocument;
 }
 
 function ShowHideArea(idshow){
@@ -185,7 +193,6 @@ function ShowHideArea(idshow){
 }
 
 function ChangeEvent(json_data_event){
-    reset();
     loaderDocArea(json_data_event);
     loaderMetaEventArea(json_data_event);
 }
