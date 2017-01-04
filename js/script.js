@@ -84,6 +84,7 @@ function loaderEventArea() {
 }
 
 function LoadAnnotation(urlDocument){
+    $("#Anntable").html("<thead><tr><th>User</th><th>Data</th><th>Content</th><th>Delete</th></tr</thead>");
     $.ajax({
         url:"./PHP/loadAnnotation.php",
         type:"POST",
@@ -94,10 +95,9 @@ function LoadAnnotation(urlDocument){
                 var html = $(v["Path"]).html();
                 html = html.substring(0, parseInt(v["OffsetFromStart"])) + "<span style='background-color:yellow;' data-toggle='tooltip' title='"+v["Annotation"]+"'>" + html.substring(parseInt(v["OffsetFromStart"]),parseInt(v["LenghtAnnotation"])+parseInt(v["OffsetFromStart"]))+"</span>"+html.substring( parseInt(v["OffsetFromStart"]) + parseInt(v["LenghtAnnotation"]));
                 $(v["Path"]).html(html);
-                $('[data-toggle="tooltip"]').tooltip();   
-                
-                
-                
+                $('[data-toggle="tooltip"]').tooltip();  
+                dataAnn = new Date(parseInt(v["Data"]));
+                $('#Anntable').append("<tr><td>"+v['Author']+"</td><td>"+dataAnn.getDay() + "/"+(dataAnn.getMonth()+1)+"/"+dataAnn.getFullYear() +"<td>"+v['Annotation']+"</td></td><td onclick=deleteAnnotation(\""+v['Author']+"\",\""+v['Data']+"\") class='pointer'>delete</td></tr>");
             });
         },
         error:function(jqXHR, status, errorThrown) {
@@ -108,6 +108,26 @@ function LoadAnnotation(urlDocument){
     });
 }
 
+function deleteAnnotation(author,data){
+    $.ajax({
+        url:"./PHP/deleteAnnotation.php",
+        type:"POST",
+        data:{author : author , data: data},
+        dataType:'json',
+        success:function(paper_json){
+            if(paper_json["error"]){
+                Notify("error",paper_json["error"]);
+            }else{
+                Notify("success","Da implementare, ma eliminata, bisogna rimuovere la riga nella tabella e ovviamente lo span!");
+            }
+        },
+        error:function(jqXHR, status, errorThrown) {
+            console.log(jqXHR.responseText);
+            console.log(status);
+            console.log(errorThrown);
+        }
+    });
+}
 
 
 function LoadDocument(urlDocument) {  
@@ -124,7 +144,6 @@ function LoadDocument(urlDocument) {
             startmetadati = "<li class='list-group-item'>";
             endmetadati="</li>";
             metadati = startmetadati + "keywords : <ul class='list-group list-unstyled'>";
-            console.log(metadati);
             $.each(paper_json["keyword"],function(k,v){
                 metadati = metadati + startmetadati + v + endmetadati;
             });
@@ -136,7 +155,7 @@ function LoadDocument(urlDocument) {
             $.each(paper_json["Autori"],function(k,v){
                 if(v["linked"] == "false"){
                     metadati = metadati + startmetadati;
-                    metadati = metadati + "<a href =\""+v["email"]+"\">"+v["name"]+"</a><p>"+v["affiliation"]+"</p>";
+                    metadati = metadati + "<a mailto =\""+v["email"]+"\">"+v["name"]+"</a><p>"+v["affiliation"]+"</p>";
                     metadati = metadati + endmetadati;
                 }
             });

@@ -19,6 +19,7 @@ body {
     padding: 50px;
     background-color: skyblue;
     margin: 0;
+    margin-top: 120px;
     display: block;
     margin: 8px;
 }
@@ -30,7 +31,6 @@ body {
     margin-left: -50px;
     margin-right: -50px;
     padding: 0;
-    bottom: 50px;
 }
 .navbar-inverse {
     background-color: #222;
@@ -194,7 +194,7 @@ button {
 }
 
 img {
-    width: 650px;
+    width: 100%;
     margin: 0 auto;
     vertical-align: middle;
     border: 0;
@@ -874,8 +874,11 @@ button.close {
 }
 
 #notification{
-    padding-left: 10%;
-    padding-right: 10%;
+    position: fixed;
+    left: 10%;
+    right: 10%;
+    width: 80%;
+    z-index: 999999;
 }
 
 .pointer, a {
@@ -949,8 +952,53 @@ width: 120%;
 
 
 img{
-width: 650px;
+width: 100%;
 height: auto;
 display: block;
 margin: 0 auto;
+}
+
+
+.flip {
+  -webkit-perspective: 800;
+perspective: 800;
+
+    position: relative;
+}
+.flip .card.flipped {
+  -webkit-transform: rotatey(-180deg);
+    transform: rotatey(-180deg);
+}
+.flip .card {
+
+  height: 100%;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: 0.5s;
+    transform-style: preserve-3d;
+    transition: 0.5s;
+}
+.flip .card .face {
+
+  -webkit-backface-visibility: hidden ;
+    backface-visibility: hidden ;
+  z-index: 2;
+   
+}
+.flip .card .front {
+  position: absolute;
+   width: 100%;
+  z-index: 1;
+
+}
+.flip .card .back {
+  -webkit-transform: rotatey(-180deg);
+    transform: rotatey(-180deg);
+}
+  .inner{margin:0px !important;}
+
+#Anntable{
+    text-align: center!important;
+}
+#Anntable>thead>tr>th{
+   text-align: center!important;
 }

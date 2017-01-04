@@ -32,7 +32,8 @@
 <body>
 
 <div id="notification"></div>    
-    
+
+<script src="js/scriptlog.js" type="text/javascript"></script>   
 <?php
 session_start();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -449,7 +450,7 @@ $('.fliper-btn').click(function(){
     </div>
     <div class="modal-body">
 
-          <table class="table table-striped">
+          <table id="Anntable" class="table table-striped">
               <thead>
                 <tr>
                   <th>
@@ -490,8 +491,8 @@ $('.fliper-btn').click(function(){
       </button>
       <a class="navbar-brand" id="homebutton" style="padding:0;"><img id="logo" src="image/logo.png"/></a>
     </div>
-    <div id="navbar" class="navbar-collapse collapse nav-tabs">
-      <ul class="nav navbar-nav">
+    <div id="navbar">
+      <ul class="nav navbar-nav navbar-right">
         <li><a onclick="OpenHelp()">Help</a></li>
         <?php if ($_SESSION["userrole"] != "Reader") : ?>
         <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)"> Aggiungi annotazione</a></li>
@@ -499,19 +500,17 @@ $('.fliper-btn').click(function(){
         <li><a href="#" data-toggle="modal" data-target="#registrazione" data-original-title="">Registrazione</a></li>
         <?php endif; ?>
         <li><a  onclick="ViewAnnotation()">Controlla Annotazioni</a></li>
-      </ul>
-       <ul class="nav navbar-nav navbar-right">
-           <li>
-               <?php if ($_SESSION["userrole"] != "Reader") : ?>
-               <a data-toggle="modal" data-target="#LogoutModal" class="pointer">
-               <?php else: ?>
-               <a data-toggle="modal" data-target="#LoginModal" class="pointer">
-               <?php endif; ?>
-               <?php
+       <li>
+           <?php if ($_SESSION["userrole"] != "Reader") : ?>
+           <a data-toggle="modal" data-target="#LogoutModal" class="pointer">
+           <?php else: ?>
+           <a data-toggle="modal" data-target="#LoginModal" class="pointer">
+           <?php endif; ?>
+           <?php
 echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION["userrole"]."</span> : <span id='eventRole'>".$_SESSION["eventrole"]."</span>"; 
-               ?>
-               </a>
-           </li>
+           ?>
+           </a>
+       </li>
        </ul>
     </div>
   </div>
