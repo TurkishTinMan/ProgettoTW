@@ -238,26 +238,31 @@ function AddAnnotation(checklog){
             var range = selection.getRangeAt(0);
             var tempContainer = range.startContainer;
             var check = false;
-            if(range.startContainer == range.endContainer){
-                content = "";
-                while(tempContainer.nodeName != "BODY"){
-                    tempContainer = tempContainer.parentNode;
-                    if(tempContainer.id == "doc"){
-                        content = "div#doc" + content;
-                        check = true;
-                        break;
-                    }
-                    n = $(tempContainer).prevAll(""+tempContainer.tagName).length;
-                    content = ":eq("+n+")" + content;
-                    content = tempContainer.tagName.toLowerCase() + content;                    
-                    content = ">" + content;
+            var length = 0;
+            content = "";
+            if (range.startContainer == range.endContainer){
+                length = selection.toString().length;
+            }else{
+                length = range.startContainer.length;
+            }
+            
+            while(tempContainer.nodeName != "BODY"){
+                tempContainer = tempContainer.parentNode;
+                if(tempContainer.id == "doc"){
+                    content = "div#doc" + content;
+                    check = true;
+                    break;
                 }
+                n = $(tempContainer).prevAll(""+tempContainer.tagName).length;
+                content = ":eq("+n+")" + content;
+                content = tempContainer.tagName.toLowerCase() + content;                    
+                content = ">" + content;
             }
             if(check){
                 $("#Annotation-content").val(selectedText);
                 $("#Path").val(content);
-                $("#OffsetFromStart").val(selection.baseOffset);
-                $("#LenghtAnnotation").val(selection.toString().length);
+                $("#OffsetFromStart").val(range.startOffset);
+                $("#LenghtAnnotation").val(length);
                 $("#Data").val(Date.now());
                 $("#AnnotationModal").modal({
                     show: 'true'
