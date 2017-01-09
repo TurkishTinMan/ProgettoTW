@@ -38,6 +38,41 @@
 session_start();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch($_POST["type"]){
+            case 'changepassword':
+                if(empty($_POST['oldPass']) || empty($_POST['newPass']) || empty($_POST['newPass2']) || (strcmp($_POST['newPass'],$_POST['newPass2']) != 0)){
+?>
+                                <script>
+                                    console.log("error");
+                                    Notify('error',"Wrong password!");
+                                </script>
+<?php               
+                }else{
+                    $string = file_get_contents("./Dataset/project-files/users.json");
+                    $json_a = json_decode($string,true);
+                    foreach ($json_a as $key => $person_name) {
+                        if($person_name['email'] == $_SESSION["email"]){
+                            if($person_name['pass'] == $_POST['oldPass']){
+                                $person_name["pass"] = $_POST['newPass'];
+?>
+                                <script>
+                                    console.log("success");
+                                    Notify('success',"Wrong password!");
+                                </script>
+<?php   
+                            }else{
+?>
+                                <script>
+                                    console.log("error");
+                                    Notify('error',"Wrong password!");
+                                </script>
+<?php                        
+                            }
+                        }
+                    }
+                    $json_a = json_encode($json_a);
+                    file_put_contents("./Dataset/project-files/users.json",$json_a);
+                }
+                break;
             case 'logout':
                 session_unset();
                 unset($_SESSION["userrole"]);
@@ -351,19 +386,36 @@ $('.fliper-btn').click(function(){
 <div id="LogoutModal" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true"></li>
 <div class="modal-dialog">
 <div class="panel panel-primary">
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
     <div class="panel-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 class="panel-title" id="infoLabel"> Logout <i class="glyphicon glyphicon-info-sign"></i></h3>
+        <h3 class="panel-title" id="infoLabel"> Gestione Utente </h3>
     </div>
     <div class="modal-body">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <input type="hidden" name="type" value="changepassword">
+            <div class="form-group">
+                <label for="oldPass">Vecchia password</label>
+                <input id="oldPass" class="form-control" type="password" placeholder="Vecchia password" name="oldPass">
+            </div>
+            <div class="form-group">
+                <label for="newPass">Nuova password</label>
+                <input id="newPass" class="form-control" type="password" placeholder="Nuova password" name="newPass">
+            </div>
+            <div class="form-group">
+                <label for="newPass2">Conferma nuova password</label>
+                <input id="newPass2" class="form-control" type="password" placeholder="Conferma nuova password" name="newPass2">
+            </div>
+            <button type="submit" class="btn btn-default">Cambia password</button>
+        </form>
+        <hr>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <input type="hidden" name="type" value="logout">
+            <button type="submit" class="btn btn-default">Logout</button>
+        </form>
     </div>
     <div class="panel-footer">
-        <input type="hidden" name="type" value="logout">
-        <button type="submit" class="btn btn-default">Submit</button>
         <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
     </div>
-    </form>
 </div>
 </div>
 </div>
