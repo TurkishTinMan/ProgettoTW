@@ -53,6 +53,7 @@ session_start();
                         if($person_name['email'] == $_SESSION["email"]){
                             if($person_name['pass'] == $_POST['oldPass']){
                                 $person_name["pass"] = $_POST['newPass'];
+                                $json_a[$key] = $person_name;
 ?>
                                 <script>
                                     console.log("success");
