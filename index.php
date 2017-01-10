@@ -236,18 +236,61 @@ session_start();
                         $new_person['GUID'] = $GUID;
                         /*TsU{7pCCePneBtAT*/
                         
-                        $new_key = $_POST['given_name']." ".$_POST['family_name']." <".$_POST['email'].">";
-                        $json_a[$new_key] = $new_person;
-                        $json_a = json_encode($json_a);
-                        if(!file_exists("./Dataset/project-files/temp-users.json")){
-                            touch("./Dataset/project-files/temp-users.json");
-                        }
-                        file_put_contents("./Dataset/project-files/temp-users.json",$json_a);
+                        require_once('./PHP/class.phpmailer.php');
+
+                        $mail             = new PHPMailer();
+
+                        $body             = file_get_contents('./extra/contents.html');
+                        $body             = eregi_replace("[\]",'',$body);
+                        $body             = str_replace("#linktoreplace",$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?verify=".$GUID,$body);
+                        
+
+                        $mail->IsSMTP();
+                        $mail->Host       = "mail.yourdomain.com"; 
+                                          
+                        $mail->SMTPAuth   = true;                  
+                        $mail->SMTPSecure = "tls";                 
+                        
+                        $mail->Host       = "smtp.gmail.com";      
+                        $mail->Port       = 587;                    
+                        
+                        $mail->Username   = "noreplyeasyrash@gmail.com";  // GMAIL username
+                        $mail->Password   = "TsU{7pCCePneBtAT";            // GMAIL password
+
+                        $mail->SetFrom('noreplyeasyrash@gmail.com', 'EasyRash');
+
+                        $mail->AddReplyTo("noreplyeasyrash@gmail.com","EasyRash");
+
+                        $mail->Subject    = "Mail di verifica";
+
+                        $mail->AltBody    = "To view the message, please use an HTML compatible email viewer!";
+
+                        $mail->MsgHTML($body);
+
+                        $address = $_POST['email'];
+                        $mail->AddAddress($address, $_POST['given_name']." ".$_POST['family_name']);
+
+                        if(!$mail->Send()) {
 ?>
-                        <script>
-                            Notify('success',"Registrazione avvenuta con successo, a breve riceverai una mail per completare la registrazione!");
-                        </script>  
+                            <script>
+                                Notify('error',"Problemi interni, impossibile mandare la mail, riprovare più tardi");
+                            </script>  
+<?php
+                        } else {
+                            $new_key = $_POST['given_name']." ".$_POST['family_name']." <".$_POST['email'].">";
+                            $json_a[$new_key] = $new_person;
+                            $json_a = json_encode($json_a);
+                            if(!file_exists("./Dataset/project-files/temp-users.json")){
+                                touch("./Dataset/project-files/temp-users.json");
+                            }
+                            file_put_contents("./Dataset/project-files/temp-users.json",$json_a);
+?>
+                            <script>
+                                Notify('success',"Registrazione avvenuta con successo, a breve riceverai una mail per completare la registrazione!");
+                            </script>  
 <?php          
+
+                        }
                     }else{
 ?>
                         <script>
@@ -296,6 +339,59 @@ session_start();
                 }
                 break;
         }
+    }else{
+        if (isset($_GET["verify"])){
+            $GETGUID = $_GET["verify"];
+            $string = file_get_contents("./Dataset/project-files/temp-users.json");
+            $json_a = json_decode($string,true);
+            $cont = false;
+            $user = array();        
+            
+            if($json_a != null){
+                foreach ($json_a as $key => $person_name) {
+                    if(strcmp($person_name['GUID'], $GETGUID) == 0){
+                        $cont = true;
+                        $user = $key;  
+                        unset($json_a[$user]['GUID']);
+                    }
+                }
+            }
+            
+            if($cont){
+                $string_b = file_get_contents("./Dataset/project-files/users.json");
+                $json_b = json_decode($string_b,true);
+
+                $new_key = $json_a[$user]['given_name']." ".$json_a[$user]['family_name']." <".$json_a[$user]['email'].">";
+                $json_b[$new_key] = $json_a[$user];
+                
+                if(!file_exists("./Dataset/project-files/users.json")){
+                    touch("./Dataset/project-files/users.json");
+                }
+                $json_b = json_encode($json_b);
+                file_put_contents("./Dataset/project-files/users.json",$json_b);
+                unset($json_a[$user]);
+                
+                $json_a = json_encode($json_a);
+                if(!file_exists("./Dataset/project-files/temp-users.json")){
+                    touch("./Dataset/project-files/temp-users.json");
+                }
+                file_put_contents("./Dataset/project-files/temp-users.json",$json_a);
+                
+?>
+            <script>
+                Notify('success',"Registrazione completata, da ora è possibile effettuare l'accesso!");
+            </script>  
+<?php
+            }else{
+?>
+            <script>
+                Notify('error',"Codice di verifica non valido o già usato!");
+            </script>  
+<?php
+            }
+
+        }
+    
     }
 
 if(!isset($_SESSION["userrole"])) :?>
