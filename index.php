@@ -35,6 +35,25 @@
 
 <script src="js/scriptlog.js" type="text/javascript"></script>   
 <?php
+function getGUID(){
+    if (function_exists('com_create_guid')){
+        return com_create_guid();
+    }
+    else {
+        mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+        $charid = strtoupper(md5(uniqid(rand(), true)));
+        $hyphen = chr(45);// "-"
+        $uuid = chr(123)// "{"
+            .substr($charid, 0, 8).$hyphen
+            .substr($charid, 8, 4).$hyphen
+            .substr($charid,12, 4).$hyphen
+            .substr($charid,16, 4).$hyphen
+            .substr($charid,20,12)
+            .chr(125);// "}"
+        return $uuid;
+    }
+}
+
 session_start();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch($_POST["type"]){
@@ -183,48 +202,61 @@ session_start();
                 }
             
                 if($success){
-                    $string = file_get_contents("./Dataset/project-files/users.json");
+                    $string = file_get_contents("./Dataset/project-files/temp-users.json");
                     $json_a = json_decode($string,true);
                     $cont = true;
                     
-                    foreach ($json_a as $key => $person_name) {
-                        if($person_name['email'] == $_POST['email']){
-                            $cont = false;
-?>
-                            <script>
-                                Notify('error',"Email già in archivio!");
-                            </script>  
-<?php       
+                    if($json_a != null){
+                        foreach ($json_a as $key => $person_name) {
+                            if(strcmp($person_name['email'], $_POST['email']) == 0){
+                                $cont = false;    
+                            }
                         }
                     }
+                    
+                    $string_b = file_get_contents("./Dataset/project-files/users.json");
+                    $json_b = json_decode($string_b,true);
+                    
+                    if($json_b != null){
+                        foreach ($json_b as $key => $person_name) {
+                            if(strcmp($person_name['email'], $_POST['email']) == 0){
+                                $cont = false;    
+                            }
+                        }
+                    }
+
+                    
                     if($cont){
+                        $GUID = getGUID();
                         $new_person['given_name'] = $_POST['given_name'];
                         $new_person['family_name'] = $_POST['family_name'];
                         $new_person['email'] = $_POST['email'];
                         $new_person['pass'] = $_POST['pass1'];
                         $new_person['sex'] = $_POST['sex'];
-
+                        $new_person['GUID'] = $GUID;
+                        /*TsU{7pCCePneBtAT*/
+                        
                         $new_key = $_POST['given_name']." ".$_POST['family_name']." <".$_POST['email'].">";
                         $json_a[$new_key] = $new_person;
                         $json_a = json_encode($json_a);
-                        if(!file_exists("./Dataset/project-files/users.json")){
-                            touch("./Dataset/project-files/users.json");
+                        if(!file_exists("./Dataset/project-files/temp-users.json")){
+                            touch("./Dataset/project-files/temp-users.json");
                         }
-                        file_put_contents("./Dataset/project-files/users.json",$json_a);
-
-    ?>
-                        <script>
-                            Notify('success',"Registration Success!");
-                        </script>  
-    <?php          
-                    }
-                }else{
+                        file_put_contents("./Dataset/project-files/temp-users.json",$json_a);
 ?>
-                    <script>               
-                        ChangePage('#registrazionebutton');
-                    </script>  
-<?php                  
+                        <script>
+                            Notify('success',"Registrazione avvenuta con successo, a breve riceverai una mail per completare la registrazione!");
+                        </script>  
+<?php          
+                    }else{
+?>
+                        <script>
+                            Notify('error',"Email già registrata!");
+                        </script>  
+<?php     
+                    }
                 }
+
             break;
             case 'addAnnotation':
                 if(!isset($_POST['Annotation']) || !isset($_POST['OffsetFromStart']) || !isset($_POST['Path']) || !isset($_POST['Data']) || !isset($_POST['Doc']) || !isset($_POST['LenghtAnnotation'])){
@@ -324,7 +356,7 @@ if(!isset($_SESSION["userrole"])) :?>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </select>
-                    <input type="submit" class="btn btn-primary btn-block" value="LOG IN">
+                    <input type="submit" class="btn btn-primary btn-block" value="REGISTRAZIONE">
                 </form>
                 <br>
 
@@ -545,7 +577,7 @@ $('.fliper-btn').click(function(){
         <?php if ($_SESSION["userrole"] != "Reader") : ?>
         <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)"> Aggiungi annotazione</a></li>
         <?php else: ?>
-        <li><a href="#" data-toggle="modal" data-target="#registrazione" data-original-title="">Registrazione</a></li>
+          <li><form "<?php echo $_SERVER['PHP_SELF']; ?>" method="post"><input type="hidden" name="type" value="logout"><button type="submit">Registrazione</button></form></li>
         <?php endif; ?>
         <li><a  onclick="ViewAnnotation()">Controlla Annotazioni</a></li>
        <li>
