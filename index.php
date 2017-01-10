@@ -42,7 +42,6 @@ session_start();
                 if(empty($_POST['oldPass']) || empty($_POST['newPass']) || empty($_POST['newPass2']) || (strcmp($_POST['newPass'],$_POST['newPass2']) != 0)){
 ?>
                                 <script>
-                                    console.log("error");
                                     Notify('error',"Wrong password!");
                                 </script>
 <?php               
@@ -56,14 +55,12 @@ session_start();
                                 $json_a[$key] = $person_name;
 ?>
                                 <script>
-                                    console.log("success");
-                                    Notify('success',"Wrong password!");
+                                    Notify('success',"Password cambiata con successo!");
                                 </script>
 <?php   
                             }else{
 ?>
                                 <script>
-                                    console.log("error");
                                     Notify('error',"Wrong password!");
                                 </script>
 <?php                        
@@ -79,7 +76,6 @@ session_start();
                 unset($_SESSION["userrole"]);
 ?>
                             <script>
-                                console.log("error");
                                 Notify('success',"Logout complete!");
                             </script>
 <?php          
@@ -103,7 +99,6 @@ session_start();
                         }else{
 ?>
                             <script>
-                                console.log("error");
                                 Notify('error',"Wrong password!");
                             </script>
 <?php                        
@@ -599,16 +594,20 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                             <i class="glyphicon glyphicon-asterisk"></i>    
                        </div>
                        <div class="panel-body" id="MetaArea">
+                           <div id="div-metaarea-ann">
+                                <h4 onclick="ShowHideArea('#ul-metaarea-ann')">Annotazioni</h4>
+                                <ul id="ul-metaarea-ann" class="list-group list-unstyled">
+                                </ul>
+                           </div>
+                           
                            <div id="div-metaarea-events">
-                                <h4>Evento</h4>
+                                <h4 onclick="ShowHideArea('#ul-metaarea-events')">Evento</h4>
                                 <ul id="ul-metaarea-events" class="list-group list-unstyled">
-                                -
                                 </ul>
                            </div>
                            <div id="div-metaarea-documents">
-                                <h4>Documento</h4>
+                                <h4 onclick="ShowHideArea('#ul-metaarea-documents')">Documento</h4>
                                 <ul id="ul-metaarea-documents" class="list-group list-unstyled">
-                                -
                                 </ul>
                            </div>
                        </div>

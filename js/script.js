@@ -15,7 +15,7 @@ $( document ).ready(function(){
     $("nav>div>div>ul>li").attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
     reset();
     loaderDocArea("-1");
-    loaderEventArea();
+    loaderEventArea();    
 });
 
 function loaderDocArea(numberEvent) {
@@ -99,6 +99,7 @@ function loaderEventArea() {
 
 function LoadAnnotation(urlDocument){
     $("#Anntable").html("<thead><tr><th>User</th><th>Data</th><th>Content</th><th>Delete</th></tr</thead>");
+    $("#ul-metaarea-ann").html("");
     $.ajax({
         url:"./PHP/loadAnnotation.php",
         type:"POST",
@@ -112,6 +113,7 @@ function LoadAnnotation(urlDocument){
                 $('[data-toggle="tooltip"]').tooltip();  
                 dataAnn = new Date(parseInt(v["Data"]));
                 $('#Anntable').append("<tr id='row"+v["Data"]+"'><td>"+v['Author']+"</td><td>"+dataAnn.getDay() + "/"+(dataAnn.getMonth()+1)+"/"+dataAnn.getFullYear() +"<td>"+v['Annotation']+"</td></td><td onclick=deleteAnnotation(\""+v['Author']+"\",\""+v['Data']+"\") class='pointer'>delete</td></tr>");
+                $("#ul-metaarea-ann").append("<li><a onclick='ScrollToAnnotation(\"comment"+v["Data"]+"\")'>"+ v["Annotation"] +"</a></li>");
             });
         },
         error:function(jqXHR, status, errorThrown) {
@@ -290,3 +292,20 @@ function OpenHelp(){
         show: 'true'
     });
 }
+
+function ScrollToAnnotation(idcomment){
+    var offset = $(".well").offset();
+    var offsetTop = offset.top - $(".navbar-fixed-top").height();
+    
+    $('body,html').animate({
+        scrollTop: offsetTop
+    },200);
+    
+    $('.well').animate({
+        scrollTop: $("#"+idcomment).position().top + $(".well").scrollTop()
+    },200);
+
+}
+
+
+
