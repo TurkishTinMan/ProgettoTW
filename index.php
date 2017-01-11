@@ -55,6 +55,10 @@ function getGUID(){
 }
 
 session_start();
+
+if(!isset($_SESSION["eventrole"])){
+    $_SESSION["eventrole"] = "None";
+}
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch($_POST["type"]){
             case 'changepassword':

@@ -14,7 +14,6 @@ function reset(){
 $( document ).ready(function(){
     $("nav>div>div>ul>li").attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
     reset();
-    loaderDocArea("-1");
     loaderEventArea();    
 });
 
@@ -60,9 +59,16 @@ function loaderMetaEventArea(numberEvent){
           success: function(json_data){
             result = "";
             $.each(json_data,function(k,v){
-                if(k != "submissions"){
-                    result=result+"<li class='list-group-item'>"+k+":"+v+"</li>";
+                if(k == "conference"){
+                    result=result+"<li class='list-group-item'>"+v+"</li>";
                 }
+                if(k == "chairs"){
+                    result=result+"<li class='list-group-item'>"+v+"</li>";
+                }
+                if(k == "pc_members"){
+                    result=result+"<li class='list-group-item'>"+v+"</li>";
+                }
+                
             });
             $("#ul-metaarea-events").html(result);
           },
@@ -88,7 +94,6 @@ function loaderEventArea() {
                 }
             });
         }
-        result = result+"<li><a onclick='ChangeEvent(\"-1\")'> All Event </a></li>"
         $("#EventAreaBody").html(result);
       },
       error: function() {
