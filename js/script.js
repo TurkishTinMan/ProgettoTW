@@ -63,10 +63,16 @@ function loaderMetaEventArea(numberEvent){
                     result=result+"<li class='list-group-item'>"+v+"</li>";
                 }
                 if(k == "chairs"){
-                    result=result+"<li class='list-group-item'>"+v+"</li>";
+                    result = result + "<h4>Chairs</h4>";
+                    $.each(v,function(x,z){
+                        result=result+"<li class='list-group-item'>"+z+"</li>";    
+                    });
                 }
                 if(k == "pc_members"){
-                    result=result+"<li class='list-group-item'>"+v+"</li>";
+                    result = result + "<h4>Membri</h4>";
+                    $.each(v,function(x,z){
+                        result=result+"<li class='list-group-item'>"+z+"</li>";    
+                    });
                 }
                 
             });
