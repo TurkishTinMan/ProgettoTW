@@ -336,6 +336,7 @@ if(!isset($_SESSION["eventrole"])){
                     <script>
                         Notify('success',"Annotazione aggiunta con successo!");
                         $( document ).ready(function(){
+                            ChangeEvent("<?php echo $_POST['Event'] ?>");
                             LoadDocument("<?php echo $_POST['Doc'] ?>");
                         });
                     </script>  
@@ -608,6 +609,7 @@ $('.fliper-btn').click(function(){
           <input name="LenghtAnnotation" type="hidden" class="form-control" id="LenghtAnnotation">
           <input name="Data" type="hidden" class="form-control" id="Data">
           <input name="Doc" type="hidden" class="form-control" id="Doc" value="">
+          <input name="Event" type="hidden" class="form-control" id="Eventid" value="">
       </div>
 
         <div class="panel-footer">

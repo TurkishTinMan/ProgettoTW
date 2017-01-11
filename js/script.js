@@ -215,6 +215,7 @@ function ShowHideArea(idshow){
 }
 
 function ChangeEvent(json_data_event){
+    $("#Eventid").val(json_data_event);
     loaderDocArea(json_data_event);
     loaderMetaEventArea(json_data_event);
 }
