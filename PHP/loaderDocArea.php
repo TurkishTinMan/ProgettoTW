@@ -23,9 +23,11 @@ if($a >= 0){
     foreach($json_event[$a]["chairs"] as $chair){
         if (strcmp($chair, $_SESSION["name"]) == 0) {
             $_SESSION["eventrole"] = "Chair";
-        }else{
-            $_SESSION["eventrole"] = "PC Member";
         }
+    }
+    
+    if($_SESSION["eventrole"] == "None"){
+        $_SESSION["eventrole"] = "PC Member";
     }
     
     foreach ($json_event[$a]["submissions"] as $document) {
