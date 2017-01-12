@@ -577,8 +577,8 @@ $('.fliper-btn').click(function(){
         <p>bls bla bla bla</p>
         <p>qui sotto metto la form ma tranquillo puoi sempre riaprire questo modal quando vorrai basta cliccare sul tuo nome fra i membri, puoi sempre cambiare il tuo giudizio</p>
         <input type="hidden" name="type" value="addJudgment">
-        <input name="Doc" type="hidden" class="form-control" id="Doc" value="">
-        <input name="Event" type="hidden" class="form-control" id="Eventid" value="">
+        <input name="Doc" type="hidden" class="form-control" id="Doc1" value="">
+        <input name="Event" type="hidden" class="form-control" id="Eventid1" value="">
         <div class="radio">
           <label><input type="radio" name="judgment" value="Rejected">Rejected</label>
         </div>

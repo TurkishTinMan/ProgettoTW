@@ -210,6 +210,7 @@ function LoadDocument(urlDocument) {
     $("span#memberRole").html(" ");
     $("span#Judgment").html(" ");
     $("#resumereviewers").html(" ");
+    urlCurrentDoc = urlDocument;
     $.ajax({ 
         url:"./PHP/loaderDocument.php",
         type:"POST",
@@ -242,6 +243,7 @@ function LoadDocument(urlDocument) {
             metadati = metadati + endmetadati;
             $("#ul-metaarea-documents").html(metadati);
             $("#Doc").val(urlDocument);
+            $("#Doc1").val(urlDocument);
             LoadAnnotation(urlDocument);
             $.each(paper_json["reviewers"], function(x,z){
                 loadJudgment(z);
@@ -278,6 +280,7 @@ function ShowHideArea(idshow){
 
 function ChangeEvent(json_data_event){
     $("#Eventid").val(json_data_event);
+    $("#Eventid1").val(json_data_event);
     currentEvent = json_data_event;
     loaderDocArea(json_data_event);
     loaderMetaEventArea(json_data_event);
