@@ -242,7 +242,7 @@ function LoadDocument(urlDocument) {
             metadati = metadati + "</ul>";
             metadati = metadati + endmetadati;
             $("#ul-metaarea-documents").html(metadati);
-            $("#Doc").val(urlDocument);
+            $("#Doc2").val(urlDocument);
             $("#Doc1").val(urlDocument);
             LoadAnnotation(urlDocument);
             $.each(paper_json["reviewers"], function(x,z){
@@ -279,7 +279,7 @@ function ShowHideArea(idshow){
 }
 
 function ChangeEvent(json_data_event){
-    $("#Eventid").val(json_data_event);
+    $("#Eventid2").val(json_data_event);
     $("#Eventid1").val(json_data_event);
     currentEvent = json_data_event;
     loaderDocArea(json_data_event);

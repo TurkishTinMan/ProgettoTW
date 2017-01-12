@@ -720,8 +720,8 @@ $('.fliper-btn').click(function(){
           <input name="OffsetFromStart" type="hidden" class="form-control" id="OffsetFromStart">
           <input name="LenghtAnnotation" type="hidden" class="form-control" id="LenghtAnnotation">
           <input name="Data" type="hidden" class="form-control" id="Data">
-          <input name="Doc" type="hidden" class="form-control" id="Doc" value="">
-          <input name="Event" type="hidden" class="form-control" id="Eventid" value="">
+          <input name="Doc" type="hidden" class="form-control" id="Doc2" value="">
+          <input name="Event" type="hidden" class="form-control" id="Eventid2" value="">
       </div>
 
         <div class="panel-footer">
