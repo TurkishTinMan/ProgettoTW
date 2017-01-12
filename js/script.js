@@ -194,6 +194,7 @@ function loadJudgment(userkey){
                     $('#'+ z + "> #Judgment").html("Inespresso");
                 }   
             }
+            $("#resumereviewers").append("<li>"+ $('#'+ z).html() +"</li>");
         },
         error:function(jqXHR, status, errorThrown) {
             console.log(jqXHR.responseText);
@@ -208,6 +209,7 @@ function LoadDocument(urlDocument) {
     $(".member").css("color","black");  
     $("span#memberRole").html(" ");
     $("span#Judgment").html(" ");
+    $("#resumereviewers").html(" ");
     $.ajax({ 
         url:"./PHP/loaderDocument.php",
         type:"POST",
@@ -252,6 +254,9 @@ function LoadDocument(urlDocument) {
                 $('#'+ z).css("color","red");  
                 $('#'+ z + "> #memberRole").html("Reviewers");
             });
+            if(paper_json["chairJudgment"]){
+                ViewChairJudgment();
+            }
         },
         error:function(jqXHR, status, errorThrown) {
             console.log(jqXHR.responseText);
@@ -368,6 +373,13 @@ function OpenHelp(){
         show: 'true'
     });
 }
+
+function ViewChairJudgment(){
+    $("#ViewChairJudgment").modal({
+        show: 'true'
+    });
+}
+
 
 function ScrollToAnnotation(idcomment){
     var offset = $(".well").offset();

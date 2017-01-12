@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include('simple_html_dom.php');
 
 $document = array();
@@ -84,6 +84,17 @@ if($a >= 0){
     foreach($json_event[$a]["submissions"] as $paper){
         if(strcmp($paper["url"],basename($_POST['localUrl'])) == 0){
             $document["reviewers"] = $paper["reviewers"]; 
+        }
+    }
+    if(strcmp($_SESSION['userrole'],"Chair")){    
+        $document["chairJudgment"] = true;
+
+        $json_j = file_get_contents("../Dataset/project-files/judgment.json");
+        $json_j = json_decode($json_j,true);
+        foreach($document["reviewers"] as $reviewer){
+            if(!isset($json_j[$_POST['localUrl']][$reviewer])){
+                $document["chairJudgment"] = false;
+            }
         }
     }
 }

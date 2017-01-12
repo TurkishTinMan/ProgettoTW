@@ -4,9 +4,6 @@ session_start();
 include('simple_html_dom.php');
 $output = array();
 
-$json_event = file_get_contents("../Dataset/project-files/events.json");
-$json_event = json_decode($json_event, true);
-
 $json_j = file_get_contents("../Dataset/project-files/judgment.json");
 $json_j = json_decode($json_j,true);
 if($json_j != null){
@@ -22,6 +19,5 @@ if($json_j != null){
 if(strcmp($_POST['user'], $_SESSION["name"]) == 0){
     $output["role"] = "reviewer";
 }
-
 
 echo json_encode($output);

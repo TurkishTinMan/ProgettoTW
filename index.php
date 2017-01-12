@@ -61,6 +61,18 @@ if(!isset($_SESSION["eventrole"])){
 }
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch($_POST["type"]){
+            case 'addChairJudgment':
+
+?>
+                <script>
+                    $( document ).ready(function(){
+                        ChangeEvent("<?php echo $_POST['Event'] ?>");
+                        LoadDocument("<?php echo $_POST['Doc'] ?>");
+                    });
+                </script>
+<?php  
+                break;
+            
             case 'addJudgment':
                 if(empty($_POST['judgment'])){
 ?>
@@ -78,7 +90,7 @@ if(!isset($_SESSION["eventrole"])){
                     
 ?>
                     <script>
-                        Notify('success',"Annotazione aggiunta con successo!");
+                        Notify('success',"Giudizio aggiunto con successo!");
                     </script>  
 <?php  
                 }
@@ -518,6 +530,38 @@ $('.fliper-btn').click(function(){
     
 <?php else: ?>
       
+<div id="ViewChairJudgment"class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="panel-title" id="infoLabel"> Assegna un giudizio al documento </i></h3>
+    </div>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" accept-charset="utf-8">
+    <div class="modal-body">
+        <h3>Sei un Chair</h3>
+        <p>Tutti i reviewer si sono espressi sul documento, manca solo il tuo giudizio.</p>
+        <p id="resumereviewers"></p>
+        <input type="hidden" name="type" value="addChairJudgment">
+        <input name="Doc" type="hidden" class="form-control" id="Doc" value="">
+        <input name="Event" type="hidden" class="form-control" id="Eventid" value="">
+        <div class="radio">
+          <label><input type="radio" name="judgment" value="Rejected">Rejected</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="judgment" value="Accepted">Accepted</label>
+        </div>        
+    </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+    </div>
+</div>
+</div>
+
+    
     
     
 <div id="ViewJudgmentModal"class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true">
