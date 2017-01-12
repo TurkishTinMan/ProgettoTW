@@ -12,9 +12,16 @@ $json_j = json_decode($json_j,true);
 if($json_j != null){
     foreach($json_j as $document => $value){
         if(strcmp($_POST['localUrl'],$document) == 0){
-            array_push($output,$value[$_POST['user']]);
+            if(isset($value[$_POST['user']])){
+                $output["judgment"] = $value[$_POST['user']];
+            }
         }
     }
 }
+
+if(strcmp($_POST['user'], $_SESSION["name"]) == 0){
+    $output["role"] = "reviewer";
+}
+
 
 echo json_encode($output);

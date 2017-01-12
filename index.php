@@ -61,6 +61,37 @@ if(!isset($_SESSION["eventrole"])){
 }
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch($_POST["type"]){
+            case 'addJudgment':
+                if(empty($_POST['judgment'])){
+?>
+                                <script>
+                                    Notify('error',"Devi immettere un giudizio");
+                                </script>
+<?php                
+                }else{
+                    $string = file_get_contents("./Dataset/project-files/judgment.json");
+                    $json_j = json_decode($string,true);
+                    $json_j[$_POST['Doc']][$_SESSION["name"]] = $_POST['judgment'];
+                    $json_j = json_encode($json_j);
+                    file_put_contents("./Dataset/project-files/judgment.json",$json_j);
+
+                    
+?>
+                    <script>
+                        Notify('success',"Annotazione aggiunta con successo!");
+                    </script>  
+<?php  
+                }
+?>
+                <script>
+                    $( document ).ready(function(){
+                        ChangeEvent("<?php echo $_POST['Event'] ?>");
+                        LoadDocument("<?php echo $_POST['Doc'] ?>");
+                    });
+                </script>
+<?php  
+                break;
+            
             case 'changepassword':
                 if(empty($_POST['oldPass']) || empty($_POST['newPass']) || empty($_POST['newPass2']) || (strcmp($_POST['newPass'],$_POST['newPass2']) != 0)){
 ?>
@@ -487,6 +518,43 @@ $('.fliper-btn').click(function(){
     
 <?php else: ?>
       
+    
+    
+<div id="ViewJudgmentModal"class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="panel-title" id="infoLabel"> Assegna un giudizio al documento </i></h3>
+    </div>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" accept-charset="utf-8">
+    <div class="modal-body">
+        <h3>Sei un Reviewer</h3>
+        <p>bls bla bla bla</p>
+        <p>qui sotto metto la form ma tranquillo puoi sempre riaprire questo modal quando vorrai basta cliccare sul tuo nome fra i membri, puoi sempre cambiare il tuo giudizio</p>
+        <input type="hidden" name="type" value="addJudgment">
+        <input name="Doc" type="hidden" class="form-control" id="Doc" value="">
+        <input name="Event" type="hidden" class="form-control" id="Eventid" value="">
+        <div class="radio">
+          <label><input type="radio" name="judgment" value="Rejected">Rejected</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="judgment" value="Modification Request">Modification Request</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="judgment" value="Accepted">Accepted</label>
+        </div>        
+    </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+    </div>
+</div>
+</div>
+    
+    
 <!--Info Modal-->
 <div id="ViewHelp" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true"></li>
 <div class="modal-dialog">

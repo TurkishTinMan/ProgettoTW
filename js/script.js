@@ -174,10 +174,25 @@ function loadJudgment(userkey){
         data: {localUrl : urlCurrentDoc, user : userkey},
         dataType:'json',
         success: function(paper_json) {
-            if(paper_json[userkey]){
-                $('#'+ userkey + "> #Judgment").html(paper_json[userkey]);
+            start = userkey.indexOf('<');
+            start = start +1;
+            end = userkey.indexOf('>');
+            z = userkey.substring(start,end);
+            z = z.replace(/@/g, 'a');
+            z = z.replace(/\./g, 'p');
+            if(paper_json["role"] == "reviewer"){
+                if(paper_json["judgment"]){
+                    $('#'+ z + "> #Judgment").html("<a  onclick='JudgmentModal()'>"+paper_json["judgment"]+"</a>");
+                }else{
+                    $('#'+ z + "> #Judgment").html("<a  onclick='JudgmentModal()'>Inespresso</a>");
+                    JudgmentModal();
+                }
             }else{
-                $('#'+ userkey + "> #Judgment").html("Inespresso");
+                if(paper_json["judgment"]){
+                    $('#'+ z + "> #Judgment").html(paper_json["judgment"]);
+                }else{
+                    $('#'+ z + "> #Judgment").html("Inespresso");
+                }   
             }
         },
         error:function(jqXHR, status, errorThrown) {
@@ -227,13 +242,13 @@ function LoadDocument(urlDocument) {
             $("#Doc").val(urlDocument);
             LoadAnnotation(urlDocument);
             $.each(paper_json["reviewers"], function(x,z){
+                loadJudgment(z);
                 start = z.indexOf('<');
                 start = start +1;
                 end = z.indexOf('>');
                 z = z.substring(start,end);
                 z = z.replace(/@/g, 'a');
                 z = z.replace(/\./g, 'p');
-                loadJudgment(z);
                 $('#'+ z).css("color","red");  
                 $('#'+ z + "> #memberRole").html("Reviewers");
             });
@@ -333,6 +348,12 @@ function AddAnnotation(checklog){
     }else{
         Notify("error", "Devi essere un Annotator per creare annotazioni");
     }
+}
+
+function JudgmentModal(){
+    $("#ViewJudgmentModal").modal({
+        show:true
+    });
 }
 
 
