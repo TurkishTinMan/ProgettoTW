@@ -76,6 +76,17 @@ foreach($links as $link){
 $document["title"] =$doc_title;
 $document["body"] = $doc_body -> innertext;
 
+
+$json_event = file_get_contents("../Dataset/project-files/events.json");
+$json_event = json_decode($json_event, true);
+$a = (int)$_POST['currentEvent'];
+if($a >= 0){
+    foreach($json_event[$a]["submissions"] as $paper){
+        if(strcmp($paper["url"],basename($_POST['localUrl'])) == 0){
+            $document["reviewers"] = $paper["reviewers"]; 
+        }
+    }
+}
 echo json_encode($document);
 
 

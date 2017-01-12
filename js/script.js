@@ -1,4 +1,5 @@
 var urlCurrentDoc = "";
+var currentEvent = 0;
 
 function randomCSS(){
     return "background-color:#"+Math.floor(Math.random()*16777215).toString(16);
@@ -71,7 +72,13 @@ function loaderMetaEventArea(numberEvent){
                 if(k == "pc_members"){
                     result = result + "<h4>Membri</h4>";
                     $.each(v,function(x,z){
-                        result=result+"<li class='list-group-item'>"+z+"</li>";    
+                        start = z.indexOf('<');
+                        start = start +1;
+                        end = z.indexOf('>');
+                        y = z.substring(start,end);
+                        y = y.replace(/@/g, 'a');
+                        y = y.replace(/\./g, 'p');
+                        result=result+"<li id='"+y+"' class='list-group-item member'>"+z.substring(0,start-1)+"<span id='memberRole'></span><span id='Judgment'></span></li>";    
                     });
                 }
                 
@@ -160,12 +167,36 @@ function deleteAnnotation(author,data){
     });
 }
 
+function loadJudgment(userkey){
+    $.ajax({
+        url:"./PHP/loaderJudgment.php",
+        type:"POST",
+        data: {localUrl : urlCurrentDoc, user : userkey},
+        dataType:'json',
+        success: function(paper_json) {
+            if(paper_json[userkey]){
+                $('#'+ userkey + "> #Judgment").html(paper_json[userkey]);
+            }else{
+                $('#'+ userkey + "> #Judgment").html("Inespresso");
+            }
+        },
+        error:function(jqXHR, status, errorThrown) {
+            console.log(jqXHR.responseText);
+            console.log(status);
+            console.log(errorThrown);
+        }
+    });
+}
+
 
 function LoadDocument(urlDocument) {  
+    $(".member").css("color","black");  
+    $("span#memberRole").html(" ");
+    $("span#Judgment").html(" ");
     $.ajax({ 
         url:"./PHP/loaderDocument.php",
         type:"POST",
-        data: {localUrl : urlDocument},
+        data: {localUrl : urlDocument,currentEvent : currentEvent},
         dataType:'json',
         success: function(paper_json) {
             $("#docClick").html(paper_json["title"]);
@@ -195,6 +226,17 @@ function LoadDocument(urlDocument) {
             $("#ul-metaarea-documents").html(metadati);
             $("#Doc").val(urlDocument);
             LoadAnnotation(urlDocument);
+            $.each(paper_json["reviewers"], function(x,z){
+                start = z.indexOf('<');
+                start = start +1;
+                end = z.indexOf('>');
+                z = z.substring(start,end);
+                z = z.replace(/@/g, 'a');
+                z = z.replace(/\./g, 'p');
+                loadJudgment(z);
+                $('#'+ z).css("color","red");  
+                $('#'+ z + "> #memberRole").html("Reviewers");
+            });
         },
         error:function(jqXHR, status, errorThrown) {
             console.log(jqXHR.responseText);
@@ -216,6 +258,7 @@ function ShowHideArea(idshow){
 
 function ChangeEvent(json_data_event){
     $("#Eventid").val(json_data_event);
+    currentEvent = json_data_event;
     loaderDocArea(json_data_event);
     loaderMetaEventArea(json_data_event);
 }
