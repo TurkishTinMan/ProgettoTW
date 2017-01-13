@@ -840,12 +840,6 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                             <i class="glyphicon glyphicon-asterisk"></i>    
                        </div>
                        <div class="panel-body" id="MetaArea">
-                           <div id="div-metaarea-ann">
-                                <h4 onclick="ShowHideArea('#ul-metaarea-ann')">Annotazioni</h4>
-                                <ul id="ul-metaarea-ann" class="list-group list-unstyled">
-                                </ul>
-                           </div>
-                           
                            <div id="div-metaarea-events">
                                 <h4 onclick="ShowHideArea('#ul-metaarea-events')">Evento</h4>
                                 <ul id="ul-metaarea-events" class="list-group list-unstyled">
@@ -865,14 +859,18 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                     <ul class="nav nav-tabs">
                       <li><a data-toggle="tab" href="#doc"  id="docClick" class="truncate">Documento caricato</a></li>
                     </ul>
-                        <div class="tab-content">
+                    <div class="tab-content">
                         <div class="well">
                             <div id="doc" class="tab-pane fade">
                             <h3>Documento</h3>
                             <p>----</p>
                             </div>
                         </div>
-                    </div>
+                        <div class="well" style="top:600px;">
+                            <div id="metaarea-ann" class="list-group list-unstyled">
+                            </div>
+                        </div>
+                    </div> 
                 </div>
             </div>
         </div>

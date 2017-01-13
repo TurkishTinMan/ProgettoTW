@@ -1001,3 +1001,7 @@ perspective: 800;
 #Anntable>thead>tr>th{
    text-align: center!important;
 }
+
+#Judgment{
+    float: right;
+}

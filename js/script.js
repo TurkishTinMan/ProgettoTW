@@ -9,7 +9,9 @@ function randomCSS(){
 function reset(){
     $("#docClick").html("Documento caricato");
     $("#doc").html("<h3>Documento</h3><p>----</p>");
-    $("#ul-metaarea-documents").html("-");
+    $("#ul-metaarea-documents").html(" ");
+    $("#ul-reviewer").remove();
+    $("#Reviewer-title").remove();
 }
 
 $( document ).ready(function(){
@@ -74,11 +76,7 @@ function loaderMetaEventArea(numberEvent){
                     $.each(v,function(x,z){
                         start = z.indexOf('<');
                         start = start +1;
-                        end = z.indexOf('>');
-                        y = z.substring(start,end);
-                        y = y.replace(/@/g, 'a');
-                        y = y.replace(/\./g, 'p');
-                        result=result+"<li id='"+y+"' class='list-group-item member'>"+z.substring(0,start-1)+"<span id='memberRole'></span><span id='Judgment'></span></li>";    
+                        result=result+"<li class='list-group-item member'>"+z.substring(0,start-1)+"</li>";    
                     });
                 }
                 
@@ -131,7 +129,7 @@ function LoadAnnotation(urlDocument){
                 $('[data-toggle="tooltip"]').tooltip();  
                 dataAnn = new Date(parseInt(v["Data"]));
                 $('#Anntable').append("<tr id='row"+v["Data"]+"'><td>"+v['Author']+"</td><td>"+dataAnn.getDay() + "/"+(dataAnn.getMonth()+1)+"/"+dataAnn.getFullYear() +"<td>"+v['Annotation']+"</td></td><td onclick=deleteAnnotation(\""+v['Author']+"\",\""+v['Data']+"\") class='pointer'>delete</td></tr>");
-                $("#ul-metaarea-ann").append("<li><a onclick='ScrollToAnnotation(\"comment"+v["Data"]+"\")'>"+ v["Annotation"] +"</a></li>");
+                $("#metaarea-ann").append("<p>"+ v["Annotation"] +": "+ v['Author'] +"<a onclick='ScrollToAnnotation(\"comment"+v["Data"]+"\")'>Trovalo nel testo</a></p><hr>");
             });
         },
         error:function(jqXHR, status, errorThrown) {
@@ -206,10 +204,10 @@ function loadJudgment(userkey){
 
 
 function LoadDocument(urlDocument) {  
-    $(".member").css("color","black");  
-    $("span#memberRole").html(" ");
     $("span#Judgment").html(" ");
     $("#resumereviewers").html(" ");
+    $("#ul-reviewer").remove();
+    $("#Reviewer-title").remove();
     urlCurrentDoc = urlDocument;
     $.ajax({ 
         url:"./PHP/loaderDocument.php",
@@ -235,7 +233,7 @@ function LoadDocument(urlDocument) {
             $.each(paper_json["Autori"],function(k,v){
                 if(v["linked"] == "false"){
                     metadati = metadati + startmetadati;
-                    metadati = metadati + "<a mailto =\""+v["email"]+"\">"+v["name"]+"</a><p>"+v["affiliation"]+"</p>";
+                    metadati = metadati + "<a mailto:\""+v["email"]+"\">"+v["name"]+"</a><p>"+v["affiliation"]+"</p>";
                     metadati = metadati + endmetadati;
                 }
             });
@@ -245,16 +243,18 @@ function LoadDocument(urlDocument) {
             $("#Doc2").val(urlDocument);
             $("#Doc1").val(urlDocument);
             LoadAnnotation(urlDocument);
+            result = "<h4 id='Reviewer-title'>Reviewers</h4>";
+            result = result+"<ul id='ul-reviewer' class='list-group list-unstyled'></ul>";
+            $("#ul-metaarea-events").append(result);
             $.each(paper_json["reviewers"], function(x,z){
                 loadJudgment(z);
                 start = z.indexOf('<');
                 start = start +1;
                 end = z.indexOf('>');
-                z = z.substring(start,end);
-                z = z.replace(/@/g, 'a');
-                z = z.replace(/\./g, 'p');
-                $('#'+ z).css("color","red");  
-                $('#'+ z + "> #memberRole").html("Reviewers");
+                y = z.substring(start,end);
+                y = y.replace(/@/g, 'a');
+                y = y.replace(/\./g, 'p');
+                $("#ul-reviewer").append("<li class='list-group-item member' id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li>")  
             });
             if(paper_json["chairJudgment"]){
                 ViewChairJudgment();
