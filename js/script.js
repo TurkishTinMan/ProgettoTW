@@ -234,7 +234,7 @@ function LoadDocument(urlDocument) {
             $.each(paper_json["Autori"],function(k,v){
                 if(v["linked"] == "false"){
                     metadati = metadati + startmetadati;
-                    metadati = metadati + "<a mailto:\""+v["email"]+"\">"+v["name"]+"</a><p>"+v["affiliation"]+"</p>";
+                    metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a><p>"+v["affiliation"]+"</p>";
                     metadati = metadati + endmetadati;
                 }
             });
