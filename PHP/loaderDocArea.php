@@ -26,7 +26,7 @@ if($a >= 0){
         }
     }
     
-    if($_SESSION["eventrole"] == "None"){
+    if(strcmp($_SESSION["eventrole"], "None")==0){
         $_SESSION["eventrole"] = "PC Member";
     }
     

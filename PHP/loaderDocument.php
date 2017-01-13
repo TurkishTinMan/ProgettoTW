@@ -86,7 +86,8 @@ if($a >= 0){
             $document["reviewers"] = $paper["reviewers"]; 
         }
     }
-    if(strcmp($_SESSION['userrole'],"Chair")){    
+    $document["chairJudgment"] = false;
+    if(strcmp($_SESSION['eventrole'],"Chair") == 0){    
         $document["chairJudgment"] = true;
 
         $json_j = file_get_contents("../Dataset/project-files/judgment.json");
@@ -101,7 +102,6 @@ if($a >= 0){
     $json_jc = json_decode($json_jc,true);
     if(isset($json_jc[$_POST['localUrl']])){
         $document["chairJudgmentvalue"] = $json_jc[$_POST['localUrl']];
-        $document["chairJudgment"] = false;
     }
 }
 echo json_encode($document);

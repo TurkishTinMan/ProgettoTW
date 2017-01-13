@@ -258,16 +258,22 @@ function LoadDocument(urlDocument) {
                 y = y.replace(/\./g, 'p');
                 $("#ul-reviewer").append("<li class='list-group-item member' id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li>")  
             });
+            resumechairjudgment = "";
             
             if(paper_json["chairJudgmentvalue"]){
-                $("#chairjudgmentresume").html(paper_json["chairJudgmentvalue"]);
+                resumechairjudgment = paper_json["chairJudgmentvalue"];
             }else{
-                $("#chairjudgmentresume").html("Inespresso");
+                resumechairjudgment = "Inespresso";
             }
             
             if(paper_json["chairJudgment"]){
-                ViewChairJudgment();
+                console.log(paper_json["chairJudgment"]);
+                resumechairjudgment = "<a onclick='ViewChairJudgment()'>" + resumechairjudgment + "</a>";
             }
+            
+            $("#chairjudgmentresume").html(resumechairjudgment);
+
+            
         },
         error:function(jqXHR, status, errorThrown) {
             console.log(jqXHR.responseText);
