@@ -115,7 +115,7 @@ function loaderEventArea() {
 
 function LoadAnnotation(urlDocument){
     $("#Anntable").html("<thead><tr><th>User</th><th>Data</th><th>Content</th><th>Delete</th></tr</thead>");
-    $("#ul-metaarea-ann").html("");
+    $("#metaarea-ann").html(" ");
     $.ajax({
         url:"./PHP/loadAnnotation.php",
         type:"POST",
@@ -256,6 +256,9 @@ function LoadDocument(urlDocument) {
                 y = y.replace(/\./g, 'p');
                 $("#ul-reviewer").append("<li class='list-group-item member' id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li>")  
             });
+            
+            console.log(paper_json["chairJudgmentvalue"]);
+            
             if(paper_json["chairJudgment"]){
                 ViewChairJudgment();
             }

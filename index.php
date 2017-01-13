@@ -62,6 +62,28 @@ if(!isset($_SESSION["eventrole"])){
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch($_POST["type"]){
             case 'addChairJudgment':
+                 if(empty($_POST['judgment'])){
+?>
+                                <script>
+                                    Notify('error',"Devi immettere un giudizio");
+                                </script>
+<?php                
+                }else{
+                    $string = file_get_contents("./Dataset/project-files/chairjudgment.json");
+                    $json_j = json_decode($string,true);
+                    $json_j[$_POST['Doc']] = $_POST['judgment'];
+                    $json_j = json_encode($json_j);
+                    file_put_contents("./Dataset/project-files/chairjudgment.json",$json_j);
+
+                    
+?>
+                    <script>
+                        Notify('success',"Giudizio aggiunto con successo!");
+                    </script>  
+<?php  
+                }
+           
+            
 
 ?>
                 <script>
@@ -866,7 +888,7 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                             <p>----</p>
                             </div>
                         </div>
-                        <div class="well" style="top:600px;">
+                        <div class="well2">
                             <div id="metaarea-ann" class="list-group list-unstyled">
                             </div>
                         </div>

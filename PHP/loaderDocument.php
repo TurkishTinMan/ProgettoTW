@@ -97,6 +97,11 @@ if($a >= 0){
             }
         }
     }
+    $json_jc = file_get_contents("../Dataset/project-files/chairjudgment.json");
+    $json_jc = json_decode($json_jc,true);
+    if(isset($json_jc[$_POST['localUrl']])){
+        $document["chairJudgmentvalue"] = $json_jc[$_POST['localUrl']];
+    }
 }
 echo json_encode($document);
 
