@@ -206,6 +206,7 @@ function loadJudgment(userkey){
 function LoadDocument(urlDocument) {  
     $("span#Judgment").html(" ");
     $("#resumereviewers").html(" ");
+    $("#chairjudgmentresume").html(" ");
     $("#ul-reviewer").remove();
     $("#Reviewer-title").remove();
     urlCurrentDoc = urlDocument;
@@ -242,6 +243,7 @@ function LoadDocument(urlDocument) {
             $("#ul-metaarea-documents").html(metadati);
             $("#Doc2").val(urlDocument);
             $("#Doc1").val(urlDocument);
+            $("#Doc").val(urlDocument);
             LoadAnnotation(urlDocument);
             result = "<h4 id='Reviewer-title'>Reviewers</h4>";
             result = result+"<ul id='ul-reviewer' class='list-group list-unstyled'></ul>";
@@ -257,7 +259,11 @@ function LoadDocument(urlDocument) {
                 $("#ul-reviewer").append("<li class='list-group-item member' id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li>")  
             });
             
-            console.log(paper_json["chairJudgmentvalue"]);
+            if(paper_json["chairJudgmentvalue"]){
+                $("#chairjudgmentresume").html(paper_json["chairJudgmentvalue"]);
+            }else{
+                $("#chairjudgmentresume").html("Inespresso");
+            }
             
             if(paper_json["chairJudgment"]){
                 ViewChairJudgment();
@@ -284,6 +290,7 @@ function ShowHideArea(idshow){
 function ChangeEvent(json_data_event){
     $("#Eventid2").val(json_data_event);
     $("#Eventid1").val(json_data_event);
+    $("#Eventid").val(json_data_event);
     currentEvent = json_data_event;
     loaderDocArea(json_data_event);
     loaderMetaEventArea(json_data_event);

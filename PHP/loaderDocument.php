@@ -101,6 +101,7 @@ if($a >= 0){
     $json_jc = json_decode($json_jc,true);
     if(isset($json_jc[$_POST['localUrl']])){
         $document["chairJudgmentvalue"] = $json_jc[$_POST['localUrl']];
+        $document["chairJudgment"] = false;
     }
 }
 echo json_encode($document);

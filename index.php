@@ -889,6 +889,7 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                             </div>
                         </div>
                         <div class="well2">
+                            <h3>Giudizio del Chair: <span id="chairjudgmentresume"></span></h3>
                             <div id="metaarea-ann" class="list-group list-unstyled">
                             </div>
                         </div>
