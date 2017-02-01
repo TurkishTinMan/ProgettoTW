@@ -22,6 +22,9 @@ $( document ).ready(function(){
 
 function loaderDocArea(numberEvent) {
     toReset = true;
+    if ($("#DocArea").css("display") != 'none'){
+        $("#DocArea").hide(300);
+    }
     $.ajax({
       url: "./PHP/loaderDocArea.php",
       type: "POST",
@@ -48,6 +51,7 @@ function loaderDocArea(numberEvent) {
         $("#DocAreaBody").html("Error!");
       }
     });  
+    $("#DocArea").show(300);
 }
 
 function loaderMetaEventArea(numberEvent){
@@ -287,9 +291,9 @@ function LoadDocument(urlDocument) {
 
 function ShowHideArea(idshow){
     if($(idshow).is(":visible")){
-        $(idshow).hide();
+        $(idshow).hide(300);
     }else{
-        $(idshow).show();
+        $(idshow).show(300);
     }
 }
 

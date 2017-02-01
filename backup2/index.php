@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <title>EasyRASH</title>
 
@@ -13,8 +13,7 @@
     <link rel="shortcut icon" type="image/png" href="image/favicon.png"/>
 
     <link rel="stylesheet" href="css/style.css">
-    <!--<link rel="stylesheet" href="Dataset/project-files/dataset/css/rash.css">-->
-    
+    <link rel="stylesheet" href="css/styleh.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     
@@ -652,8 +651,7 @@ $('.fliper-btn').click(function(){
 <div class="panel panel-primary">
     <div class="panel-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-user"></i> User
-        </h1>
+        <h3 class="panel-title" id="infoLabel"> Gestione Utente </h3>
     </div>
     <div class="modal-body">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -673,16 +671,14 @@ $('.fliper-btn').click(function(){
             <button type="submit" class="btn btn-default">Cambia password</button>
         </form>
         <hr>
-        
-    </div>
-    <div class="panel-footer">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <input type="hidden" name="type" value="logout">
             <button type="submit" class="btn btn-default">Logout</button>
         </form>
-        <button type="button"  class="btn btn-default btn-close" data-dismiss="modal">Close</button>
     </div>
-    
+    <div class="panel-footer">
+        <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+    </div>
 </div>
 </div>
 </div>
@@ -710,7 +706,7 @@ $('.fliper-btn').click(function(){
     </div>
         <div class="panel-footer">
             <button type="submit" class="btn btn-default">Submit</button>
-            <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
         </div>
         </form>
     </div>
@@ -723,7 +719,7 @@ $('.fliper-btn').click(function(){
 <div class="panel panel-primary">
     <div class="panel-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-pencil"></i> Annotation </h1>
+        <h3 class="panel-title" id="infoLabel"> Annotation <i class="glyphicon glyphicon-log-in"></i></h3>
     </div>
     <div class="modal-body">
 
@@ -752,10 +748,9 @@ $('.fliper-btn').click(function(){
 
         <div class="panel-footer">
         <button type="submit" class="btn btn-default">Submit</button>
-        <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
-        
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </form>
       </div>
-     </form>
     </div>
 
   </div>
@@ -767,8 +762,7 @@ $('.fliper-btn').click(function(){
 <div class="panel panel-primary">
     <div class="panel-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-log-in"></i> List Annotations
-        </h1>
+        <h3 class="panel-title" id="infoLabel"> List Annotation <i class="glyphicon glyphicon-log-in"></i></h3>
     </div>
     <div class="modal-body">
 
@@ -817,11 +811,11 @@ $('.fliper-btn').click(function(){
       <ul class="nav navbar-nav navbar-right">
         <li><a onclick="OpenHelp()">Help</a></li>
         <?php if ($_SESSION["userrole"] != "Reader") : ?>
-        <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">Add Annotation</a></li>
+        <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)"> Aggiungi annotazione</a></li>
         <?php else: ?>
           <li><form "<?php echo $_SERVER['PHP_SELF']; ?>" method="post"><input type="hidden" name="type" value="logout"><button type="submit">Registrazione</button></form></li>
         <?php endif; ?>
-        <li><a  onclick="ViewAnnotation()">Annotations List</a></li>
+        <li><a  onclick="ViewAnnotation()">Controlla Annotazioni</a></li>
        <li>
            <?php if ($_SESSION["userrole"] != "Reader") : ?>
            <a data-toggle="modal" data-target="#LogoutModal" class="pointer">
@@ -837,23 +831,25 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
     </div>
   </div>
 </nav>
-    
 <div class="tab-content">
-    
   <!---  MAIN  --->
   <div id="main" class="tab-pane fade in active">
         <div class="container">
             <div class="row">
-                
-                <!---     Menu - left coloumn    --->
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                   <div class="panel panel-default">
+                       <div class="panel-heading pointer" onclick="ShowHideArea('#DocArea')">
+                           <i class="glyphicon glyphicon-folder-open"></i>
+                       </div>
+                       <div class="panel-body" id="DocArea">
+                           <ul class="list-group list-unstyled" id="DocAreaBody">
+                           </ul>
+                       </div>
+                    </div>
                     
-                    <!---   EVENT AREA   --->
-                    <div class="panel panel-primary">
+                    <div class="panel panel-default">
                        <div class="panel-heading pointer" onclick="ShowHideArea('#EventArea')">
-                           
-                           <h1 class="panel-title"><i class="glyphicon glyphicon-calendar"></i> Events</h1>
-                           
+                            <i class="glyphicon glyphicon-calendar"></i>
                        </div>
                        <div class="panel-body" id="EventArea">
                            <ul class="list-group list-unstyled" id="EventAreaBody">
@@ -861,60 +857,47 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                        </div>
                     </div>
                     
-                    <!---   DOCUMENT AREA   --->
-                    <div class="panel panel-primary">
-                       <div class="panel-heading pointer" onclick="ShowHideArea('#DocArea')">
-                           
-                           <h1 class="panel-title"><i class="glyphicon glyphicon-folder-open"></i> Documents</h1>
-                           
-                       </div>
-                       <div class="panel-body" id="DocArea">
-                           <ul class="list-group list-unstyled" id="DocAreaBody">
-                           </ul>
-                       </div>
-                    </div>
-
-                    
-                    <!---   META AREA   --->
-                    <div class="panel panel-primary">
+                    <div class="panel panel-default">
                        <div class="panel-heading pointer" onclick="ShowHideArea('#MetaArea')">
-                           
-                            <h1 class="panel-title"><i class="glyphicon glyphicon-info-sign"></i> About Document</h1>
-                       
+                            <i class="glyphicon glyphicon-asterisk"></i>    
                        </div>
                        <div class="panel-body" id="MetaArea">
                            <div id="div-metaarea-events">
-                                <h4 onclick="ShowHideArea('#ul-metaarea-events')">Event:</h4>
+                                <h4 onclick="ShowHideArea('#ul-metaarea-events')">Evento</h4>
                                 <ul id="ul-metaarea-events" class="list-group list-unstyled">
                                 </ul>
                            </div>
                            <div id="div-metaarea-documents">
-                                <h4 onclick="ShowHideArea('#ul-metaarea-documents')">Document:</h4>
+                                <h4 onclick="ShowHideArea('#ul-metaarea-documents')">Documento</h4>
                                 <ul id="ul-metaarea-documents" class="list-group list-unstyled">
                                 </ul>
                            </div>
                        </div>
                     </div>
+                   
+
                 </div>
-                
-                <!---     Document View - right coloumn     --->
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                    
-                    <h1 id="docClick" class="truncate"></h1>
-                    
-                    <div class="well">
-                        <div id="doc">
+                    <ul class="nav nav-tabs">
+                      <li><a data-toggle="tab" href="#doc"  id="docClick" class="truncate">Documento caricato</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="well">
+                            <div id="doc" class="tab-pane fade">
+                            <h3>Documento</h3>
+                            <p>----</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="well2">
-                        <h3>Chair's judgement: <span id="chairjudgmentresume"></span></h3>
-                        <div id="metaarea-ann" class="list-group list-unstyled">
+                        <div class="well2">
+                            <h3>Giudizio del Chair: <span id="chairjudgmentresume"></span></h3>
+                            <div id="metaarea-ann" class="list-group list-unstyled">
+                            </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
-    </div><!--- End Main --->
+    </div>
   <!----
     <div id="registrazione" class="tab-pane fade">
         <div class="container">
