@@ -27,7 +27,7 @@
 
     <script src="js/script.js" type="text/javascript"></script>
 
-    
+
 </head>
 
 <body>
@@ -492,7 +492,7 @@ if(!isset($_SESSION["userrole"])) :?>
                 <hr>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="hiddenform">
                 <input type="hidden" name="type" value="skiplogin">
-                <p class="blue">
+                <p class="blue" align="center">
                 <a onclick="$('#hiddenform').submit()"> Skip to EasyRASH </a>
                 </p>
               </form>
@@ -577,7 +577,7 @@ $('.fliper-btn').click(function(){
     </div>
         <div class="panel-footer">
             <button type="submit" class="btn btn-default">Submit</button>
-            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button> 
         </div>
         </form>
     </div>
@@ -614,7 +614,7 @@ $('.fliper-btn').click(function(){
     </div>
         <div class="panel-footer">
             <button type="submit" class="btn btn-default">Submit</button>
-            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button> <!--HO INSERITO STYLE -->
         </div>
         </form>
     </div>
@@ -639,7 +639,7 @@ $('.fliper-btn').click(function(){
         Shank bacon short ribs, doner picanha chuck drumstick salami ribeye ham hock sirloin. Ribeye spare ribs rump salami sausage, shoulder tail leberkas ham hock short loin jerky jowl. Landjaeger shank rump strip steak ham hock jerky cow. Alcatra turducken flank, shank pancetta tongue leberkas ground round sausage biltong strip steak drumstick.</p>
     </div>
         <div class="panel-footer">
-            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button> <!--HO INSERITO STYLE -->
         </div>
         </form>
     </div>
@@ -672,15 +672,14 @@ $('.fliper-btn').click(function(){
             </div>
             <button type="submit" class="btn btn-default">Cambia password</button>
         </form>
-        <hr>
         
     </div>
     <div class="panel-footer">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <input type="hidden" name="type" value="logout">
-            <button type="submit" class="btn btn-default">Logout</button>
+            <button type="submit" style="float: left;" class="btn btn-default">Logout</button>  <!--HO INSERITO STYLE E TOLTO <HR>-->
         </form>
-        <button type="button"  class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
     </div>
     
 </div>
