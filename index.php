@@ -26,7 +26,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <script src="js/script.js" type="text/javascript"></script>
-
+    <script src="js/scriptlog.js" type="text/javascript"></script> 
 
 </head>
 
@@ -34,7 +34,7 @@
 
 <div id="notification"></div>    
 
-<script src="js/scriptlog.js" type="text/javascript"></script>   
+  
 <?php
 function getGUID(){
     if (function_exists('com_create_guid')){
@@ -466,7 +466,7 @@ if(!isset($_SESSION["eventrole"])){
     }
 
 if(!isset($_SESSION["userrole"])) :?>
-<script src="js/scriptlog.js" type="text/javascript"></script>    
+
     
 <div class="container">
   <div class="row">
@@ -897,10 +897,7 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                 </div>
                 
                 <!---     Document View - right coloumn     --->
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                    
-                    <h1 id="docClick" class="truncate"></h1>
-                    
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">                    
                     <div class="well">
                         <div id="doc">
                         </div>

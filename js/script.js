@@ -7,7 +7,6 @@ function randomCSS(){
 
 
 function reset(){
-    $("#docClick").html("Documento caricato");
     $("#doc").html("<h3>Documento</h3><p>----</p>");
     $("#ul-metaarea-documents").html(" ");
     $("#ul-reviewer").remove();
@@ -220,7 +219,6 @@ function LoadDocument(urlDocument) {
         data: {localUrl : urlDocument,currentEvent : currentEvent},
         dataType:'json',
         success: function(paper_json) {
-            $("#docClick").html(paper_json["title"]);
             paper = "<h1>" + paper_json["title"] + "</h1><div>" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
             
@@ -285,7 +283,6 @@ function LoadDocument(urlDocument) {
             console.log(errorThrown);
         }
     });
-    $("#docClick").click();
     urlCurrentDoc = urlDocument;
 }
 
@@ -315,7 +312,7 @@ function ChangePage(idpagebutton){
 
 function Notify(type,text){
     $( document ).ready(function(){
-        output = "<div class='alert alert-";
+        output = "<div id=\""+type+text.replace(/\s+/g,"").replace(/\'+/g,"")+"\" class='alert alert-";
         switch(type){
             case 'error':
                 output = output + "danger";
@@ -326,6 +323,9 @@ function Notify(type,text){
         }
         output = output + "'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+ text +"</div>";
         $('#notification').append(output);
+        $("#"+type+text.replace(/\s+/g,"").replace(/\'+/g,"")).fadeTo(2000, 500).slideUp(500, function(){
+               $("#"+type+text.replace(/\s+/g,"").replace(/\'+/g,"")).slideUp(500);
+        });   
     });
 }
 
