@@ -73,9 +73,11 @@ a {
 .navbar-default {
     border-color: skyblue;
     padding: 0.5em;
-    height: 4.6em;
-    padding-top: 1.5em;
 }
+#logo{
+    height: 100%;
+}
+
 /* * * END Navigation Bar *****/
 /*
 /*
@@ -116,6 +118,10 @@ h1.panel-title:hover {
 .list-group li:nth-child(1) {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+span#Judgment {
+    float: right;
 }
 
 /* * * END Left Coloumn - Menu *****/

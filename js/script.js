@@ -66,12 +66,12 @@ function loaderMetaEventArea(numberEvent){
             result = "";
             $.each(json_data,function(k,v){
                 if(k == "conference"){
-                    result=result+"<li class='list-group-item'>"+v+"</li>";
+                    result=result+"<li>"+v+"</li>";
                 }
                 if(k == "chairs"){
                     result = result + "<h4>Chairs</h4>";
                     $.each(v,function(x,z){
-                        result=result+"<li class='list-group-item'>"+z+"</li>";    
+                        result=result+"<li>"+z+"</li>";    
                     });
                 }
                 if(k == "pc_members"){
@@ -79,7 +79,7 @@ function loaderMetaEventArea(numberEvent){
                     $.each(v,function(x,z){
                         start = z.indexOf('<');
                         start = start +1;
-                        result=result+"<li class='list-group-item member'>"+z.substring(0,start-1)+"</li>";    
+                        result=result+"<li>"+z.substring(0,start-1)+"</li>";    
                     });
                 }
                 
@@ -104,7 +104,7 @@ function loaderEventArea() {
         for(var i=0; i<=json_data.length;i++){
             $.each(json_data[i],function(k,v){
                 if(k=="conference"){
-                    result=result+"<li><a onclick='ChangeEvent(\""+i+"\")'>"+v+"</a></li>";
+                    result=result+"<li class='list-group-item member'><a onclick='ChangeEvent(\""+i+"\")'>"+v+"</a></li>";
                 }
             });
         }
@@ -222,7 +222,7 @@ function LoadDocument(urlDocument) {
             paper = "<h1>" + paper_json["title"] + "</h1><div>" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
             
-            startmetadati = "<li class='list-group-item'>";
+            startmetadati = "<li>";
             endmetadati="</li>";
             metadati = startmetadati + "keywords : <ul class='list-group list-unstyled'>";
             $.each(paper_json["keyword"],function(k,v){
@@ -258,7 +258,7 @@ function LoadDocument(urlDocument) {
                 y = z.substring(start,end);
                 y = y.replace(/@/g, 'a');
                 y = y.replace(/\./g, 'p');
-                $("#ul-reviewer").append("<li class='list-group-item member' id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li>")  
+                $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li>")  
             });
             resumechairjudgment = "";
             
@@ -405,10 +405,9 @@ function ViewChairJudgment(){
 
 function ScrollToAnnotation(idcomment){
     var offset = $(".well").offset();
-    var offsetTop = offset.top - $(".navbar-fixed-top").height();
     
     $('body,html').animate({
-        scrollTop: offsetTop
+        scrollTop: 0
     },200);
     
     $('.well').animate({

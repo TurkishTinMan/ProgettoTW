@@ -817,7 +817,12 @@ $('.fliper-btn').click(function(){
         <?php if ($_SESSION["userrole"] != "Reader") : ?>
         <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">Add Annotation</a></li>
         <?php else: ?>
-          <li><form "<?php echo $_SERVER['PHP_SELF']; ?>" method="post"><input type="hidden" name="type" value="logout"><button type="submit">Registrazione</button></form></li>
+        <li>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="registrationform">                 <input type="hidden" name="type" value="logout">
+            </form>
+
+          <a onclick="$('#registrationform').submit()">Registrazione</a>
+        </li>
         <?php endif; ?>
         <li><a  onclick="ViewAnnotation()">Annotations List</a></li>
        <li>

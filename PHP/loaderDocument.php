@@ -74,7 +74,7 @@ foreach($links as $link){
 }
 
 $document["title"] =$doc_title;
-$document["body"] = $doc_body -> innertext;
+$document["body"] = $doc_body -> innertext ;
 
 
 $json_event = file_get_contents("../Dataset/project-files/events.json");
