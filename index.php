@@ -313,7 +313,6 @@ if(!isset($_SESSION["eventrole"])){
                         $body             = file_get_contents('./extra/contents.html');
                         $body             = eregi_replace("[\]",'',$body);
                         $body             = str_replace("#linktoreplace",$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?verify=".$GUID,$body);
-                        
 
                         $mail->IsSMTP();
                         $mail->Host       = "mail.yourdomain.com"; 

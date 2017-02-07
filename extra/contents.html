@@ -2,14 +2,49 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <title>PHPMailer Test</title>
+  <title>Welcome!</title>
 </head>
+<style>
+body{
+    background-color: whitesmoke;
+}
+#card{
+    width: 600px;
+    margin: auto;
+    text-align: center;
+    background: white;
+    border-radius: 5px;
+    border: black 1px solid;
+}
+    
+#button{
+    border-radius: 5px;
+    border: blue 1px solid;
+    margin: 5px;
+    padding: 5px;
+    background-color: #3292cd;
+    text-decoration: none;
+}
+    
+#button:hover{
+    background-color: blue;
+    border-color: #3292cd;
+    color: #3292cd;
+}
+</style>
+    
 <body>
-<div style="width: 640px; font-family: Arial, Helvetica, sans-serif; font-size: 11px;">
-  <h1>Mail di benvenuto!</h1>
-  <div align="center">
-      <a href="#linktoreplace">link</a>
-  </div>
-</div>
+    <div id="card">
+        <h1>Mail di benvenuto!</h1>
+        <p> Grazie per essersi iscritto al nostro servizio! questa &eacute; la sua mail di attivazione.</p>
+        <p> La preghiamo di utilizzare il pulsante sotto questo testo per attivare le sue credenziali</p>
+        <p><a id="button" href="#linktoreplace">Attiva EasyRash</a></p>
+    </div>
+    
+    <br><br>
+    <div id="card">
+        <h3>In caso di malfunzionamento del pulsante</h3>
+        <p>Ci scusiamo per il disagio se non &eacute; possibile da parte vostra segnalare il messaggio come non nocivo e quindi abilitare il pulsante qui mettiamo il link da utilizzare, fate copia incolla nel vostro browser: #linktoreplace </p>
+    </div>
 </body>
 </html>

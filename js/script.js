@@ -312,7 +312,7 @@ function ChangePage(idpagebutton){
 
 function Notify(type,text){
     $( document ).ready(function(){
-        output = "<div id=\""+type+text.replace(/\s+/g,"").replace(/\'+/g,"")+"\" class='alert alert-";
+        output = "<div class='alert alert-";
         switch(type){
             case 'error':
                 output = output + "danger";
@@ -322,9 +322,8 @@ function Notify(type,text){
             break;
         }
         output = output + "'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+ text +"</div>";
-        $('#notification').append(output);
-        $("#"+type+text.replace(/\s+/g,"").replace(/\'+/g,"")).fadeTo(2000, 500).slideUp(500, function(){
-               $("#"+type+text.replace(/\s+/g,"").replace(/\'+/g,"")).slideUp(500);
+        $(output).appendTo("#notification").fadeTo(2000, 500).slideUp(500, function(){
+               $(output).slideUp(500);
         });   
     });
 }
