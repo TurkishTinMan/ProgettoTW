@@ -567,7 +567,7 @@ $('body').css('background',"url('image/background.jpg')");
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" accept-charset="utf-8">
     <div class="modal-body">
         <h3>Sei un Chair</h3>
-        <p>Tutti i reviewer si sono espressi sul documento, manca solo il tuo giudizio.</p>
+        <p>Esprimi il tuo giudizio sul documento.</p>
         <p id="resumereviewers"></p>
         <input type="hidden" name="type" value="addChairJudgment">
         <input name="Doc" type="hidden" class="form-control" id="Doc" value="">
@@ -601,8 +601,7 @@ $('body').css('background',"url('image/background.jpg')");
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" accept-charset="utf-8">
     <div class="modal-body">
         <h3>Sei un Reviewer</h3>
-        <p>bls bla bla bla</p>
-        <p>qui sotto metto la form ma tranquillo puoi sempre riaprire questo modal quando vorrai basta cliccare sul tuo nome fra i membri, puoi sempre cambiare il tuo giudizio</p>
+        <p>Esprimi il tuo giudizio sul documento</p>
         <input type="hidden" name="type" value="addJudgment">
         <input name="Doc" type="hidden" class="form-control" id="Doc1" value="">
         <input name="Event" type="hidden" class="form-control" id="Eventid1" value="">

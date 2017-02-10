@@ -182,12 +182,12 @@ function loadJudgment(userkey){
             z = z.replace(/@/g, 'a');
             z = z.replace(/\./g, 'p');
             if(paper_json["role"] == "reviewer"){
+                giudizio = "Inespresso";
                 if(paper_json["judgment"]){
-                    $('#'+ z + "> #Judgment").html("<a  onclick='JudgmentModal()'>"+paper_json["judgment"]+"</a>");
-                }else{
-                    $('#'+ z + "> #Judgment").html("<a  onclick='JudgmentModal()'>Inespresso</a>");
-                    JudgmentModal();
+                    giudizio = paper_json["judgment"];
                 }
+                $('#'+ z + "> #Judgment").html("<a  onclick='JudgmentModal()'>"+giudizio+"</a>");
+                Notify('info','Sei un revier, il tuo giudizio su questo documento è:'+giudizio+'.<br>Puoi cambiarlo cliccando vicino al tuo nome nella lista dei reviewer.')
             }else{
                 if(paper_json["judgment"]){
                     $('#'+ z + "> #Judgment").html(paper_json["judgment"]);
@@ -260,17 +260,14 @@ function LoadDocument(urlDocument) {
                 y = y.replace(/\./g, 'p');
                 $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li>")  
             });
-            resumechairjudgment = "";
+            resumechairjudgment = "Inespresso";
             
             if(paper_json["chairJudgmentvalue"]){
                 resumechairjudgment = paper_json["chairJudgmentvalue"];
-            }else{
-                resumechairjudgment = "Inespresso";
-            }
-            
+            }  
             if(paper_json["chairJudgment"]){
-                console.log(paper_json["chairJudgment"]);
                 resumechairjudgment = "<a onclick='ViewChairJudgment()'>" + resumechairjudgment + "</a>";
+                Notify('info','Sei un chair, il tuo giudizio su questo documento è:'+ resumechairjudgment +'.<br>Puoi cambiarlo cliccando vicino al tuo nome nella lista dei reviewer.');
             }
             
             $("#chairjudgmentresume").html(resumechairjudgment);
@@ -320,9 +317,11 @@ function Notify(type,text){
             case 'success' :
                 output = output + "success";
             break;
+            case 'info':
+                output = output + "info";
         }
         output = output + "'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+ text +"</div>";
-        $(output).appendTo("#notification").fadeTo(1500, 500).slideUp(300, function(){
+        $(output).appendTo("#notification").fadeTo(5000, 500).slideUp(300, function(){
                $(output).slideUp(500);
         });   
     });
