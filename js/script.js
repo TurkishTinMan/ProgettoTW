@@ -312,7 +312,7 @@ function ChangePage(idpagebutton){
 
 function Notify(type,text){
     $( document ).ready(function(){
-        output = "<div class='alert alert-";
+        output = "<div class='alert fade in alert-dismissable alert-";
         switch(type){
             case 'error':
                 output = output + "danger";
@@ -322,7 +322,7 @@ function Notify(type,text){
             break;
         }
         output = output + "'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+ text +"</div>";
-        $(output).appendTo("#notification").fadeTo(2000, 500).slideUp(500, function(){
+        $(output).appendTo("#notification").fadeTo(1500, 500).slideUp(300, function(){
                $(output).slideUp(500);
         });   
     });

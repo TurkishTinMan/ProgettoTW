@@ -13,8 +13,7 @@
     <link rel="shortcut icon" type="image/png" href="image/favicon.png"/>
 
     <link rel="stylesheet" href="css/style.css">
-    <!--<link rel="stylesheet" href="Dataset/project-files/dataset/css/rash.css">-->
-    
+        
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     
@@ -467,45 +466,46 @@ if(!isset($_SESSION["eventrole"])){
 if(!isset($_SESSION["userrole"])) :?>
 
     
-<div class="container">
+<div id="logcard" class="container">
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
       <div class="flip">
         <div class="card"> 
           <div class="face front"> 
-            <div class="panel panel-default">
+            <div class="panel panel-default text-center">
               <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal customform">
                 <br>
-                <div align="center">
+                
                   <div class="image">
                     <img src="image/logo.png"/>
                   </div>
-                  <br>
-                </div>
+                
+                <br />
                 <input type="hidden" name="type" value="login">
                 <input name="email" class="form-control" placeholder="Username"/>
+                <br />
                 <input name="password" type="password" class="form-control" placeholder="Password" required="" id="pass_s">
-                <br>
-                <input type="submit" class="btn btn-primary btn-block" value="LOG IN">
+                <br />
+                <input type="submit" class="btn btn-primary" value="LOG IN">
               </form>
                 <hr>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="hiddenform">
                 <input type="hidden" name="type" value="skiplogin">
-                <p class="blue" align="center">
-                <a onclick="$('#hiddenform').submit()"> Skip to EasyRASH </a>
+                <p class="blue">
+                <a onclick="$('#hiddenform').submit()"> Skip to EasyRASH as reader </a>
                 </p>
               </form>
                 <hr>
-                <p class="text-center">
-                  <a href="#" class="fliper-btn">Create new account?</a>
+                <p>
+                  <a href="#" class="fliper-btn">Create New Account?</a>
                 </p>
             </div>
           </div> 
           <div class="face back"> 
-            <div class="panel panel-default">
+            <div class="panel panel-default text-center">
                 <br> 
                 <form class="form-horizontal customform" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                <div align="center">
+                
                   <div class="image">
                     <img src="image/logo.png"/>
                   </div>
@@ -514,35 +514,39 @@ if(!isset($_SESSION["userrole"])) :?>
                     
                   <input type="hidden" name="type" value="registrazione">
                   <input name="given_name" class="form-control" placeholder="Name"/>
+                    <br />
                   <input name="family_name" class="form-control" placeholder="Surname"/>
+                    <br />
                   <input class="form-control" placeholder="Email" name="email"/>
+                    <br />
                   <input type="password" class="form-control" placeholder="Password" required="" id="pass_s" name="pass1">
+                    <br />
                   <input type="password" class="form-control" placeholder="Password" required="" id="pass_s" name="pass2">
+                    <br />
                   <select name="sex" class="form-control" id="gender">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </select>
-                    <input type="submit" class="btn btn-primary btn-block" value="REGISTRAZIONE">
+                    <br />
+                    <input type="submit" class="btn btn-primary" value="REGISTRAZIONE">
                 </form>
                 <br>
 
-                <p class="text-center">
+                <p>
                   <a href="#" class="fliper-btn">Already have an account?</a>
                 </p>
-            </div>
+            
           </div>
         </div>   
       </div>
-
-
 
 
         </div>
         <div class="col-md-4"></div>
 
       </div>
-
-    </div><!-- /.container -->
+    </div>
+</div><!-- /.container -->
 
 <script type="text/javascript">
 $('.fliper-btn').click(function(){
@@ -557,7 +561,7 @@ $('.fliper-btn').click(function(){
 <div class="panel panel-primary">
     <div class="panel-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 class="panel-title" id="infoLabel"> Assegna un giudizio al documento </i></h3>
+        <h3 class="panel-title" id="infoLabel"> Assegna un giudizio al documento</h3>
     </div>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" accept-charset="utf-8">
     <div class="modal-body">
@@ -591,7 +595,7 @@ $('.fliper-btn').click(function(){
 <div class="panel panel-primary">
     <div class="panel-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 class="panel-title" id="infoLabel"> Assegna un giudizio al documento </i></h3>
+        <h3 class="panel-title" id="infoLabel"> Assegna un giudizio al documento</h3>
     </div>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" accept-charset="utf-8">
     <div class="modal-body">
@@ -622,12 +626,12 @@ $('.fliper-btn').click(function(){
     
     
 <!--Info Modal-->
-<div id="ViewHelp" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true"></li>
+<div id="ViewHelp" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true">
 <div class="modal-dialog">
 <div class="panel panel-primary">
     <div class="panel-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 class="panel-title" id="infoLabel"> Help <i class="glyphicon glyphicon-info-sign"></i></h3>
+        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-info-sign"></i><span>Help</span></h1>
     </div>
     <form action="#" method="post" accept-charset="utf-8">
     <div class="modal-body">
@@ -646,12 +650,12 @@ $('.fliper-btn').click(function(){
 </div>
 
 <!--Logout Modal-->
-<div id="LogoutModal" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true"></li>
+<div id="LogoutModal" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true">
 <div class="modal-dialog">
 <div class="panel panel-primary">
     <div class="panel-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-user"></i> User
+        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-user"></i><span>User</span>
         </h1>
     </div>
     <div class="modal-body">
@@ -691,7 +695,7 @@ $('.fliper-btn').click(function(){
 <div class="panel panel-primary">
     <div class="panel-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 class="panel-title" id="infoLabel"> Login <i class="glyphicon glyphicon-log-in"></i></h3>
+        <h3 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-log-in"></i><span>Login</span></h3>
     </div>
     <form action="#" method="post" accept-charset="utf-8">
     <div class="modal-body">
@@ -705,13 +709,14 @@ $('.fliper-btn').click(function(){
             <label for="pwd">Password:</label>
             <input name ="password" type="password" class="form-control" id="pwd">
           </div>
-    </div>
+    
         <div class="panel-footer">
             <button type="submit" class="btn btn-default">Submit</button>
             <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
         </div>
         </form>
     </div>
+</div>
 </div>
 </div>
     
@@ -721,7 +726,7 @@ $('.fliper-btn').click(function(){
 <div class="panel panel-primary">
     <div class="panel-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-pencil"></i> Annotation </h1>
+        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-pencil"></i><span>Annotation</span></h1>
     </div>
     <div class="modal-body">
 
@@ -751,8 +756,7 @@ $('.fliper-btn').click(function(){
         <div class="panel-footer">
         <button type="submit" class="btn btn-default">Submit</button>
         <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
-        
-      </div>
+        </div>
      </form>
     </div>
 
@@ -765,8 +769,7 @@ $('.fliper-btn').click(function(){
 <div class="panel panel-primary">
     <div class="panel-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-log-in"></i> List Annotations
-        </h1>
+        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-log-in"></i><span>List Annotations</span></h1>
     </div>
     <div class="modal-body">
 
@@ -855,7 +858,7 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                     <div class="panel panel-primary">
                        <div class="panel-heading pointer" onclick="ShowHideArea('#EventArea')">
                            
-                           <h1 class="panel-title"><i class="glyphicon glyphicon-calendar"></i> Events</h1>
+                           <h1 class="panel-title"><i class="glyphicon glyphicon-calendar"></i><span>Events</span></h1>
                            
                        </div>
                        <div class="panel-body" id="EventArea">
@@ -868,7 +871,7 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                     <div class="panel panel-primary">
                        <div class="panel-heading pointer" onclick="ShowHideArea('#DocArea')">
                            
-                           <h1 class="panel-title"><i class="glyphicon glyphicon-folder-open"></i> Documents</h1>
+                           <h1 class="panel-title"><i class="glyphicon glyphicon-folder-open"></i><span> Documents</span></h1>
                            
                        </div>
                        <div class="panel-body" id="DocArea">
@@ -882,7 +885,7 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                     <div class="panel panel-primary">
                        <div class="panel-heading pointer" onclick="ShowHideArea('#MetaArea')">
                            
-                            <h1 class="panel-title"><i class="glyphicon glyphicon-info-sign"></i> About Document</h1>
+                            <h1 class="panel-title"><i class="glyphicon glyphicon-info-sign"></i><span>About Document</span></h1>
                        
                        </div>
                        <div class="panel-body" id="MetaArea">

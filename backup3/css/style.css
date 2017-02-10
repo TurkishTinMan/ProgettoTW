@@ -1,0 +1,242 @@
+/***** General *****/
+body {
+    padding-top: 5em;
+    font-size: 10pt;
+    font-family: 'Roboto', sans-serif;
+    margin: 2em;
+    background-color: whitesmoke;
+}
+
+/* For screen smaller than 768px, e.g.: mobile phones */
+@media only screen and (max-width: 768px) {
+    [class*="col-"] {
+        width: 100%;
+    }
+}
+
+.container {
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar {
+    font-family: 'Roboto Slab', sans-serif;
+}
+
+h1.panel-title {
+    color: skyblue;
+}
+
+.pointer, 
+a {
+    cursor: pointer;
+}
+
+/***bottone Close ***/
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    margin-top: -8px;
+}
+
+/**PANEL FOOTER MODAL **/
+.panel-footer {
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    height: 40px;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+/*** Alerts ***/
+#notification {
+    left: 10%;
+    right: 10%;
+    position: fixed;
+    z-index: 100;
+}
+
+
+/* * * END Generals *****/
+/*
+/*
+/*
+/***** Navigation Bar *****/
+.navbar-default {
+    border-color: skyblue;
+    padding: 0.5em;
+}
+#logo{
+    height: 100%;
+}
+
+/* * * END Navigation Bar *****/
+/*
+/*
+/*
+/***** Left Coloumn - Menu *****/
+
+.panel-primary {
+    border: none;
+}
+
+h1.panel-title:hover {
+    color: white;
+}
+
+#DocArea, 
+#EventArea {
+    padding: 0;
+}
+
+#MetaArea {
+    border: 1px solid lightgray;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+#DocAreaBody, 
+#EventAreaBody {
+    padding: 0;
+    margin-bottom: 0;
+    border: none;
+}
+
+#DocAreaBody li, 
+#EventAreaBody li {
+    padding: 8px 8px;
+}
+
+.list-group li:nth-child(1) {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+span#Judgment {
+    float: right;
+}
+
+/* * * END Left Coloumn - Menu *****/
+/*
+/*
+/*
+/***** Right Coloumn - Document *****/
+.well, 
+.well2 {
+    background-color: white;
+}
+
+/**PROBLEMA: senza position:absolute non funziona lo scroll; se lo inserisco il well2 non è piu visibile **/
+.well {
+        width: 100%;
+        height: 600px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+}
+
+/* * END Right Coloumn - Document */
+/*
+/*
+/*
+/***** Login flip card *****/
+.flip {
+    perspective: 800;
+    position: relative;
+}
+
+.flip .card.flipped {
+    transform: rotatey(-180deg);
+}
+
+.flip .card {
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: 0.5s;
+}
+
+.flip .card .face {  
+    backface-visibility: hidden ;
+    z-index: 2;
+}
+
+.flip .card .front {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+.flip .card .back { 
+    transform: rotatey(-180deg);
+}
+/* * * END Login flip card *****/
+/*
+/*
+/*
+/***** 
+From rash.css - Version 0.4, February 16, 2016
+by Silvio Peroni
+and
+From lncs.css - Version 0.3, February 17, 2016
+by Silvio Peroni
+*****/
+
+/* Figure, table and formula */
+img {
+    max-width:90%;
+    height:auto;
+}
+
+table {
+    max-width:90%;
+    margin: 0 auto;
+    font-size: 8pt;
+}
+
+figure {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    text-align:center;
+}
+
+figure > p:not(mathml|math) {
+    margin-bottom:0px;
+}
+
+figure img:not([role=math]), figure svg {
+    border: 1px solid black;
+}
+
+figure > pre {
+    text-align:left;
+}
+
+figcaption {
+    margin-top:5px;
+}
+
+td , th {
+    border:1px solid black;
+    padding:5px;
+}
+
+td p {
+    margin-bottom:0px;
+}
+
+th {
+    background-color: #606060;
+    color: white;
+    text-align:center;
+}
+/* /END Figure, table and formula */
+
+
+
