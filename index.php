@@ -763,46 +763,6 @@ $('body').css('background',"url('image/background.jpg')");
   </div>
 </div>  
     
-<!-- List Annotation Modal -->
-<div id="ViewAnnotationModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-log-in"></i><span>List Annotations</span></h1>
-    </div>
-    <div class="modal-body">
-
-          <table id="Anntable" class="table table-striped">
-              <thead>
-                <tr>
-                  <th>
-                    User
-                  </th>
-                  <th>
-                    Data
-                  </th>
-                  <th>
-                    Content
-                  </th>
-                  <th>
-                    Delete
-                  </th>
-                </tr>
-              </thead>
-                  
-          </table>
-      </div>
-
-        <div class="panel-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-    
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -827,7 +787,6 @@ $('body').css('background',"url('image/background.jpg')");
           <a onclick="$('#registrationform').submit()">Registrazione</a>
         </li>
         <?php endif; ?>
-        <li><a  onclick="ViewAnnotation()">Annotations List</a></li>
        <li>
            <?php if ($_SESSION["userrole"] != "Reader") : ?>
            <a data-toggle="modal" data-target="#LogoutModal" class="pointer">
@@ -911,8 +870,28 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                     </div>
                     <div class="well2">
                         <h3>Chair's judgement: <span id="chairjudgmentresume"></span></h3>
-                        <div id="metaarea-ann" class="list-group list-unstyled">
-                        </div>
+                        <table id="Anntable" class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>
+                                User
+                              </th>
+                              <th>
+                                Data
+                              </th>
+                              <th>
+                                Content
+                              </th>
+                              <th>
+                                Find
+                              </th>    
+                              <th>
+                                Delete
+                              </th>
+                            </tr>
+                          </thead>
+                      </table>
+
                     </div>
                 </div>
             </div>

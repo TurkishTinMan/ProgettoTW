@@ -117,7 +117,7 @@ function loaderEventArea() {
 }
 
 function LoadAnnotation(urlDocument){
-    $("#Anntable").html("<thead><tr><th>User</th><th>Data</th><th>Content</th><th>Delete</th></tr</thead>");
+    $("#Anntable").html("<thead><tr><th>User</th><th>Data</th><th>Content</th><th>Find</th><th>Delete</th></tr></thead>");
     $("#metaarea-ann").html(" ");
     $.ajax({
         url:"./PHP/loadAnnotation.php",
@@ -131,8 +131,7 @@ function LoadAnnotation(urlDocument){
                 $(v["Path"]).html(html);
                 $('[data-toggle="tooltip"]').tooltip();  
                 dataAnn = new Date(parseInt(v["Data"]));
-                $('#Anntable').append("<tr id='row"+v["Data"]+"'><td>"+v['Author']+"</td><td>"+dataAnn.getDay() + "/"+(dataAnn.getMonth()+1)+"/"+dataAnn.getFullYear() +"<td>"+v['Annotation']+"</td></td><td onclick=deleteAnnotation(\""+v['Author']+"\",\""+v['Data']+"\") class='pointer'>delete</td></tr>");
-                $("#metaarea-ann").append("<p>"+ v["Annotation"] +": "+ v['Author'] +"<a onclick='ScrollToAnnotation(\"comment"+v["Data"]+"\")'>Trovalo nel testo</a></p><hr>");
+                $('#Anntable').append("<tr id='row"+v["Data"]+"'><td>"+v['Author']+"</td><td>"+dataAnn.getDay() + "/"+(dataAnn.getMonth()+1)+"/"+dataAnn.getFullYear() +"<td>"+v['Annotation']+"</td><td><a onclick='ScrollToAnnotation(\"comment"+v["Data"]+"\")' class='pointer'><span class='glyphicon glyphicon-search' aria-hidden ='true'></span></a></td><td onclick=deleteAnnotation(\""+v['Author']+"\",\""+v['Data']+"\") class='pointer'><span class='glyphicon glyphicon-trash' aria-hidden ='true'></span></td></tr>");
             });
         },
         error:function(jqXHR, status, errorThrown) {
@@ -379,13 +378,6 @@ function AddAnnotation(checklog){
 function JudgmentModal(){
     $("#ViewJudgmentModal").modal({
         show:true
-    });
-}
-
-
-function ViewAnnotation(){
-    $("#ViewAnnotationModal").modal({
-        show: 'true'
     });
 }
 
