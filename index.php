@@ -465,7 +465,7 @@ if(!isset($_SESSION["eventrole"])){
 
 if(!isset($_SESSION["userrole"])) :?>
 
-    
+
 <div id="logcard" class="container">
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
@@ -552,6 +552,7 @@ if(!isset($_SESSION["userrole"])) :?>
 $('.fliper-btn').click(function(){
     $('.flip').find('.card').toggleClass('flipped');
 });
+$('body').css('background',"url('image/background.jpg')");
 </script>
     
 <?php else: ?>
