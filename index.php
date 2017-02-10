@@ -868,8 +868,8 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                         <div id="doc">
                         </div>
                     </div>
-                    <div class="well2">
-                        <h3>Chair's judgement: <span id="chairjudgmentresume"></span></h3>
+                    <div class="text-center">
+                        <h3>Annotations Table</h3>
                         <table id="Anntable" class="table table-striped">
                           <thead>
                             <tr>
@@ -891,7 +891,7 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                             </tr>
                           </thead>
                       </table>
-
+                      <h3>Chair's judgement: <span id="chairjudgmentresume"> </span></h3>
                     </div>
                 </div>
             </div>
