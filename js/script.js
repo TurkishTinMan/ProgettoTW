@@ -209,6 +209,7 @@ function LoadDocument(urlDocument) {
     $("span#Judgment").html(" ");
     $("#resumereviewers").html(" ");
     $("#chairjudgmentresume").html(" ");
+    $("#keyWordsList").html(" ");
     $("#ul-reviewer").remove();
     $("#Reviewer-title").remove();
     urlCurrentDoc = urlDocument;
@@ -223,14 +224,12 @@ function LoadDocument(urlDocument) {
             
             startmetadati = "<li>";
             endmetadati="</li>";
-            metadati = startmetadati + "keywords : <ul class='list-group list-unstyled'>";
             $.each(paper_json["keyword"],function(k,v){
-                metadati = metadati + startmetadati + v + endmetadati;
+                $(startmetadati + v + endmetadati).appendTo("#keyWordsList");
             });
             
-            metadati = metadati + "</ul>"
             
-            metadati = metadati + startmetadati + "Autori:<ul class='list-group list-unstyled'>";
+            metadati = "Autori:<ul class='list-group list-unstyled'>";
             
             $.each(paper_json["Autori"],function(k,v){
                 if(v["linked"] == "false"){
@@ -240,7 +239,7 @@ function LoadDocument(urlDocument) {
                 }
             });
             metadati = metadati + "</ul>";
-            metadati = metadati + endmetadati;
+            metadati = metadati;
             $("#ul-metaarea-documents").html(metadati);
             $("#Doc2").val(urlDocument);
             $("#Doc1").val(urlDocument);
@@ -269,7 +268,7 @@ function LoadDocument(urlDocument) {
                 Notify('info','Sei un chair, il tuo giudizio su questo documento è:'+ resumechairjudgment +'.<br>Puoi cambiarlo cliccando vicino al tuo nome nella lista dei reviewer.');
             }
             
-            $("#chairjudgmentresume").html(resumechairjudgment);
+            $("#chairjudgmentresume").html("<h3>Chair's judgement:" + resumechairjudgment + "</h3>");
 
             
         },
@@ -339,33 +338,33 @@ function AddAnnotation(checklog){
             content = "";
             if (range.startContainer == range.endContainer){
                 length = selection.toString().length;
-            }else{
-                length = range.startContainer.length;
-            }
             
-            while(tempContainer.nodeName != "BODY"){
-                tempContainer = tempContainer.parentNode;
-                if(tempContainer.id == "doc"){
-                    content = "div#doc" + content;
-                    check = true;
-                    break;
+                while(tempContainer.nodeName != "BODY"){
+                    tempContainer = tempContainer.parentNode;
+                    if(tempContainer.id == "doc"){
+                        content = "div#doc" + content;
+                        check = true;
+                        break;
+                    }
+                    n = $(tempContainer).prevAll(""+tempContainer.tagName).length;
+                    content = ":eq("+n+")" + content;
+                    content = tempContainer.tagName.toLowerCase() + content;                    
+                    content = ">" + content;
                 }
-                n = $(tempContainer).prevAll(""+tempContainer.tagName).length;
-                content = ":eq("+n+")" + content;
-                content = tempContainer.tagName.toLowerCase() + content;                    
-                content = ">" + content;
-            }
-            if(check){
-                $("#Annotation-content").val(selectedText);
-                $("#Path").val(content);
-                $("#OffsetFromStart").val(range.startOffset);
-                $("#LenghtAnnotation").val(length);
-                $("#Data").val(Date.now());
-                $("#AnnotationModal").modal({
-                    show: 'true'
-                });
+                if(check){
+                    $("#Annotation-content").val(selectedText);
+                    $("#Path").val(content);
+                    $("#OffsetFromStart").val(range.startOffset);
+                    $("#LenghtAnnotation").val(length);
+                    $("#Data").val(Date.now());
+                    $("#AnnotationModal").modal({
+                        show: 'true'
+                    });
+                }else{
+                    Notify("error", "Devi selezionare qualcosa all'interno di un documento caricato per creare un'annotazione");
+                }
             }else{
-                Notify("error", "Devi selezionare qualcosa all'interno di un documento caricato per creare un'annotazione");
+                Notify("info", "Devi selezionare qualcosa dentro lo stesso frammento");
             }
         }else{
             Notify("error", "Devi selezionare qualcosa per creare un'annotazione");

@@ -869,34 +869,16 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
                         </div>
                     </div>
                     <div class="text-center">
-                        <h3>Annotations Table</h3>
-                        <table id="Anntable" class="table table-striped">
-                          <thead>
-                            <tr>
-                              <th>
-                                User
-                              </th>
-                              <th>
-                                Data
-                              </th>
-                              <th>
-                                Content
-                              </th>
-                              <th>
-                                Find
-                              </th>    
-                              <th>
-                                Delete
-                              </th>
-                            </tr>
-                          </thead>
+                      <ul id="keyWordsList"></ul>  
+                      <table id="Anntable" class="table table-striped">
                       </table>
-                      <h3>Chair's judgement: <span id="chairjudgmentresume"> </span></h3>
+                      <h3 id="chairjudgmentresume"></h3>
                     </div>
                 </div>
             </div>
         </div>
     </div><!--- End Main --->
+    
   <!----
     <div id="registrazione" class="tab-pane fade">
         <div class="container">
