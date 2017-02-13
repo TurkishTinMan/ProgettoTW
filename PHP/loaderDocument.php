@@ -1,16 +1,14 @@
 <?php
 session_start();
 include('simple_html_dom.php');
+include('dbManager.php');
 
 $document = array();
-
 $doc = new simple_html_dom();
 $doc -> load_file($_POST['localUrl']);
 
 
-
 $doc_body = $doc -> find('body',0);
-
 
 
 $doc_title = $doc -> find('title', 0) -> innertext;
@@ -76,9 +74,7 @@ foreach($links as $link){
 $document["title"] =$doc_title;
 $document["body"] = $doc_body -> innertext ;
 
-
-$json_event = file_get_contents("../Dataset/project-files/events.json");
-$json_event = json_decode($json_event, true);
+$json_event = load("../Dataset/project-files/events.json");
 $a = (int)$_POST['currentEvent'];
 if($a >= 0){
     foreach($json_event[$a]["submissions"] as $paper){
@@ -90,21 +86,17 @@ if($a >= 0){
     if(strcmp($_SESSION['eventrole'],"Chair") == 0){    
         $document["chairJudgment"] = true;
 
-        $json_j = file_get_contents("../Dataset/project-files/judgment.json");
-        $json_j = json_decode($json_j,true);
+        $json_j = load("../Dataset/project-files/judgment.json");
         foreach($document["reviewers"] as $reviewer){
             if(!isset($json_j[$_POST['localUrl']][$reviewer])){
                 $document["chairJudgment"] = false;
             }
         }
     }
-    $json_jc = file_get_contents("../Dataset/project-files/chairjudgment.json");
-    $json_jc = json_decode($json_jc,true);
+    $json_jc = load("../Dataset/project-files/chairjudgment.json");
     if(isset($json_jc[$_POST['localUrl']])){
         $document["chairJudgmentvalue"] = $json_jc[$_POST['localUrl']];
     }
 }
 echo json_encode($document);
-
-
 ?>

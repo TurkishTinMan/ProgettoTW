@@ -1,8 +1,8 @@
 <?php
 include('simple_html_dom.php');
+include('dbManager.php');
 $output = array();
-$json = file_get_contents("../Dataset/project-files/annotations.json");
-$json = json_decode($json,true);
+$json = load("../Dataset/project-files/annotations.json");
 if($json != null){
     foreach($json as $value){
         if(strcmp($_POST['localUrl'],$value["Doc"]) == 0){

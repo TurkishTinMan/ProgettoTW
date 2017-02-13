@@ -1,11 +1,10 @@
 <?php
 session_start();
-
 include('simple_html_dom.php');
+include('dbManager.php');
 $output = array();
 
-$json_j = file_get_contents("../Dataset/project-files/judgment.json");
-$json_j = json_decode($json_j,true);
+$json_j = load("../Dataset/project-files/judgment.json");
 if($json_j != null){
     foreach($json_j as $document => $value){
         if(strcmp($_POST['localUrl'],$document) == 0){

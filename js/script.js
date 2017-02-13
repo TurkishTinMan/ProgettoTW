@@ -5,9 +5,8 @@ function randomCSS(){
     return "background-color:#"+Math.floor(Math.random()*16777215).toString(16);
 }
 
-
 function reset(){
-    $("#doc").html("<h3>Documento</h3><p>----</p>");
+    $("#doc").html(" ");
     $("#ul-metaarea-documents").html(" ");
     $("#ul-reviewer").remove();
     $("#Reviewer-title").remove();
@@ -38,7 +37,7 @@ function loaderDocArea(numberEvent) {
                 if (k.localeCompare(urlCurrentDoc) == 0){
                     toReset = false;
                 }
-                result=result+"<li class='list-group-item'><a onclick='LoadDocument(\""+k+"\")'>"+v+"</a></li>";
+                result=result+"<li class='list-group-item'><a onclick='LoadDocument(\""+k+"\",this)'>"+v+"</a></li>";
             }
         });
         $("#DocAreaBody").html(result);
@@ -55,7 +54,7 @@ function loaderDocArea(numberEvent) {
 
 function loaderMetaEventArea(numberEvent){
     if(numberEvent < 0){
-        $("#ul-metaarea-events").html("-");
+
     }else{
         $.ajax({
           url: "./PHP/loaderMetaEventArea.php",
@@ -84,10 +83,9 @@ function loaderMetaEventArea(numberEvent){
                 }
                 
             });
-            $("#ul-metaarea-events").html(result);
           },
           error: function() {
-            $("#ul-metaarea-events").html("-");
+              
           }
         });  
     }
@@ -104,7 +102,7 @@ function loaderEventArea() {
         for(var i=0; i<=json_data.length;i++){
             $.each(json_data[i],function(k,v){
                 if(k=="conference"){
-                    result=result+"<li class='list-group-item member'><a onclick='ChangeEvent(\""+i+"\")'>"+v+"</a></li>";
+                    result=result+"<li class='list-group-item member'><a id=\""+i+"-conference\" onclick='ChangeEvent(\""+i+"\")'>"+v+"</a></li>";
                 }
             });
         }
@@ -205,7 +203,9 @@ function loadJudgment(userkey){
 }
 
 
-function LoadDocument(urlDocument) {  
+function LoadDocument(urlDocument,e) { 
+    $("#selectorDocumentStar").remove();
+    $(e).append('<span id="selectorDocumentStar" class="glyphicon glyphicon-star" aria-hidden="true"></span>');
     $("span#Judgment").html(" ");
     $("#resumereviewers").html(" ");
     $("#chairjudgmentresume").html(" ");
@@ -290,6 +290,8 @@ function ShowHideArea(idshow){
 }
 
 function ChangeEvent(json_data_event){
+    $("#selectorEventStar").remove();
+    $("#"+json_data_event+"-conference").append('<span id="selectorEventStar" class="glyphicon glyphicon-star" aria-hidden="true"></span>');
     $("#Eventid2").val(json_data_event);
     $("#Eventid1").val(json_data_event);
     $("#Eventid").val(json_data_event);

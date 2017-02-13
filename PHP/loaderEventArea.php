@@ -1,8 +1,8 @@
 <?php
 session_start();
 include('simple_html_dom.php');
-$events = file_get_contents("../Dataset/project-files/events.json");
-$json_e = json_decode($events,true);
+include('dbManager.php');
+$json_e = load("../Dataset/project-files/events.json");
 foreach ($json_e as $key=>$event) {
     $cantsee = true;
     foreach($event["chairs"] as $chair){
