@@ -232,7 +232,12 @@ Info Modal-->
         </h1>
     </div>
     <div class="modal-body">
-        <p><span class="glyphicon glyphicon-cog button"></span>Cambia Modalità</p>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="changemode">   
+            <input type="hidden" name="type" value="changemode">
+            <input name="Doc" type="hidden" class="form-control" id="Doc3" value="">
+            <input name="Event" type="hidden" class="form-control" id="Eventid3" value="">
+        </form>
+        <p><span class="glyphicon glyphicon-cog button" onclick="$('#changemode').submit();"></span>Cambia Modalità</p>
         <p><span class="glyphicon glyphicon-cog button" onclick="ShowHideArea(ChangePass)"></span>Cambia Password</p>
         <form id="ChangePass" style="display:none;" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <input type="hidden" name="type" value="changepassword">

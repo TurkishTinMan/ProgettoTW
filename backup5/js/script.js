@@ -292,6 +292,7 @@ function ShowHideArea(idshow){
 function ChangeEvent(json_data_event){
     $("#selectorEventStar").remove();
     $("#"+json_data_event+"-conference").append('<span id="selectorEventStar" class="glyphicon glyphicon-star" aria-hidden="true"></span>');
+    $("#Eventid3").val(json_data_event);
     $("#Eventid2").val(json_data_event);
     $("#Eventid1").val(json_data_event);
     $("#Eventid").val(json_data_event);

@@ -1,5 +1,5 @@
 var urlCurrentDoc = "";
-var currentEvent = 0;
+var currentEvent = -1;
 var eventrole = "";
 var helpUrl = "../help.html";
 var AnnotatorSign = '<span class="glyphicon glyphicon-pencil"></span>';
@@ -14,12 +14,21 @@ function randomCSS(){
 //carica il file help.html che contiene la guida
 function reset(){
     LoadDocument(helpUrl);
+    $("#Eventid").val(-1);
+    $("#Eventid1").val(-1);
+    $("#Eventid2").val(-1);
+    $("#Eventid3").val(-1);
 }
 
 //Evidenzia l'evento scelto
-function HighLightEvent(element){
+function HighLightEvent(i){
     $("#EventAreaBody > li").removeClass("highlight");
-    $(element).parent().addClass("highlight");
+    currentEvent = i;
+    $("#Eventid").val(currentEvent);
+    $("#Eventid1").val(currentEvent);
+    $("#Eventid2").val(currentEvent);
+    $("#Eventid3").val(currentEvent);
+    $("#"+currentEvent+"event").parent().addClass("highlight");
 }
 
 //Evidenzia il documento scelto, lo setta come variabile globale, riempie le form di riferimento e svuota i metadati
@@ -29,6 +38,7 @@ function HighLightDocument(urlDocument,element){
     $("#Doc").val(urlDocument);
     $("#Doc1").val(urlDocument);
     $("#Doc2").val(urlDocument);
+    $("#Doc3").val(urlDocument);
     $("#keyWordsList").html("");
     $("#Anntable").html("");
     $("#chairjudgmentresume").html("");
@@ -80,7 +90,7 @@ function loaderEventArea() {
         for(var i=0; i<=json_data.length;i++){
             $.each(json_data[i],function(k,v){
                 if(k=="conference"){
-                    result=result+"<li class='list-group-item member'><a  onclick='ChangeEvent(\""+i+"\",this)'>"+v+"</a></li>";
+                    result=result+"<li class='list-group-item member'><a  id=\""+i+"event\" onclick='ChangeEvent("+i+")'>"+v+"</a></li>";
                 }
             });
         }
@@ -93,14 +103,10 @@ function loaderEventArea() {
 }
 
 //Funzione cambia evento
-function ChangeEvent(json_data_event,e){
-    HighLightEvent(e);
-    currentEvent = json_data_event;
-    $("#Eventid").val(currentEvent);
-    $("#Eventid1").val(currentEvent);
-    $("#Eventid2").val(currentEvent);
-    loaderDocArea(currentEvent);
-    loaderMetaEventArea(currentEvent);
+function ChangeEvent(json_data_event){
+    HighLightEvent(json_data_event);
+    loaderDocArea(json_data_event);
+    loaderMetaEventArea(json_data_event);
 }
 
 //Funzione Ajax che restiruisce tutti i documenti dell'evento
@@ -472,6 +478,4 @@ function ScrollToAnnotation(idcomment){
     },200);
 
 }
-
-
 

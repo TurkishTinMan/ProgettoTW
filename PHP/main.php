@@ -11,7 +11,9 @@ $AnnotationFileUrl = "./Dataset/project-files/annotations.json";
 function setting(){
     session_start();
     $_SESSION["eventrole"] = "None";
-    $_SESSION["userrole"] = "Reader";
+    if(!isset($_SESSION["userrole"])){
+        $_SESSION["userrole"] = "Reader";
+    }
 }
 
 function getGUID(){
@@ -33,6 +35,15 @@ function getGUID(){
 
 function postManager($type){
     switch($type){
+        case 'changemode':
+            if(strcmp($_SESSION["userrole"],"Reader")== 0){
+                $_SESSION["userrole"] = "Annotator";
+            }else{
+                $_SESSION["userrole"] = "Reader";
+            }
+            $returnEvent = $_POST['Event'];
+            $returnDoc = $_POST['Doc'];
+            break;
         case 'addChairJudgment':
             if(empty($_POST['judgment'])){
                  $error = "Devi immettere un giudizio";
@@ -79,6 +90,7 @@ function postManager($type){
         case 'logout':
             session_unset();
             unset($_SESSION["userrole"]);
+            unset($_SESSION["name"]);
             $success = "Logout complete!";
             break;
         case 'skiplogin':
@@ -212,7 +224,7 @@ function postManager($type){
         $( document ).ready(function(){
             ChangeEvent('<?php echo $returnEvent; ?>');
             LoadDocument('<?php echo $returnDoc; ?>');
-        }
+        });
     </script>
 <?php    
     }
