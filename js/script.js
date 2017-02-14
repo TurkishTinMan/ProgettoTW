@@ -24,6 +24,7 @@ function HighLightEvent(i){
     $("#Eventid1").val(currentEvent);
     $("#Eventid2").val(currentEvent);
     $("#Eventid3").val(currentEvent);
+    console.log($("#"+currentEvent+"event"));
     $("#"+currentEvent+"event").parent().addClass("highlight");
 }
 
@@ -71,7 +72,6 @@ $( document ).ready(function(){
     $("nav>div>div>ul>li").attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
     loaderEventArea();  
     $("#eventRole").html(NoneSign);
-    reset();
 });
 
 
@@ -91,6 +91,9 @@ function loaderEventArea() {
             });
         }
         $("#EventAreaBody").html(result);
+        if (currentEvent >= 0){
+            ChangeEvent(currentEvent);
+        }
       },
       error: function() {
         Notify('error','Errore interno, impossibile caricare gli eventi!');

@@ -222,7 +222,7 @@ function postManager($type){
 ?>
     <script>
         $( document ).ready(function(){
-            ChangeEvent('<?php echo $returnEvent; ?>');
+            currentEvent = <?php echo $returnEvent; ?>;
             LoadDocument('<?php echo $returnDoc; ?>');
         });
     </script>
