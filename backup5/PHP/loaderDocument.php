@@ -23,7 +23,7 @@ foreach ($tags as $tag) {
 $scripts = $doc_body -> find('script');
 foreach ($scripts as $script) {
     $old_src = $script -> src;
-    if (0 !== strpos($old_src, 'http') && 0 !== strcmp($old_src, '')) {
+    if (0 !== strpos($old_src, 'http')) {
         $new_src_url = './Dataset/project-files/dataset/'.$old_src;
         $script -> src = $new_src_url;
     }
@@ -33,7 +33,7 @@ foreach ($scripts as $script) {
 $styles = $doc_body -> find('link');
 foreach ($styles as $style) {
     $old_src = $style -> src;
-    if (0 !== strpos($old_src, 'http') && 0 !== strcmp($old_src, '')) {
+    if (0 !== strpos($old_src, 'http')) {
         $new_src_url = './Dataset/project-files/dataset/'.$old_src;
         $style -> src = $new_src_url;
     }
@@ -87,11 +87,9 @@ if($a >= 0){
         $document["chairJudgment"] = true;
 
         $json_j = load("../Dataset/project-files/judgment.json");
-        if(isset($document["reviewers"])){
-            foreach($document["reviewers"] as $reviewer){
-                if(!isset($json_j[$_POST['localUrl']][$reviewer])){
-                    $document["chairJudgment"] = false;
-                }
+        foreach($document["reviewers"] as $reviewer){
+            if(!isset($json_j[$_POST['localUrl']][$reviewer])){
+                $document["chairJudgment"] = false;
             }
         }
     }

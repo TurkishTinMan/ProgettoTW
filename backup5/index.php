@@ -197,7 +197,7 @@ if(!isset($_SESSION["userrole"])) :?>
 </div>
     
     
-<!--
+<!--Info Modal-->
 <div id="ViewHelp" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true">
 <div class="modal-dialog">
 <div class="panel panel-primary">
@@ -214,13 +214,12 @@ if(!isset($_SESSION["userrole"])) :?>
         Shank bacon short ribs, doner picanha chuck drumstick salami ribeye ham hock sirloin. Ribeye spare ribs rump salami sausage, shoulder tail leberkas ham hock short loin jerky jowl. Landjaeger shank rump strip steak ham hock jerky cow. Alcatra turducken flank, shank pancetta tongue leberkas ground round sausage biltong strip steak drumstick.</p>
     </div>
         <div class="panel-footer">
-            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button> 
+            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button> <!--HO INSERITO STYLE -->
         </div>
         </form>
     </div>
 </div>
 </div>
-Info Modal-->
 
 <!--Logout Modal-->
 <div id="LogoutModal" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true">
@@ -349,7 +348,7 @@ Info Modal-->
     </div>
     <div id="navbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a onclick="reset()">Help</a></li>
+        <li><a onclick="OpenHelp()">Help</a></li>
         <?php if ($_SESSION["userrole"] != "Reader") : ?>
         <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">Add Annotation</a></li>
         <?php else: ?>
@@ -367,7 +366,7 @@ Info Modal-->
            <a data-toggle="modal" data-target="#LoginModal" class="pointer">
            <?php endif; ?>
            <?php
-echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION["userrole"]."</span> : <span id='eventRole'></span>"; 
+echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION["userrole"]."</span> : <span id='eventRole'>".$_SESSION["eventrole"]."</span>"; 
            ?>
            </a>
        </li>

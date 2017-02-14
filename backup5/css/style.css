@@ -110,9 +110,12 @@ div.text-center {
 #EventArea {
     padding: 0;
 }
+#selectorEventStar{
+    float: right;
+}
 
-.highlight{
-    background-color: yellow;
+#selectorDocumentStar{
+    float: right;
 }
 
 #MetaArea {

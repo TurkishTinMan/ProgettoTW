@@ -1,107 +1,23 @@
 var urlCurrentDoc = "";
 var currentEvent = 0;
-var eventrole = "";
-var helpUrl = "../help.html";
-var AnnotatorSign = '<span class="glyphicon glyphicon-pencil"></span>';
-var PC_MemberSign = '<span class="glyphicon glyphicon-eye-open"></span>';
-var NoneSign = '<span class="glyphicon glyphicon-ban-circle"></span>';
-
 
 function randomCSS(){
     return "background-color:#"+Math.floor(Math.random()*16777215).toString(16);
 }
 
-//carica il file help.html che contiene la guida
 function reset(){
-    LoadDocument(helpUrl);
-}
-
-//Evidenzia l'evento scelto
-function HighLightEvent(element){
-    $("#EventAreaBody > li").removeClass("highlight");
-    $(element).parent().addClass("highlight");
-}
-
-//Evidenzia il documento scelto, lo setta come variabile globale, riempie le form di riferimento e svuota i metadati
-function HighLightDocument(urlDocument,element){
-    $("#DocAreaBody > li").removeClass("highlight");
-    $(element).parent().addClass("highlight");
-    $("#Doc").val(urlDocument);
-    $("#Doc1").val(urlDocument);
-    $("#Doc2").val(urlDocument);
-    $("#keyWordsList").html("");
-    $("#Anntable").html("");
-    $("#chairjudgmentresume").html("");
-    /*
-    $("span#Judgment").html(" ");
-    $("#resumereviewers").html(" ");
-    $("#chairjudgmentresume").html(" ");
+    $("#doc").html(" ");
+    $("#ul-metaarea-documents").html(" ");
     $("#ul-reviewer").remove();
-    $("#Reviewer-title").remove();*/
-    urlCurrentDoc = urlDocument;
+    $("#Reviewer-title").remove();
 }
 
-//Switch che associa la stringa "role" alla variabile e al simbolo grafico
-function ChangeRole(role){
-    switch(role){
-        case 'Chair':
-            $("#eventRole").html(AnnotatorSign);
-            eventrole = "Chair";
-            break;
-        case 'PC Member':
-            $("#eventRole").html(PC_MemberSign);
-            eventrole = "";
-            break;
-        default:
-            $("#eventRole").html(NoneSign);
-            eventrole = "";
-            break;
-    }
-}
-
-//funzione ready
 $( document ).ready(function(){
-    loaderEventArea();  
-    $("#eventRole").html(NoneSign);
+    $("nav>div>div>ul>li").attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
     reset();
+    loaderEventArea();    
 });
 
-
-//funzione ajax che restituisce la lista degli eventi che l'utente può vedere
-function loaderEventArea() {
-    $.ajax({
-      url: "./PHP/loaderEventArea.php",
-      type: "GET",
-      dataType: 'json',
-      success: function(json_data){
-        result = "";
-        for(var i=0; i<=json_data.length;i++){
-            $.each(json_data[i],function(k,v){
-                if(k=="conference"){
-                    result=result+"<li class='list-group-item member'><a  onclick='ChangeEvent(\""+i+"\",this)'>"+v+"</a></li>";
-                }
-            });
-        }
-        $("#EventAreaBody").html(result);
-      },
-      error: function() {
-        Notify('error','Errore interno, impossibile caricare gli eventi!');
-      }
-    });  
-}
-
-//Funzione cambia evento
-function ChangeEvent(json_data_event,e){
-    HighLightEvent(e);
-    currentEvent = json_data_event;
-    $("#Eventid").val(currentEvent);
-    $("#Eventid1").val(currentEvent);
-    $("#Eventid2").val(currentEvent);
-    loaderDocArea(currentEvent);
-    loaderMetaEventArea(currentEvent);
-}
-
-//Funzione Ajax che restiruisce tutti i documenti dell'evento
 function loaderDocArea(numberEvent) {
     toReset = true;
     if ($("#DocArea").css("display") != 'none'){
@@ -116,14 +32,12 @@ function loaderDocArea(numberEvent) {
         result = "";
         $.each(json_data,function(k,v){
             if(k=="Role"){
-                ChangeRole(v);
+                $("#eventRole").html(v);
             }else{
                 if (k.localeCompare(urlCurrentDoc) == 0){
                     toReset = false;
-                    result=result+"<li class='list-group-item highlight'><a onclick='LoadDocument(\""+k+"\",this)'>"+v+"</a></li>";
-                }else{
-                    result=result+"<li class='list-group-item'><a onclick='LoadDocument(\""+k+"\",this)'>"+v+"</a></li>";
                 }
+                result=result+"<li class='list-group-item'><a onclick='LoadDocument(\""+k+"\",this)'>"+v+"</a></li>";
             }
         });
         $("#DocAreaBody").html(result);
@@ -132,16 +46,15 @@ function loaderDocArea(numberEvent) {
         }
       },
       error: function() {
-        Notify('error','Errore interno, impossibile caricare i documenti!');
+        $("#DocAreaBody").html("Error!");
       }
     });  
     $("#DocArea").show(300);
 }
 
-//Funzione Ajax che restiruisce i metadati dell'evento
 function loaderMetaEventArea(numberEvent){
     if(numberEvent < 0){
-        reset();
+
     }else{
         $.ajax({
           url: "./PHP/loaderMetaEventArea.php",
@@ -151,18 +64,15 @@ function loaderMetaEventArea(numberEvent){
           success: function(json_data){
             result = "";
             $.each(json_data,function(k,v){
-                //nome conferenza--TODO metterla da qualche parte o non gestire il caso
                 if(k == "conference"){
                     result=result+"<li>"+v+"</li>";
                 }
-                //lista dei Chair-- TODO Farla vedere da qualche parte
                 if(k == "chairs"){
                     result = result + "<h4>Chairs</h4>";
                     $.each(v,function(x,z){
                         result=result+"<li>"+z+"</li>";    
                     });
                 }
-                //lista dei membri-- TODO metterla da qualche parte o non gestire il caso
                 if(k == "pc_members"){
                     result = result + "<h4>Membri</h4>";
                     $.each(v,function(x,z){
@@ -175,96 +85,34 @@ function loaderMetaEventArea(numberEvent){
             });
           },
           error: function() {
-              Notify('error','Impossibile raggiungere le caratteristiche dell\'evento, errore interno!');
+              
           }
         });  
     }
 }
 
-//Funzione ajax che carica il documento
-function LoadDocument(urlDocument,e) { 
-    HighLightDocument(urlDocument,e);
-    $.ajax({ 
-        url:"./PHP/loaderDocument.php",
-        type:"POST",
-        data: {
-                localUrl : urlDocument,
-                currentEvent : currentEvent
-        },
-        dataType:'json',
-        success: function(paper_json) {
-            //Scrittura del paper nell'apposita sezione
-            paper = "<h1>" + paper_json["title"] + "</h1><div>" + paper_json["body"] + "</div>";
-            $("#doc").html(paper);
-            if(urlDocument != helpUrl){
-                startmetadati = "<li>";
-                endmetadati="</li>";
 
-                //Lista delle parole chiavi del documento
-                $.each(paper_json["keyword"],function(k,v){
-                    $(startmetadati + v + endmetadati).appendTo("#keyWordsList");
-                });
-
-                //Creazione lista degli autori -- TODO metterla da qualche parte
-                metadati = "<ul class='list-group list-unstyled'>";
-                $.each(paper_json["Autori"],function(k,v){
-                    if(v["linked"] == "false"){
-                        metadati = metadati + startmetadati;
-                        metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a><p>"+v["affiliation"]+"</p>";
-                        metadati = metadati + endmetadati;
-                    }
-                });
-                metadati = metadati + "</ul>";
-                metadati = metadati;
-
-                //Creazione lista degli reviwer -- TODO metterla da qualche parte
-                result = "<ul id='ul-reviewer' class='list-group list-unstyled'></ul>";
-                $.each(paper_json["reviewers"], function(x,z){
-                    loadJudgment(z);
-                    start = z.indexOf('<');
-                    start = start +1;
-                    end = z.indexOf('>');
-                    y = z.substring(start,end);
-                    y = y.replace(/@/g, 'a');
-                    y = y.replace(/\./g, 'p');
-                    $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li>")  
-                });
-
-
-                resumechairjudgment = "Inespresso";
-
-                if(paper_json["chairJudgmentvalue"]){
-                    resumechairjudgment = paper_json["chairJudgmentvalue"];
-                }  
-                if(paper_json["chairJudgment"]){
-                    resumechairjudgment = "<a onclick='ViewChairJudgment()'>" + resumechairjudgment + "</a>";
-                    Notify('info','Sei un chair, il tuo giudizio su questo documento è:'+ resumechairjudgment +'.<br>Puoi cambiarlo cliccando vicino al tuo nome nella lista dei reviewer.');
+function loaderEventArea() {
+    $.ajax({
+      url: "./PHP/loaderEventArea.php",
+      type: "GET",
+      dataType: 'json',
+      success: function(json_data){
+        result = "";
+        for(var i=0; i<=json_data.length;i++){
+            $.each(json_data[i],function(k,v){
+                if(k=="conference"){
+                    result=result+"<li class='list-group-item member'><a id=\""+i+"-conference\" onclick='ChangeEvent(\""+i+"\")'>"+v+"</a></li>";
                 }
-
-                $("#chairjudgmentresume").html("<h3>Chair's judgement:" + resumechairjudgment + "</h3>");
-
-
-                LoadAnnotation(urlDocument);  
-            }
-        },
-        error:function(jqXHR, status, errorThrown) {
-            console.log(jqXHR.responseText);
-            console.log(status);
-            console.log(errorThrown);
+            });
         }
-    });
+        $("#EventAreaBody").html(result);
+      },
+      error: function() {
+        $("#EventAreaBody").html("Error!");
+      }
+    });  
 }
-
-
-
-
-
-
-
-
-
-
-
 
 function LoadAnnotation(urlDocument){
     $("#Anntable").html("<thead><tr><th>User</th><th>Data</th><th>Content</th><th>Find</th><th>Delete</th></tr></thead>");
@@ -355,6 +203,83 @@ function loadJudgment(userkey){
 }
 
 
+function LoadDocument(urlDocument,e) { 
+    $("#selectorDocumentStar").remove();
+    $(e).append('<span id="selectorDocumentStar" class="glyphicon glyphicon-star" aria-hidden="true"></span>');
+    $("span#Judgment").html(" ");
+    $("#resumereviewers").html(" ");
+    $("#chairjudgmentresume").html(" ");
+    $("#keyWordsList").html(" ");
+    $("#ul-reviewer").remove();
+    $("#Reviewer-title").remove();
+    urlCurrentDoc = urlDocument;
+    $.ajax({ 
+        url:"./PHP/loaderDocument.php",
+        type:"POST",
+        data: {localUrl : urlDocument,currentEvent : currentEvent},
+        dataType:'json',
+        success: function(paper_json) {
+            paper = "<h1>" + paper_json["title"] + "</h1><div>" + paper_json["body"] + "</div>";
+            $("#doc").html(paper);
+            
+            startmetadati = "<li>";
+            endmetadati="</li>";
+            $.each(paper_json["keyword"],function(k,v){
+                $(startmetadati + v + endmetadati).appendTo("#keyWordsList");
+            });
+            
+            
+            metadati = "Autori:<ul class='list-group list-unstyled'>";
+            
+            $.each(paper_json["Autori"],function(k,v){
+                if(v["linked"] == "false"){
+                    metadati = metadati + startmetadati;
+                    metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a><p>"+v["affiliation"]+"</p>";
+                    metadati = metadati + endmetadati;
+                }
+            });
+            metadati = metadati + "</ul>";
+            metadati = metadati;
+            $("#ul-metaarea-documents").html(metadati);
+            $("#Doc2").val(urlDocument);
+            $("#Doc1").val(urlDocument);
+            $("#Doc").val(urlDocument);
+            LoadAnnotation(urlDocument);
+            result = "<h4 id='Reviewer-title'>Reviewers</h4>";
+            result = result+"<ul id='ul-reviewer' class='list-group list-unstyled'></ul>";
+            $("#ul-metaarea-events").append(result);
+            $.each(paper_json["reviewers"], function(x,z){
+                loadJudgment(z);
+                start = z.indexOf('<');
+                start = start +1;
+                end = z.indexOf('>');
+                y = z.substring(start,end);
+                y = y.replace(/@/g, 'a');
+                y = y.replace(/\./g, 'p');
+                $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li>")  
+            });
+            resumechairjudgment = "Inespresso";
+            
+            if(paper_json["chairJudgmentvalue"]){
+                resumechairjudgment = paper_json["chairJudgmentvalue"];
+            }  
+            if(paper_json["chairJudgment"]){
+                resumechairjudgment = "<a onclick='ViewChairJudgment()'>" + resumechairjudgment + "</a>";
+                Notify('info','Sei un chair, il tuo giudizio su questo documento è:'+ resumechairjudgment +'.<br>Puoi cambiarlo cliccando vicino al tuo nome nella lista dei reviewer.');
+            }
+            
+            $("#chairjudgmentresume").html("<h3>Chair's judgement:" + resumechairjudgment + "</h3>");
+
+            
+        },
+        error:function(jqXHR, status, errorThrown) {
+            console.log(jqXHR.responseText);
+            console.log(status);
+            console.log(errorThrown);
+        }
+    });
+    urlCurrentDoc = urlDocument;
+}
 
 function ShowHideArea(idshow){
     if($(idshow).is(":visible")){
@@ -363,6 +288,18 @@ function ShowHideArea(idshow){
         $(idshow).show(300);
     }
 }
+
+function ChangeEvent(json_data_event){
+    $("#selectorEventStar").remove();
+    $("#"+json_data_event+"-conference").append('<span id="selectorEventStar" class="glyphicon glyphicon-star" aria-hidden="true"></span>');
+    $("#Eventid2").val(json_data_event);
+    $("#Eventid1").val(json_data_event);
+    $("#Eventid").val(json_data_event);
+    currentEvent = json_data_event;
+    loaderDocArea(json_data_event);
+    loaderMetaEventArea(json_data_event);
+}
+
 
 function ChangePage(idpagebutton){
     $( document ).ready(function(){
@@ -444,13 +381,13 @@ function JudgmentModal(){
         show:true
     });
 }
-/*
+
 function OpenHelp(){
     $("#ViewHelp").modal({
         show: 'true'
     });
 }
-*/
+
 function ViewChairJudgment(){
     $("#ViewChairJudgment").modal({
         show: 'true'

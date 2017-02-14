@@ -10,7 +10,9 @@ $AnnotationFileUrl = "./Dataset/project-files/annotations.json";
 
 function setting(){
     session_start();
-    $_SESSION["eventrole"] = "None";
+    if(!isset($_SESSION["eventrole"])){
+        $_SESSION["eventrole"] = "None";
+    }
 }
 
 function getGUID(){
