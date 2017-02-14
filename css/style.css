@@ -275,3 +275,11 @@ th {
     background-color: #92c3e2;
     margin-left: 5px;
 }
+
+.button{
+    background-color: #337ab7;
+    border-radius: 4px;
+    border:solid 1px black;
+    padding: 4px;
+}
+

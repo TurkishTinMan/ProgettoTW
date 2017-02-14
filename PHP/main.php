@@ -11,6 +11,7 @@ $AnnotationFileUrl = "./Dataset/project-files/annotations.json";
 function setting(){
     session_start();
     $_SESSION["eventrole"] = "None";
+    $_SESSION["userrole"] = "Reader";
 }
 
 function getGUID(){
@@ -91,7 +92,6 @@ function postManager($type){
                 if($person_name['email'] == $_POST['email']){
                     $user = false;
                     if($person_name['pass'] == $_POST['password']){
-                        $_SESSION["userrole"] = "Annotator";
                         $_SESSION["name"] = $key;
                         $_SESSION["email"] = $person_name['email'];
                     }else{

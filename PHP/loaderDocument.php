@@ -39,6 +39,16 @@ foreach ($styles as $style) {
     }
 }
 
+$links = $doc_body -> find('a');
+foreach ($links as $link) {
+    $old_src = $link -> href;
+    if (0 !== strpos($old_src, 'http') && 0 !== strcmp($old_src, '')) {
+        $new_src_url = './Dataset/project-files/dataset/js/'.$old_src;
+        $link -> href = $new_src_url;
+    }
+}
+
+
 $metas = $doc -> find('meta');
 $document["keyword"] = array();
 $document["Autori"] = array();

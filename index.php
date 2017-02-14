@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         verify($_GET["verify"]);   
     }
 }
-if(!isset($_SESSION["userrole"])) :?>
+if(!isset($_SESSION["name"])) :?>
 
 
 <div id="logcard" class="container">
@@ -232,7 +232,9 @@ Info Modal-->
         </h1>
     </div>
     <div class="modal-body">
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+        <p><span class="glyphicon glyphicon-cog button"></span>Cambia Modalità</p>
+        <p><span class="glyphicon glyphicon-cog button" onclick="ShowHideArea(ChangePass)"></span>Cambia Password</p>
+        <form id="ChangePass" style="display:none;" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <input type="hidden" name="type" value="changepassword">
             <div class="form-group">
                 <label for="oldPass">Vecchia password</label>
@@ -352,16 +354,9 @@ Info Modal-->
         <li><a onclick="reset()">Help</a></li>
         <?php if ($_SESSION["userrole"] != "Reader") : ?>
         <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">Add Annotation</a></li>
-        <?php else: ?>
-        <li>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="registrationform">                 <input type="hidden" name="type" value="logout">
-            </form>
-
-          <a onclick="$('#registrationform').submit()">Registrazione</a>
-        </li>
         <?php endif; ?>
        <li>
-           <?php if ($_SESSION["userrole"] != "Reader") : ?>
+           <?php if ($_SESSION["name"] != "Utente") : ?>
            <a data-toggle="modal" data-target="#LogoutModal" class="pointer">
            <?php else: ?>
            <a data-toggle="modal" data-target="#LoginModal" class="pointer">
@@ -371,6 +366,12 @@ echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION
            ?>
            </a>
        </li>
+       <li>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="logout">                           <input type="hidden" name="type" value="logout">
+            </form>
+
+          <a onclick="$('#logout').submit()"><span class="glyphicon glyphicon-log-out"></span></a>
+        </li>
        </ul>
     </div>
   </div>

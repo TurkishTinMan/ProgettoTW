@@ -61,6 +61,8 @@ function ChangeRole(role){
 
 //funzione ready
 $( document ).ready(function(){
+    //Mi permette di cliccare sul menu senza perdere la selezione sul testo
+    $("nav>div>div>ul>li").attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
     loaderEventArea();  
     $("#eventRole").html(NoneSign);
     reset();
