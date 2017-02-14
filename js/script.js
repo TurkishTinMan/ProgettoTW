@@ -14,10 +14,6 @@ function randomCSS(){
 //carica il file help.html che contiene la guida
 function reset(){
     LoadDocument(helpUrl);
-    $("#Eventid").val(-1);
-    $("#Eventid1").val(-1);
-    $("#Eventid2").val(-1);
-    $("#Eventid3").val(-1);
 }
 
 //Evidenzia l'evento scelto
