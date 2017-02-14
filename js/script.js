@@ -93,6 +93,8 @@ function loaderEventArea() {
         $("#EventAreaBody").html(result);
         if (currentEvent >= 0){
             ChangeEvent(currentEvent);
+        }else{
+            LoadDocument(helpUrl);
         }
       },
       error: function() {
@@ -399,7 +401,7 @@ function Notify(type,text){
 
 
 function AddAnnotation(checklog){
-    if(checklog){
+    if(checklog && (helpUrl != urlCurrentDoc)){
         var selection = window.getSelection();
         if(selection.toString().length != 0){
             var selectedText = selection.toString();
@@ -442,7 +444,7 @@ function AddAnnotation(checklog){
             Notify("error", "Devi selezionare qualcosa per creare un'annotazione");
         }
     }else{
-        Notify("error", "Devi essere un Annotator per creare annotazioni");
+        Notify("error", "Non hai i permessi per creare annotazioni su queto documento");
     }
 }
 
