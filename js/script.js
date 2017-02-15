@@ -24,7 +24,6 @@ function HighLightEvent(i){
     $("#Eventid1").val(currentEvent);
     $("#Eventid2").val(currentEvent);
     $("#Eventid3").val(currentEvent);
-    console.log($("#"+currentEvent+"event"));
     $("#"+currentEvent+"event").parent().addClass("highlight");
 }
 
@@ -203,6 +202,8 @@ function LoadDocument(urlDocument,e) {
         dataType:'json',
         success: function(paper_json) {
             //Scrittura del paper nell'apposita sezione
+            console.log(paper_json["body"]);
+            console.log(paper_json["test"]);
             paper = "<h1>" + paper_json["title"] + "</h1><div>" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
             if(urlDocument != helpUrl){

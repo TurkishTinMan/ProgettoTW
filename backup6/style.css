@@ -7,27 +7,16 @@ body {
     background-color: whitesmoke;
 }
 
-.container {
-    width: 85%;
-}
-
-/* For screen smaller than 768px, e.g.: tablets */
+/* For screen smaller than 768px, e.g.: mobile phones */
 @media only screen and (max-width: 768px) {
     [class*="col-"] {
         width: 100%;
     }
 }
-/* For screen smaller than 468px, e.g.: mobile phones */
-@media only screen and (max-width: 468px) {
-    .container {
-        padding: 0.5em;
-        margin: 0;
-        width:100%;
-    }
-    body {
-        padding-top: 10em;
-        margin: 0;
-    }
+
+.container {
+    padding-right: 50px;
+    padding-left: 50px;
 }
 
 h1,
@@ -106,11 +95,9 @@ div.text-center {
 
 .navbar-default {
     border-color: skyblue;
+    padding: 0.5em;
+    height: 4.6em;
     padding-top: 1.5em;
-}
-
-.navbar-brand {
-    padding-top: 0.3em;
 }
 
 /* * * END Navigation Bar *****/
@@ -223,7 +210,7 @@ by Silvio Peroni
 *****/
 
 /* Figure, table and formula */
-img:not(#logo) {
+img {
     max-width:90%;
     height:auto;
 }

@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>EasyRASH</title>
 
@@ -23,8 +23,8 @@
     <script  src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    
     <script src="js/script.js" type="text/javascript"></script>
+
     
 </head>
 
@@ -342,33 +342,32 @@ Info Modal-->
 
   </div>
 </div>  
-   
-<!--- Navigation Bar --->    
+    
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-controls="navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" id="homebutton"><img id="logo" src="image/logo.png" alt="EasyRush brand"/></a>
+      <a class="navbar-brand" id="homebutton" style="padding:0;"><img id="logo" src="image/logo.png"/></a>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
+    <div id="navbar">
       <ul class="nav navbar-nav navbar-right">
         <li><a onclick="reset()">Help</a></li>
         <?php if ($_SESSION["userrole"] != "Reader") : ?>
         <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">Add Annotation</a></li>
         <?php endif; ?>
-        <li>
+       <li>
            <?php if ($_SESSION["name"] != "Utente") : ?>
            <a data-toggle="modal" data-target="#LogoutModal" class="pointer">
            <?php else: ?>
            <a data-toggle="modal" data-target="#LoginModal" class="pointer">
            <?php endif; ?>
            <?php
-               echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION["userrole"]."</span> : <span id='eventRole'></span>"; 
+echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION["userrole"]."</span> : <span id='eventRole'></span>"; 
            ?>
            </a>
        </li>
@@ -382,11 +381,11 @@ Info Modal-->
     </div>
   </div>
 </nav>
-<!--- END Navigation Bar --->
-  
-<!---  Main Content  ---    
+    
 <div class="tab-content">
-  <div id="main" class="tab-pane fade in active">-->
+    
+  <!---  MAIN  --->
+  <div id="main" class="tab-pane fade in active">
         <div class="container">
             <div class="row">
                 
@@ -456,9 +455,9 @@ Info Modal-->
                     </div>
                 </div>
             </div>
-        </div><!-- END Main Content 
+        </div>
     </div>
-</div>-->
+</div>
 </body>
 </html>
 <?php endif; ?>
