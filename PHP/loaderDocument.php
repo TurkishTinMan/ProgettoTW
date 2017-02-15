@@ -58,6 +58,11 @@ foreach($metas as $meta){
         $document["keyword"][$counterkey] = $meta -> content;
         $counterkey = $counterkey+1;
     }
+    if($meta -> name == "dc.creator"){
+        $document["Autori"][$meta -> about]["name"] = $meta -> content;
+        $document["Autori"][$meta -> about]["linked"] = "none";
+        $document["Autori"][$meta -> about]["about"] = $meta -> about;
+    }
     if($meta -> property == "schema:name"){
         $document["Autori"][$meta -> about]["name"] = $meta -> content;
         $document["Autori"][$meta -> about]["linked"] = "false";

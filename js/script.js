@@ -37,13 +37,9 @@ function HighLightDocument(urlDocument,element){
     $("#Doc3").val(urlDocument);
     $("#keyWordsList").html("");
     $("#Anntable").html("");
-    $("#chairjudgmentresume").html("");
-    /*
-    $("span#Judgment").html(" ");
-    $("#resumereviewers").html(" ");
-    $("#chairjudgmentresume").html(" ");
-    $("#ul-reviewer").remove();
-    $("#Reviewer-title").remove();*/
+    $("#chairjudgmentresume").html("");;
+    $("#ul-reviewer").html("");
+    $("#ul-authors").html("");
     urlCurrentDoc = urlDocument;
 }
 
@@ -202,8 +198,6 @@ function LoadDocument(urlDocument,e) {
         dataType:'json',
         success: function(paper_json) {
             //Scrittura del paper nell'apposita sezione
-            console.log(paper_json["body"]);
-            console.log(paper_json["test"]);
             paper = "<h1>" + paper_json["title"] + "</h1><div>" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
             if(urlDocument != helpUrl){
@@ -216,19 +210,26 @@ function LoadDocument(urlDocument,e) {
                 });
 
                 //Creazione lista degli autori -- TODO metterla da qualche parte
-                metadati = "<ul class='list-group list-unstyled'>";
+                metadati = " ";
+                
                 $.each(paper_json["Autori"],function(k,v){
                     if(v["linked"] == "false"){
                         metadati = metadati + startmetadati;
                         metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a><p>"+v["affiliation"]+"</p>";
                         metadati = metadati + endmetadati;
                     }
+                    if(v["linked"] == "none"){
+                        metadati = metadati + startmetadati;
+                        metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a>";
+                        metadati = metadati + endmetadati;
+
+                    }
                 });
-                metadati = metadati + "</ul>";
                 metadati = metadati;
 
+                $("#ul-authors").append(metadati);
+                
                 //Creazione lista degli reviwer -- TODO metterla da qualche parte
-                result = "<ul id='ul-reviewer' class='list-group list-unstyled'></ul>";
                 $.each(paper_json["reviewers"], function(x,z){
                     loadJudgment(z);
                     start = z.indexOf('<');
@@ -250,8 +251,19 @@ function LoadDocument(urlDocument,e) {
                     resumechairjudgment = "<a onclick='ViewChairJudgment()'>" + resumechairjudgment + "</a>";
                     Notify('info','Sei un chair, il tuo giudizio su questo documento è:'+ resumechairjudgment +'.<br>Puoi cambiarlo cliccando vicino al tuo nome nella lista dei reviewer.');
                 }
-
-                $("#chairjudgmentresume").html("<h3>Chair's judgement:" + resumechairjudgment + "</h3>");
+                switch(resumechairjudgment){
+                    case 'Rejected':
+                        resumechairjudgment = '<span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>'
+                        break;
+                    case 'Accepted':
+                        resumechairjudgment = '<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>'
+                        break;
+                    default:
+                        resumechairjudgment = '<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>';
+                        break;
+                }
+                
+                $("#chairjudgmentresume").html("<h3> Stato documento:" + resumechairjudgment + "</h3>");
 
 
                 LoadAnnotation(urlDocument);  
