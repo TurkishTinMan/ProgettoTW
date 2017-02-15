@@ -181,24 +181,28 @@ function postManager($type){
             if(!isset($_POST['Annotation']) || !isset($_POST['OffsetFromStart']) || !isset($_POST['Path']) || !isset($_POST['Data']) || !isset($_POST['Doc']) || !isset($_POST['LenghtAnnotation'])){
                 $error = "Internal Error!";
             }else{
-                $json_a = load($GLOBALS['AnnotationFileUrl']);
+                if(strcmp($_SESSION["userrole"],"Annotator") == 0){
+                    $json_a = load($GLOBALS['AnnotationFileUrl']);
 
-                $new_annotation["Author"] = $_SESSION["email"];
-                $new_annotation["Annotation"] = $_POST['Annotation'];
-                $new_annotation["Path"] = $_POST['Path'];
-                $new_annotation["OffsetFromStart"] = $_POST['OffsetFromStart'];
-                $new_annotation["LenghtAnnotation"] = $_POST['LenghtAnnotation'];
-                $new_annotation["Data"] = $_POST['Data'];
-                $new_annotation["Doc"] = $_POST['Doc'];
+                    $new_annotation["Author"] = $_SESSION["email"];
+                    $new_annotation["Annotation"] = $_POST['Annotation'];
+                    $new_annotation["Path"] = $_POST['Path'];
+                    $new_annotation["OffsetFromStart"] = $_POST['OffsetFromStart'];
+                    $new_annotation["LenghtAnnotation"] = $_POST['LenghtAnnotation'];
+                    $new_annotation["Data"] = $_POST['Data'];
+                    $new_annotation["Doc"] = $_POST['Doc'];
 
-                if(empty($json_a)){
-                    $json_a = array();
+                    if(empty($json_a)){
+                        $json_a = array();
+                    }
+                    array_push($json_a,$new_annotation);
+                    write($GLOBALS['AnnotationFileUrl'],$json_a);
+                    $success = "Annotazione aggiunta con successo!";
+                    $returnEvent = $_POST['Event'];
+                    $returnDoc = $_POST['Doc'];
+                }else{
+                    $error = "Non hai i permessi per annotare!";
                 }
-                array_push($json_a,$new_annotation);
-                write($GLOBALS['AnnotationFileUrl'],$json_a);
-                $success = "Annotazione aggiunta con successo!";
-                $returnEvent = $_POST['Event'];
-                $returnDoc = $_POST['Doc'];
             }
             break;
     }

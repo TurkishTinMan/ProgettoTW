@@ -428,21 +428,9 @@ Info Modal-->
                        
                        </div>
                        <div class="panel-body" id="MetaArea">
-<!---
-                           <div id="div-metaarea-events">
-                                <h4 onclick="ShowHideArea('#ul-metaarea-events')">Event:</h4>
-                                <ul id="ul-metaarea-events" class="list-group list-unstyled">
-                                </ul>
-                           </div>
-                           <div id="div-metaarea-documents">
-                                <h4 onclick="ShowHideArea('#ul-metaarea-documents')">Document:</h4>
-                                <ul id="ul-metaarea-documents" class="list-group list-unstyled">
-                                </ul>
-                           </div>
-  --->                          
                             <p id="chairjudgmentresume"></p> 
-                            <ul id="ul-authors"></ul>
                             <ul id="ul-reviewer"></ul>
+                            <ul id="ul-authors"></ul>
                             <ul id="keyWordsList"></ul>  
                        </div>
                     </div>

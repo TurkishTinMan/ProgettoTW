@@ -134,6 +134,15 @@ div.text-center {
     border-bottom-right-radius: 4px;
 }
 
+#MetaArea > p > h3 > .glyphicon{
+    float:right;
+}
+#MetaArea > ul{
+    list-style: none;
+    padding-left: 0px;
+}
+
+
 #DocAreaBody, 
 #EventAreaBody {
     padding: 0;

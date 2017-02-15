@@ -213,17 +213,16 @@ function LoadDocument(urlDocument,e) {
                 metadati = " ";
                 
                 $.each(paper_json["Autori"],function(k,v){
-                    if(v["linked"] == "false"){
-                        metadati = metadati + startmetadati;
-                        metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a><p>"+v["affiliation"]+"</p>";
-                        metadati = metadati + endmetadati;
-                    }
-                    if(v["linked"] == "none"){
+                    if(v['linked']!= "true"){
                         metadati = metadati + startmetadati;
                         metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a>";
-                        metadati = metadati + endmetadati;
-
+                        if(v["linked"] == "false"){
+                            metadati = metadati + "<p>"+v["affiliation"]+"</p>";
+                            metadati = metadati + endmetadati;
+                        }
+                        metadati = metadati + "<hr>";
                     }
+
                 });
                 metadati = metadati;
 
@@ -238,7 +237,7 @@ function LoadDocument(urlDocument,e) {
                     y = z.substring(start,end);
                     y = y.replace(/@/g, 'a');
                     y = y.replace(/\./g, 'p');
-                    $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li>")  
+                    $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li><hr>")  
                 });
 
 
@@ -263,7 +262,7 @@ function LoadDocument(urlDocument,e) {
                         break;
                 }
                 
-                $("#chairjudgmentresume").html("<h3> Stato documento:" + resumechairjudgment + "</h3>");
+                $("#chairjudgmentresume").html("<h3> Stato documento:" + resumechairjudgment + "</h3><hr>");
 
 
                 LoadAnnotation(urlDocument);  
