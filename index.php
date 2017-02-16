@@ -353,7 +353,7 @@ Info Modal-->
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" id="homebutton"><img id="logo" src="image/logo.png" alt="EasyRush brand"/></a>
+      <a class="navbar-brand" id="homebutton"><img class="img-responsive" id="logo" src="image/logo.png" alt="EasyRush brand"/></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
@@ -391,7 +391,7 @@ Info Modal-->
             <div class="row">
                 
                 <!---     Menu - left coloumn    --->
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-sm-4">
                     
                     <!---   EVENT AREA   --->
                     <div class="panel panel-primary">
@@ -438,12 +438,12 @@ Info Modal-->
                 </div>
                 
                 <!---     Document View - right coloumn     --->
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">                    
+                <div class="col-sm-8">                    
                     <div class="well">
                         <div id="doc">
                         </div>
                     </div>
-                    <div class="text-center">
+                    <div class="panel panel-primary text-center">
                       <table id="Anntable" class="table table-striped">
                       </table>
                     </div>

@@ -1,33 +1,14 @@
 /***** General *****/
 body {
     padding-top: 6.5em;
-    font-size: 10pt;
+    font-size: 11pt;
     font-family: 'Roboto', sans-serif;
     margin: 2em;
     background-color: whitesmoke;
 }
 
 .container {
-    width: 85%;
-}
-
-/* For screen smaller than 768px, e.g.: tablets */
-@media only screen and (max-width: 768px) {
-    [class*="col-"] {
-        width: 100%;
-    }
-}
-/* For screen smaller than 468px, e.g.: mobile phones */
-@media only screen and (max-width: 468px) {
-    .container {
-        padding: 0.5em;
-        margin: 0;
-        width:100%;
-    }
-    body {
-        padding-top: 10em;
-        margin: 0;
-    }
+    width: 95%;
 }
 
 h1,
@@ -36,7 +17,8 @@ h3,
 h4,
 h5,
 h6,
-.navbar {
+.navbar,
+#Anntable th{
     font-family: 'Roboto Slab', sans-serif;
 }
 
@@ -237,10 +219,10 @@ img:not(#logo) {
     height:auto;
 }
 
-table {
+table:not(#Anntable) {
     max-width:90%;
     margin: 0 auto;
-    font-size: 8pt;
+    font-size: 9pt;
 }
 
 figure {
@@ -261,6 +243,9 @@ figure > pre {
     text-align:left;
 }
 
+pre > code {
+    font-size: 9pt;
+}
 figcaption {
     margin-top:5px;
 }
@@ -279,6 +264,7 @@ th {
     color: white;
     text-align:center;
 }
+
 /* /END Figure, table and formula */
 
 #keyWordsList{
@@ -305,3 +291,49 @@ th {
     padding: 4px;
 }
 
+/**** Annotation Table *****/
+#Anntable  td {
+    padding: 0.5em;
+}
+
+#Anntable th {
+    text-align: center;
+ 
+    color:white;
+}
+
+#Anntable thead {
+        background-color: #337ab7;
+}
+/*****
+/*
+/*
+/***** Media Queries *****/
+
+/* For screen smaller than 992px, e.g.: notebook */
+@media only screen and (max-width: 992px) {
+    .container {
+        width: 100%;
+    }
+}
+
+/* For screen smaller than 768px, e.g.: tablets */
+@media only screen and (max-width: 768px) {
+    .container {
+        padding: 0.5em;
+        margin: 0;
+    }
+    body {
+        padding-top: 8em;
+        max-width: 90%;
+    }
+}
+
+/* For screen smaller than 480px, e.g.: mobile phones */
+@media only screen and (max-width: 480px) {
+    body {
+        margin: 1em;
+        max-width: 95%;
+    }
+}
+/* * * END Media Queries *****/
