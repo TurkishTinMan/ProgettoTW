@@ -30,6 +30,10 @@ if($a >= 0){
         if(!is_dir($file) && in_array($file, $documentToLoad)){
             $html = file_get_html(basename($file));
             $title = $html->find('title',0)->innertext;
+            $titles = explode("--",$title);
+            if(isset($titles[1])){
+                $title = $titles[0];
+            }
             $output['../Dataset/project-files/dataset/'.basename($file)] = $title;
         }
     }

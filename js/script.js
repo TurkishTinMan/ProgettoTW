@@ -36,6 +36,8 @@ function HighLightDocument(urlDocument,element){
     $("#Doc2").val(urlDocument);
     $("#Doc3").val(urlDocument);
     $("#keyWordsList").html("");
+    $("#ACM").html("");
+    
     $("#Anntable").html("");
     $("#chairjudgmentresume").html("");;
     $("#ul-reviewer").html("");
@@ -198,7 +200,11 @@ function LoadDocument(urlDocument,e) {
         dataType:'json',
         success: function(paper_json) {
             //Scrittura del paper nell'apposita sezione
-            paper = "<h1>" + paper_json["title"] + "</h1><div>" + paper_json["body"] + "</div>";
+            paper = "<h1>" + paper_json["title"] + "</h1>";
+            if(paper_json["subtitle"]){
+                paper = paper + "<h2>"+paper_json["subtitle"]+"</h2>";
+            }
+            paper = paper + "<div>" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
             if(urlDocument != helpUrl){
                 startmetadati = "<li>";
@@ -208,18 +214,28 @@ function LoadDocument(urlDocument,e) {
                 $.each(paper_json["keyword"],function(k,v){
                     $(startmetadati + v + endmetadati).appendTo("#keyWordsList");
                 });
+                
+                //Lista delle ACM
+                $.each(paper_json["ACM"], function(x,z){
+                    $(startmetadati + z + endmetadati).appendTo("#ACM");
+                });
+
 
                 //Creazione lista degli autori -- TODO metterla da qualche parte
                 metadati = " ";
                 
                 $.each(paper_json["Autori"],function(k,v){
-                    if(v['linked']!= "true"){
-                        metadati = metadati + startmetadati;
-                        metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a>";
-                        if(v["linked"] == "false"){
-                            metadati = metadati + "<p>"+v["affiliation"]+"</p>";
-                            metadati = metadati + endmetadati;
+                    if(v["name"] && v["linked"]!= "true"){
+                        metadati + startmetadati;
+                        if(v["email"]){
+                            metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a>";
+                        }else{
+                            metadati = metadati + v["name"];
                         }
+                        if(v["affiliation"]){
+                            metadati = metadati + "<p>"+v["affiliation"]+"</p>";
+                        }
+                        metadati = metadati + endmetadati;
                         metadati = metadati + "<hr>";
                     }
 
@@ -237,9 +253,9 @@ function LoadDocument(urlDocument,e) {
                     y = z.substring(start,end);
                     y = y.replace(/@/g, 'a');
                     y = y.replace(/\./g, 'p');
-                    $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li><hr>")  
+                    $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li><hr>");
                 });
-
+                
 
                 resumechairjudgment = "Inespresso";
 

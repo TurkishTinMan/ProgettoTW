@@ -12,6 +12,9 @@ $doc_body = $doc -> find('body',0);
 
 
 $doc_title = $doc -> find('title', 0) -> innertext;
+$delimiter = "--";
+$titles = explode($delimiter, $doc_title);
+
 
 $tags = $doc_body -> find('img');
 foreach ($tags as $tag) {
@@ -38,13 +41,24 @@ foreach ($styles as $style) {
         $style -> src = $new_src_url;
     }
 }
-
+$ref = [];
+$refcount = 1;
 $links = $doc_body -> find('a');
 foreach ($links as $link) {
     $old_src = $link -> href;
-    if (0 !== strpos($old_src, 'http') && 0 !== strcmp($old_src, '')) {
-        $new_src_url = './Dataset/project-files/dataset/js/'.$old_src;
-        $link -> href = $new_src_url;
+    if (0 === strpos($old_src, '#')){
+        if(isset($ref[$old_src])){
+            $link -> innertext = "[".$ref[$old_src]."]";
+        }else{
+            $ref[$old_src] = $refcount;
+            $link -> innertext = "[".$ref[$old_src]."]";            
+            $refcount=$refcount +1;
+        }
+    }else{
+        if (0 !== strpos($old_src, 'http') && 0 !== strcmp($old_src, '')) {
+            $new_src_url = './Dataset/project-files/dataset/js/'.$old_src;
+            $link -> href = $new_src_url;
+        }
     }
 }
 
@@ -52,8 +66,13 @@ foreach ($links as $link) {
 $metas = $doc -> find('meta');
 $document["keyword"] = array();
 $document["Autori"] = array();
+$document["ACM"] = array();
 $counterkey = 0;
 foreach($metas as $meta){
+    if($meta -> name == "dcterms.subject"){
+        $document["ACM"][] = (string)$meta -> content;
+    }
+    
     if($meta -> property == "prism:keyword"){
         $document["keyword"][$counterkey] = $meta -> content;
         $counterkey = $counterkey+1;
@@ -86,7 +105,12 @@ foreach($links as $link){
     }   
 }
 
-$document["title"] =$doc_title;
+if(isset($titles[1])){
+    $document["title"] =$titles[0];
+    $document["subtitle"] =$titles[1];
+}else{
+    $document["title"] = $doc_title;
+}
 $document["body"] = $doc_body -> innertext ;
 
 $json_event = load("../Dataset/project-files/events.json");
