@@ -206,24 +206,20 @@ function LoadDocument(urlDocument,e) {
             }
             paper = paper + "<div>" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
+            //Ricerco metadati
             if(urlDocument != helpUrl){
                 startmetadati = "<li>";
                 endmetadati="</li>";
-
                 //Lista delle parole chiavi del documento
                 $.each(paper_json["keyword"],function(k,v){
                     $(startmetadati + v + endmetadati).appendTo("#keyWordsList");
                 });
-                
                 //Lista delle ACM
                 $.each(paper_json["ACM"], function(x,z){
                     $(startmetadati + z + endmetadati).appendTo("#ACM");
                 });
-
-
                 //Creazione lista degli autori -- TODO metterla da qualche parte
                 metadati = " ";
-                
                 $.each(paper_json["Autori"],function(k,v){
                     if(v["name"] && v["linked"]!= "true"){
                         metadati + startmetadati;
@@ -241,7 +237,6 @@ function LoadDocument(urlDocument,e) {
 
                 });
                 metadati = metadati;
-
                 $("#ul-authors").append(metadati);
                 
                 //Creazione lista degli reviwer -- TODO metterla da qualche parte
@@ -256,7 +251,6 @@ function LoadDocument(urlDocument,e) {
                     $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li><hr>");
                 });
                 
-
                 resumechairjudgment = "Inespresso";
 
                 if(paper_json["chairJudgmentvalue"]){
@@ -475,6 +469,14 @@ function AddAnnotation(checklog){
         Notify("error", "Non hai i permessi per creare annotazioni su queto documento");
     }
 }
+
+function AddAnnotationAjax(){
+    console.log();
+    $("#AnnotationModal").modal({
+        show: 'true'
+    });
+}
+
 
 function JudgmentModal(){
     $("#ViewJudgmentModal").modal({
