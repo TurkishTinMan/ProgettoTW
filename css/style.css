@@ -111,7 +111,7 @@ div.text-center {
 }
 
 #MetaArea {
-    border: 1px solid #d9d9d9;
+    border: 1px solid #ddd;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
 }
@@ -151,17 +151,13 @@ span#Judgment {
 /*
 /*
 /***** Right Coloumn - Document *****/
-.well, 
-.well2 {
-    background-color: white;
-}
 
-/**PROBLEMA: senza position:absolute non funziona lo scroll; se lo inserisco il well2 non è piu visibile **/
 .well {
-        width: 100%;
-        height: 800px;
-        overflow-y: scroll;
-        overflow-x: hidden;
+    background-color: white;
+    width: 100%;
+    height: 800px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 /* * END Right Coloumn - Document */
@@ -215,9 +211,9 @@ by Silvio Peroni
 
 /* Figure, table and formula */
 img:not(#logo) {
-    max-width:90%;
-    height:auto;
-}
+        max-width:90%;
+        height:auto;
+    }
 
 table:not(#Anntable) {
     max-width:90%;
@@ -246,6 +242,7 @@ figure > pre {
 pre > code {
     font-size: 9pt;
 }
+
 figcaption {
     margin-top:5px;
 }
@@ -292,18 +289,24 @@ th {
 }
 
 /**** Annotation Table *****/
-#Anntable  td {
-    padding: 0.5em;
-}
 
 #Anntable th {
     text-align: center;
- 
+    background-color: #337ab7;
     color:white;
+    border: white;
 }
 
-#Anntable thead {
-        background-color: #337ab7;
+#Anntable td {
+    padding: 0.5em;
+    border: white;
+    text-align: center;
+}
+/*** col bordo perdo gli angoli arrotondati. il radius non può nulla!***
+#Anntable {
+        border: 1px solid #d9d9d9;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 /*****
 /*

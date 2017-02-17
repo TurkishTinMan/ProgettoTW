@@ -196,32 +196,7 @@ if(!isset($_SESSION["name"])) :?>
 </div>
 </div>
     
-    
-<!--
-<div id="ViewHelp" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true">
-<div class="modal-dialog">
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-info-sign"></i><span>Help</span></h1>
-    </div>
-    <form action="#" method="post" accept-charset="utf-8">
-    <div class="modal-body">
-                              <h3>How does EasyRASH work</h3>
-                        <p>Bacon ipsum dolor amet bacon prosciutto brisket, beef pancetta filet mignon alcatra meatloaf shoulder boudin pig shank. Pork strip steak turducken pork belly salami shank flank fatback capicola. Jowl beef ribs bresaola, drumstick short ribs andouille hamburger capicola tongue short loin kevin. Leberkas chuck beef turkey chicken. Doner ground round burgdoggen, frankfurter ribeye bresaola meatball. Chicken strip steak frankfurter swine kevin short ribs alcatra shoulder jerky hamburger short loin sausage jowl beef salami.
-
-
-        Shank bacon short ribs, doner picanha chuck drumstick salami ribeye ham hock sirloin. Ribeye spare ribs rump salami sausage, shoulder tail leberkas ham hock short loin jerky jowl. Landjaeger shank rump strip steak ham hock jerky cow. Alcatra turducken flank, shank pancetta tongue leberkas ground round sausage biltong strip steak drumstick.</p>
-    </div>
-        <div class="panel-footer">
-            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button> 
-        </div>
-        </form>
-    </div>
-</div>
-</div>
-Info Modal-->
-
+  
 <!--Logout Modal-->
 <div id="LogoutModal" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true">
 <div class="modal-dialog">
@@ -299,7 +274,7 @@ Info Modal-->
 </div>
 </div>
 </div>
-    
+<?php if ($_SESSION["userrole"] != "Reader") : ?>
 <!-- Annotation Modal -->
 <div id="AnnotationModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -310,8 +285,6 @@ Info Modal-->
     </div>
     <div class="modal-body">
 
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-        <input type="hidden" name="type" value="addAnnotation">
         <div class="form-group">
           <label for="Annotation-content">Annotation:</label>
           <textarea class="form-control" rows="3" id="Annotation-content" disabled></textarea>
@@ -322,7 +295,7 @@ Info Modal-->
         </div>
         <div class="form-group">
           <label for="Annotation">Annotation:</label>
-          <input name="Annotation" type="text" class="form-control" value="" placeholder="Scrivi qui le tua considerazioni">
+          <input name="Annotation" type="text" class="form-control" value="" placeholder="Scrivi qui le tua considerazioni" id="Comment">
         </div>
             
           <input name="Path" type="hidden" class="form-control" id="Path">
@@ -331,18 +304,18 @@ Info Modal-->
           <input name="Data" type="hidden" class="form-control" id="Data">
           <input name="Doc" type="hidden" class="form-control" id="Doc2" value="">
           <input name="Event" type="hidden" class="form-control" id="Eventid2" value="">
+          <input name="Author" type="hidden" class="form-control" id="Author" value="<?php echo $_SESSION['email']; ?>">
       </div>
 
         <div class="panel-footer">
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button onclick="AddAnnotationLocal()" class="btn btn-default">Submit</button>
         <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
         </div>
-     </form>
     </div>
 
   </div>
 </div>  
-   
+<?php endif; ?>
 <!--- Navigation Bar --->    
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
@@ -360,6 +333,7 @@ Info Modal-->
         <li><a onclick="reset()">Help</a></li>
         <?php if ($_SESSION["userrole"] != "Reader") : ?>
         <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">Add Annotation</a></li>
+          <li><a onclick="SaveAnnotation()"><span id="save" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a><li>
         <?php endif; ?>
         <li>
            <?php if ($_SESSION["name"] != "Utente") : ?>
@@ -439,14 +413,12 @@ Info Modal-->
                 
                 <!---     Document View - right coloumn     --->
                 <div class="col-sm-8">                    
-                    <div class="well">
-                        <div id="doc">
-                        </div>
+                    <div id="doc" class="well">
                     </div>
-                    <div class="panel panel-primary text-center">
-                      <table id="Anntable" class="table table-striped">
-                      </table>
+                    <div class="panel panel-primary">
+                      <table id="Anntable" class="table table-bordered table-responsive">                  </table>
                     </div>
+                    
                 </div>
             </div>
         </div><!-- END Main Content 

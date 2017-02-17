@@ -16,11 +16,7 @@ Under the following terms:
 -->
 <html 
     xmlns="http://www.w3.org/1999/xhtml" 
-    prefix="
-        schema: http://schema.org/
-        prism: http://prismstandard.org/namespaces/basic/2.0/
-        cito: http://purl.org/spar/cito/
-        dcterms: http://purl.org/dc/terms/">
+    prefix="        schema: http://schema.org/        prism: http://prismstandard.org/namespaces/basic/2.0/        cito: http://purl.org/spar/cito/        dcterms: http://purl.org/dc/terms/">
     <head>
         <!-- Visualisation requirements (mandatory for optimal reading) -->
         <meta charset="UTF-8"/>
@@ -92,7 +88,7 @@ Under the following terms:
                     "nick": ["S.", "essepuntato"]
                 }
         </script>
-    </head>
+        <script id='annotation'>null</script></head>
     <body>
         <!-- Abstract -->
         <section role="doc-abstract">
@@ -354,22 +350,22 @@ Under the following terms:
                     <p>
                         <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink"
-                            width="540" height="200" viewBox="0 0 270 100">
+                            width="540" height="200" viewbox="0 0 270 100">
                             <defs>
-                                <radialGradient id="radial" cx="50%" cy="50%" fx="25%" fy="25%">
+                                <radialgradient id="radial" cx="50%" cy="50%" fx="25%" fy="25%">
                                     <stop offset="0%" stop-color="#60bafc" />
                                     <stop offset="50%" stop-color="#409adc" />
                                     <stop offset="100%" stop-color="#005a9c" />
-                                </radialGradient>
+                                </radialgradient>
                                 <path id="curve" d="M18,60 C100,10 180,110 264,60" fill="none"/>
                             </defs>
                             
                             <circle cx="138" cy="50" r="38" fill="url(#radial)" stroke="#005a9c" />
                             
                             <text font-family="Verdana" font-size="20" fill="#ff9900">
-                                <textPath xlink:href="#curve" method="stretch" style="visibility: visible;">
+                                <textpath xlink:href="#curve" method="stretch" style="visibility: visible;">
                                     Scalable <tspan fill="white">Vector</tspan> Graphics
-                                </textPath>
+                                </textpath>
                             </text>
                         </svg>
                     </p>

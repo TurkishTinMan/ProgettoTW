@@ -5,6 +5,7 @@ var helpUrl = "../help.html";
 var AnnotatorSign = '<span class="glyphicon glyphicon-pencil"></span>';
 var PC_MemberSign = '<span class="glyphicon glyphicon-eye-open"></span>';
 var NoneSign = '<span class="glyphicon glyphicon-ban-circle"></span>';
+var tempannotations = [];
 
 
 function randomCSS(){
@@ -42,6 +43,7 @@ function HighLightDocument(urlDocument,element){
     $("#chairjudgmentresume").html("");;
     $("#ul-reviewer").html("");
     $("#ul-authors").html("");
+    tempannotations = [];
     urlCurrentDoc = urlDocument;
 }
 
@@ -202,27 +204,36 @@ function LoadDocument(urlDocument,e) {
             //Scrittura del paper nell'apposita sezione
             paper = "<h1>" + paper_json["title"] + "</h1>";
             if(paper_json["subtitle"]){
-                paper = paper + "<h2>"+paper_json["subtitle"]+"</h2>";
+                paper = paper + "<small>"+paper_json["subtitle"]+"</small>";
             }
             paper = paper + "<div>" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
-            //Ricerco metadati
             if(urlDocument != helpUrl){
-                startmetadati = "<li>";
-                endmetadati="</li>";
-                //Lista delle parole chiavi del documento
-                $.each(paper_json["keyword"],function(k,v){
-                    $(startmetadati + v + endmetadati).appendTo("#keyWordsList");
+                
+            // Keywords    
+            if (paper_json["keyword"].length > 0) {
+                var list_of_keywords = $("<ul class=\"list-inline\"></ul>");
+                $.each(paper_json["keyword"],function(k,v) {
+                    list_of_keywords.append("<li><code>" + v + "</code></li>");
                 });
-                //Lista delle ACM
+                $("<p class=\"keywords\"><strong>Keywords</strong></p>").append(list_of_keywords).appendTo("#keyWordsList");
+            }
+
+            //Lista delle ACM
+            if (paper_json["ACM"].length > 0) {
+                var list_of_categories = $("<p class=\"acm_subject_categories\"><strong>ACM Subject Categories</strong></p>");
                 $.each(paper_json["ACM"], function(x,z){
-                    $(startmetadati + z + endmetadati).appendTo("#ACM");
+                    list_of_categories.append("<br /><code>" + z.split(",").join(", ") + "</code>");
                 });
+                list_of_categories.appendTo("#ACM")
+            }
+               
                 //Creazione lista degli autori -- TODO metterla da qualche parte
                 metadati = " ";
+                
                 $.each(paper_json["Autori"],function(k,v){
                     if(v["name"] && v["linked"]!= "true"){
-                        metadati + startmetadati;
+                        metadati + "<ul>";
                         if(v["email"]){
                             metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a>";
                         }else{
@@ -231,12 +242,13 @@ function LoadDocument(urlDocument,e) {
                         if(v["affiliation"]){
                             metadati = metadati + "<p>"+v["affiliation"]+"</p>";
                         }
-                        metadati = metadati + endmetadati;
+                        metadati = metadati + "</ul>";
                         metadati = metadati + "<hr>";
                     }
 
                 });
                 metadati = metadati;
+
                 $("#ul-authors").append(metadati);
                 
                 //Creazione lista degli reviwer -- TODO metterla da qualche parte
@@ -251,6 +263,7 @@ function LoadDocument(urlDocument,e) {
                     $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li><hr>");
                 });
                 
+
                 resumechairjudgment = "Inespresso";
 
                 if(paper_json["chairJudgmentvalue"]){
@@ -274,8 +287,8 @@ function LoadDocument(urlDocument,e) {
                 
                 $("#chairjudgmentresume").html("<h3> Stato documento:" + resumechairjudgment + "</h3><hr>");
 
+                AnnotationManager(paper_json["annotations"]);
 
-                LoadAnnotation(urlDocument);  
             }
         },
         error:function(jqXHR, status, errorThrown) {
@@ -288,7 +301,16 @@ function LoadDocument(urlDocument,e) {
 
 
 
-
+function AnnotationManager(json_ann){
+    $("#Anntable").html("<thead><tr><th>User</th><th>Data</th><th>Content</th><th>Find</th><th>Delete</th></tr></thead>");
+    $.each(json_ann,function(i,annotation){
+        AddAnnotationToTable(annotation["Data"] ,annotation["Author"], annotation["Comment"], (annotation["Author"] == $("#Author").val()));    
+        AddAnnotationToText (annotation["Data"],annotation["Target"]["Path"],annotation["Target"]["OffsetFromStart"],annotation["Target"]["LenghtAnnotation"],annotation["Comment"]);
+        tempannotations.push(annotation);
+    });
+    
+    
+}
 
 
 
@@ -470,11 +492,88 @@ function AddAnnotation(checklog){
     }
 }
 
-function AddAnnotationAjax(){
-    console.log();
-    $("#AnnotationModal").modal({
-        show: 'true'
-    });
+function AddAnnotationToTable(date,author,content,check){
+    datetoappend = "<tr id='row"+date+"'>";
+    datetoappend = datetoappend + "<td>"+author+"</td>";
+    dataAnn = new Date(parseInt(date));
+    datetoappend = datetoappend + "<td>"+dataAnn.getDay() + "/" + dataAnn.getMonth() +1 + "/" + dataAnn.getFullYear() + "</td>";
+    datetoappend= datetoappend +"<td>"+content+"</td>";
+    datetoappend= datetoappend +"<td><a onclick='ScrollToAnnotation(\"comment"+date+"\")' class='pointer'><span class='glyphicon glyphicon-search' aria-hidden ='true'></span></a></td>";
+    datetoappend= datetoappend +"<td onclick=deleteAnnotationLocal(\""+date+"\",\""+check+"\") class='pointer'><span class='glyphicon glyphicon-trash' aria-hidden ='true'></span></td>";
+    datatoappend=datetoappend+"</tr>";
+    $("#Anntable").append(datatoappend);
+}
+
+function AddAnnotationToText(date,path,offset,length,comment){
+    var html = $(path).html();
+    newhtml = html.substring(0, parseInt(offset));
+    newhtml = newhtml + "<span id='comment"+date+"' style='"+ randomCSS() +"' data-toggle='tooltip' title='"+comment+"'>";
+    newhtml = newhtml + html.substring(parseInt(offset),parseInt(offset) + parseInt(length));
+    newhtml = newhtml + "</span>";
+    newhtml = newhtml + html.substring(parseInt(offset) + parseInt(length));
+    
+    $(path).html(newhtml);
+    $('[data-toggle="tooltip"]').tooltip(); 
+    
+}
+
+
+function AddAnnotationLocal(){
+    thisannotation = {};
+    thisannotation["Target"]={"Path":$("#Path").val(),                                  "OffsetFromStart":$("#OffsetFromStart").val(),"LenghtAnnotation":$("#LenghtAnnotation").val()}
+    thisannotation["Data"]= $("#Data").val();
+    thisannotation["Comment"]= $("#Comment").val();
+    thisannotation["Author"]= $("#Author").val();
+    AddAnnotationToTable(thisannotation["Data"] ,thisannotation["Author"], thisannotation["Comment"], true);    
+    AddAnnotationToText (thisannotation["Data"],thisannotation["Target"]["Path"],thisannotation["Target"]["OffsetFromStart"],thisannotation["Target"]["LenghtAnnotation"],thisannotation["Comment"]);
+    tempannotations.push(thisannotation);    
+    $('#AnnotationModal').modal('toggle');
+}
+
+function DeleteAnnotationFromTable(date){
+    $('#row'+date).remove();
+}
+
+
+function DeleteAnnotationFromText(date){
+    $span = $('#comment'+date);
+    $span.replaceWith($span.html());
+}
+
+
+
+
+function deleteAnnotationLocal(date,author){
+    if(author == "true"){
+        DeleteAnnotationFromTable(date);
+        DeleteAnnotationFromText(date);
+        $.each(tempannotations, function(number,annotation){
+            if(annotation["Data"]==date){
+                tempannotations.splice(number,1);
+            }
+        });
+    }
+}
+
+
+function SaveAnnotation(){
+    $.ajax({
+      url: "./PHP/SaveAnnotation.php",
+      type: "POST",
+      data: {localUrl : urlCurrentDoc, annotations : tempannotations},
+      dataType: 'json',
+      success: function(json_data){
+        tempannotations = [];
+        Notify(json_data["esito"],json_data["content"]);
+      },
+      error: function(jqXHR, status, errorThrown) {
+        Notify('error','Errore interno, impossibile caricare gli eventi!');
+        console.log(jqXHR.responseText);
+        console.log(status);
+        console.log(errorThrown);
+
+      }
+    });  
 }
 
 
