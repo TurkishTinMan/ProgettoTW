@@ -44,30 +44,6 @@ function postManager($type){
             $returnEvent = $_POST['Event'];
             $returnDoc = $_POST['Doc'];
             break;
-        case 'addChairJudgment':
-            if(empty($_POST['judgment'])){
-                 $error = "Devi immettere un giudizio";
-            }else{
-                $json_j = load($GLOBALS['JudgmentFileUrl']);
-                $json_j[$_POST['Doc']] = $_POST['judgment'];
-                write($GLOBALS['JudgmentFileUrl'],$json_j);
-                $success = "Giudizio aggiunto con successo!";
-                $returnEvent = $_POST['Event'];
-                $returnDoc = $_POST['Doc'];
-            }
-            break;
-        case 'addJudgment':
-            if(empty($_POST['judgment'])){
-                $error = "Devi immettere un giudizio";
-            }else{
-                $json_j = load($GLOBALS['JudgmentReviwerFileUrl']);
-                $json_j[$_POST['Doc']][$_SESSION["name"]] = $_POST['judgment'];
-                write($GLOBALS['JudgmentReviwerFileUrl'],$json_j);
-                $success = "Giudizio aggiunto con successo!";
-                $returnEvent = $_POST['Event'];
-                $returnDoc = $_POST['Doc'];
-            }
-            break;
         case 'changepassword':
             if(empty($_POST['oldPass']) || empty($_POST['newPass']) || empty($_POST['newPass2']) || (strcmp($_POST['newPass'],$_POST['newPass2']) != 0)){
                 $error = "Campi immessi non validi";

@@ -43,6 +43,7 @@ function HighLightDocument(urlDocument,element){
     $("#chairjudgmentresume").html("");;
     $("#ul-reviewer").html("");
     $("#ul-authors").html("");
+    $("#resumereviewers").html("");
     tempannotations = [];
     urlCurrentDoc = urlDocument;
 }
@@ -210,69 +211,36 @@ function LoadDocument(urlDocument,e) {
             $("#doc").html(paper);
             if(urlDocument != helpUrl){
                 
-            // Keywords    
-            if (paper_json["keyword"].length > 0) {
-                var list_of_keywords = $("<ul class=\"list-inline\"></ul>");
-                $.each(paper_json["keyword"],function(k,v) {
-                    list_of_keywords.append("<li><code>" + v + "</code></li>");
-                });
-                $("<p class=\"keywords\"><strong>Keywords</strong></p>").append(list_of_keywords).appendTo("#keyWordsList");
-            }
-
-            //Lista delle ACM
-            if (paper_json["ACM"].length > 0) {
-                var list_of_categories = $("<p class=\"acm_subject_categories\"><strong>ACM Subject Categories</strong></p>");
-                $.each(paper_json["ACM"], function(x,z){
-                    list_of_categories.append("<br /><code>" + z.split(",").join(", ") + "</code>");
-                });
-                list_of_categories.appendTo("#ACM")
-            }
-               
-                //Creazione lista degli autori -- TODO metterla da qualche parte
-                metadati = " ";
+                console.log(paper_json);
                 
-                $.each(paper_json["Autori"],function(k,v){
-                    if(v["name"] && v["linked"]!= "true"){
-                        metadati + "<ul>";
-                        if(v["email"]){
-                            metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a>";
-                        }else{
-                            metadati = metadati + v["name"];
-                        }
-                        if(v["affiliation"]){
-                            metadati = metadati + "<p>"+v["affiliation"]+"</p>";
-                        }
-                        metadati = metadati + "</ul>";
-                        metadati = metadati + "<hr>";
-                    }
+                // Keywords    
+                if (paper_json["keyword"].length > 0) {
+                    KeyWordManager(paper_json["keyword"]);
+                }
 
-                });
-                metadati = metadati;
+                //Lista delle ACM
+                if (paper_json["ACM"].length > 0) {
+                    ACMManager(paper_json["ACM"]);
+                }
 
-                $("#ul-authors").append(metadati);
-                
+                //Creazione lista degli autori
+                AuthorManager(paper_json["Autori"]);
                 //Creazione lista degli reviwer -- TODO metterla da qualche parte
-                $.each(paper_json["reviewers"], function(x,z){
-                    loadJudgment(z);
-                    start = z.indexOf('<');
-                    start = start +1;
-                    end = z.indexOf('>');
-                    y = z.substring(start,end);
-                    y = y.replace(/@/g, 'a');
-                    y = y.replace(/\./g, 'p');
-                    $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'></span></li><hr>");
-                });
-                
+                ReviewerManager(paper_json["reviewersjudge"]);   
+
 
                 resumechairjudgment = "Inespresso";
 
                 if(paper_json["chairJudgmentvalue"]){
                     resumechairjudgment = paper_json["chairJudgmentvalue"];
-                }  
+                }
+                
+                  
                 if(paper_json["chairJudgment"]){
-                    resumechairjudgment = "<a onclick='ViewChairJudgment()'>" + resumechairjudgment + "</a>";
                     Notify('info','Sei un chair, il tuo giudizio su questo documento è:'+ resumechairjudgment +'.<br>Puoi cambiarlo cliccando vicino al tuo nome nella lista dei reviewer.');
                 }
+                
+                
                 switch(resumechairjudgment){
                     case 'Rejected':
                         resumechairjudgment = '<span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>'
@@ -284,7 +252,13 @@ function LoadDocument(urlDocument,e) {
                         resumechairjudgment = '<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>';
                         break;
                 }
+
                 
+                
+                if(paper_json["chairJudgment"]){
+                    resumechairjudgment = "<a onclick='ViewChairJudgment()'>" + resumechairjudgment + "</a>";
+                }
+
                 $("#chairjudgmentresume").html("<h3> Stato documento:" + resumechairjudgment + "</h3><hr>");
 
                 AnnotationManager(paper_json["annotations"]);
@@ -300,6 +274,63 @@ function LoadDocument(urlDocument,e) {
 }
 
 
+function ReviewerManager(list){
+    $.each(list, function(z,x){
+        judge = x['judge'];
+        if(x['own'] == "true"){
+            judge = "<a  onclick='JudgmentModal()'>"+judge+"</a>";
+            Notify('info','Sei un revier, il tuo giudizio su questo documento è:'+judge+'.<br>Puoi cambiarlo cliccando vicino al tuo nome nella lista dei reviewer.');
+        }                
+        start = z.indexOf('<');
+        start = start +1;
+        end = z.indexOf('>');
+        y = z.substring(start,end);
+        y = y.replace(/@/g, 'a');
+        y = y.replace(/\./g, 'p');
+        $("#ul-reviewer").append("<li id="+y+">"+z.substring(0,start-2)+"<span id='Judgment'>"+judge+"</span></li><hr>");
+        $("#resumereviewers").append("<li>"+ $('#'+ y).html() +"</li>");
+    });
+}
+
+
+
+function AuthorManager(list){
+    metadati = " ";
+    $.each(list,function(k,v){
+        if(v["name"] && v["linked"]!= "true"){
+            metadati + "<li>";
+            if(v["email"]){
+                metadati = metadati + "<a href=\"mailto:"+v["email"]+"\">"+v["name"]+"</a>";
+            }else{
+                metadati = metadati + v["name"];
+            }
+            if(v["affiliation"]){
+                metadati = metadati + "<p>"+v["affiliation"]+"</p>";
+            }
+            metadati = metadati + "</li>";
+            metadati = metadati + "<hr>";
+        }
+    });
+    metadati = metadati;
+    $("#ul-authors").append(metadati);
+}
+
+function KeyWordManager(list){
+    var list_of_keywords = $("<ul class=\"list-inline\"></ul>");
+    $.each(list,function(k,v) {
+        list_of_keywords.append("<li><code>" + v + "</code></li>");
+    });
+    $("<p class=\"keywords\"><strong>Keywords</strong></p>").append(list_of_keywords).appendTo("#keyWordsList");
+}
+
+
+function ACMManager(list){
+    var list_of_categories = $("<p class=\"acm_subject_categories\"><strong>ACM Subject Categories</strong></p>");
+    $.each(list, function(x,z){
+        list_of_categories.append("<br /><code>" + z.split(",").join(", ") + "</code>");
+    });
+list_of_categories.appendTo("#ACM");
+}
 
 function AnnotationManager(json_ann){
     $("#Anntable").html("<thead><tr><th>User</th><th>Data</th><th>Content</th><th>Find</th><th>Delete</th></tr></thead>");
@@ -313,100 +344,59 @@ function AnnotationManager(json_ann){
 }
 
 
-
-
-
-
-
-
-function LoadAnnotation(urlDocument){
-    $("#Anntable").html("<thead><tr><th>User</th><th>Data</th><th>Content</th><th>Find</th><th>Delete</th></tr></thead>");
-    $("#metaarea-ann").html(" ");
+function AddJudgmentRw(){
     $.ajax({
-        url:"./PHP/loadAnnotation.php",
-        type:"POST",
-        data:{localUrl : urlDocument},
-        dataType:'json',
-        success:function(paper_json){
-            $.each(paper_json,function(k,v){
-                var html = $(v["Path"]).html();
-                html = html.substring(0, parseInt(v["OffsetFromStart"])) + "<span id='comment"+v["Data"]+"' style='"+ randomCSS() +"' data-toggle='tooltip' title='"+v["Annotation"]+"'>" + html.substring(parseInt(v["OffsetFromStart"]),parseInt(v["LenghtAnnotation"])+parseInt(v["OffsetFromStart"]))+"</span>"+html.substring( parseInt(v["OffsetFromStart"]) + parseInt(v["LenghtAnnotation"]));
-                $(v["Path"]).html(html);
-                $('[data-toggle="tooltip"]').tooltip();  
-                dataAnn = new Date(parseInt(v["Data"]));
-                $('#Anntable').append("<tr id='row"+v["Data"]+"'><td>"+v['Author']+"</td><td>"+dataAnn.getDay() + "/"+(dataAnn.getMonth()+1)+"/"+dataAnn.getFullYear() +"<td>"+v['Annotation']+"</td><td><a onclick='ScrollToAnnotation(\"comment"+v["Data"]+"\")' class='pointer'><span class='glyphicon glyphicon-search' aria-hidden ='true'></span></a></td><td onclick=deleteAnnotation(\""+v['Author']+"\",\""+v['Data']+"\") class='pointer'><span class='glyphicon glyphicon-trash' aria-hidden ='true'></span></td></tr>");
-            });
-        },
-        error:function(jqXHR, status, errorThrown) {
-            console.log(jqXHR.responseText);
-            console.log(status);
-            console.log(errorThrown);
-        }
-    });
+      url: "./PHP/AddJudgmentRw.php",
+      type: "POST",
+      data: {localUrl : urlCurrentDoc, 
+             judge : $('input[name=judgment]:checked', '#reviewer').val()
+            },
+      dataType: 'json',
+      success: function(json_data){
+        temp = $(".highlight");
+        LoadDocument(urlCurrentDoc);
+        console.log(json_data["var"]);
+        temp.addClass('highlight')
+        Notify(json_data["esito"],json_data["content"]);
+      },
+      error: function(jqXHR, status, errorThrown) {
+        Notify('error','Errore interno, impossibile caricare gli eventi!');
+        console.log(jqXHR.responseText);
+        console.log(status);
+        console.log(errorThrown);
+
+      }
+    });  
+
+    $('#ViewJudgmentModal').modal('toggle');
 }
 
-function deleteAnnotation(author,data){
+function AddJudgmentCH(){
     $.ajax({
-        url:"./PHP/deleteAnnotation.php",
-        type:"POST",
-        data:{author : author , data: data},
-        dataType:'json',
-        success:function(paper_json){
-            if(paper_json["error"]){
-                Notify("error",paper_json["error"]);
-            }else{
-                Notify("success","Annotazione eliminata!");
-                $('#row'+data).remove();
-                $span = $('#comment'+data);
-                $span.replaceWith($span.html());
-                
-            }
-        },
-        error:function(jqXHR, status, errorThrown) {
-            console.log(jqXHR.responseText);
-            console.log(status);
-            console.log(errorThrown);
-        }
-    });
-}
+      url: "./PHP/AddJudgmentCH.php",
+      type: "POST",
+      data: {localUrl : urlCurrentDoc, 
+             judge : $('input[name=judgment]:checked', '#chairform').val()
+            },
+      dataType: 'json',
+      success: function(json_data){
+        temp = $(".highlight");
+        LoadDocument(urlCurrentDoc);
+        console.log(json_data["var"]);
+        temp.addClass('highlight')
+        Notify(json_data["esito"],json_data["content"]);
+      },
+      error: function(jqXHR, status, errorThrown) {
+        Notify('error','Errore interno, impossibile caricare gli eventi!');
+        console.log(jqXHR.responseText);
+        console.log(status);
+        console.log(errorThrown);
 
-function loadJudgment(userkey){
-    $.ajax({
-        url:"./PHP/loaderJudgment.php",
-        type:"POST",
-        data: {localUrl : urlCurrentDoc, user : userkey},
-        dataType:'json',
-        success: function(paper_json) {
-            start = userkey.indexOf('<');
-            start = start +1;
-            end = userkey.indexOf('>');
-            z = userkey.substring(start,end);
-            z = z.replace(/@/g, 'a');
-            z = z.replace(/\./g, 'p');
-            if(paper_json["role"] == "reviewer"){
-                giudizio = "Inespresso";
-                if(paper_json["judgment"]){
-                    giudizio = paper_json["judgment"];
-                }
-                $('#'+ z + "> #Judgment").html("<a  onclick='JudgmentModal()'>"+giudizio+"</a>");
-                Notify('info','Sei un revier, il tuo giudizio su questo documento è:'+giudizio+'.<br>Puoi cambiarlo cliccando vicino al tuo nome nella lista dei reviewer.')
-            }else{
-                if(paper_json["judgment"]){
-                    $('#'+ z + "> #Judgment").html(paper_json["judgment"]);
-                }else{
-                    $('#'+ z + "> #Judgment").html("Inespresso");
-                }   
-            }
-            $("#resumereviewers").append("<li>"+ $('#'+ z).html() +"</li>");
-        },
-        error:function(jqXHR, status, errorThrown) {
-            console.log(jqXHR.responseText);
-            console.log(status);
-            console.log(errorThrown);
-        }
-    });
-}
+      }
+    });  
 
+    $('#ViewChairJudgment').modal('toggle');
+}
 
 
 function ShowHideArea(idshow){

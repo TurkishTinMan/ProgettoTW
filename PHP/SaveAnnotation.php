@@ -6,13 +6,15 @@ $doc = file_get_html($_POST['localUrl'], $use_include_path = false, $context=nul
 $output = array();
 
 if(!$doc->find('script[id=annotation]',0)) {
-    $doc_head = $doc->find('head',0);
-    $doc_head->innertext.= "<script id='annotation'></script>";
+    $doc->find('head',0)->innertext .= "\n<!-- Annotation script -->\n<script id='annotation'></script>";
+    file_put_contents($_POST['localUrl'],$doc);
+    $doc = file_get_html($_POST['localUrl'], $use_include_path = false, $context=null, $offset = -1, $maxLen=-1, $lowercase = true, $forceTagsClosed=true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN=false, $defaultBRText=DEFAULT_BR_TEXT, $defaultSpanText=DEFAULT_SPAN_TEXT);
+
 }
 
 $annotation = $doc->find('script[id=annotation]',0);
 if(isset($_POST['annotations'])){
-    $annotation->innertext = json_encode($_POST['annotations']);
+    $annotation->innertext = "\n".json_encode($_POST['annotations'])."\n";
 }else{
     $annotation->innertext = "";
 }

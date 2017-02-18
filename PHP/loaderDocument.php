@@ -121,28 +121,41 @@ $document["body"] = $doc_body -> innertext ;
 $json_event = load("../Dataset/project-files/events.json");
 $a = (int)$_POST['currentEvent'];
 if($a >= 0){
+    $reviewers = array();
+    $document["reviewersjudge"] = array();
     foreach($json_event[$a]["submissions"] as $paper){
         if(strcmp($paper["url"],basename($_POST['localUrl'])) == 0){
-            $document["reviewers"] = $paper["reviewers"]; 
+            $reviewers = $paper["reviewers"]; 
+        }
+    }
+
+    if($doc->find('script[id=reviewerjudgment]',0)){
+        $document["reviewersjudge"] = json_decode($doc->find('script[id=reviewerjudgment]',0)->innertext,true);
+    }
+    
+    $allreviewer = true;
+    
+    foreach($reviewers as $reviewer){
+        if(!array_key_exists($reviewer,$document["reviewersjudge"])){
+            $document["reviewersjudge"][$reviewer]["judge"] = "Inespresso";
+            $allreviewer = false;
+        }
+        if(strcmp($reviewer,$_SESSION['name']) == 0){
+            $document["reviewersjudge"][$reviewer]["own"] = "true";
+        }else{
+            $document["reviewersjudge"][$reviewer]["own"] = "false";
         }
     }
     $document["chairJudgment"] = false;
-    if(strcmp($_SESSION['eventrole'],"Chair") == 0){    
+    if(strcmp($_SESSION['eventrole'],"Chair") == 0 && $allreviewer){    
         $document["chairJudgment"] = true;
-
-        $json_j = load("../Dataset/project-files/judgment.json");
-        if(isset($document["reviewers"])){
-            foreach($document["reviewers"] as $reviewer){
-                if(!isset($json_j[$_POST['localUrl']][$reviewer])){
-                    $document["chairJudgment"] = false;
-                }
-            }
-        }
     }
-    $json_jc = load("../Dataset/project-files/chairjudgment.json");
-    if(isset($json_jc[$_POST['localUrl']])){
-        $document["chairJudgmentvalue"] = $json_jc[$_POST['localUrl']];
+    if($doc->find('script[id=chairJudgmentvalue]',0)){
+        $document["chairJudgmentvalue"] = json_decode($doc->find('script[id=chairJudgmentvalue]',0)->innertext,true)['judge'];
+    }else{
+        $document["chairJudgmentvalue"] = "Inespresso";       
     }
+    
 }
 echo json_encode($document);
 ?>

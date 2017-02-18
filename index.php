@@ -136,26 +136,23 @@ if(!isset($_SESSION["name"])) :?>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 class="panel-title" id="infoLabel"> Assegna un giudizio al documento</h3>
     </div>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" accept-charset="utf-8">
     <div class="modal-body">
         <h3>Sei un Chair</h3>
         <p>Esprimi il tuo giudizio sul documento.</p>
         <p id="resumereviewers"></p>
-        <input type="hidden" name="type" value="addChairJudgment">
-        <input name="Doc" type="hidden" class="form-control" id="Doc" value="">
-        <input name="Event" type="hidden" class="form-control" id="Eventid" value="">
+        <form id="chairform">
         <div class="radio">
-          <label><input type="radio" name="judgment" value="Rejected">Rejected</label>
+          <label><input type="radio" name="judgment" value="Rejected" checked>Rejected</label>
         </div>
         <div class="radio">
           <label><input type="radio" name="judgment" value="Accepted">Accepted</label>
-        </div>        
-    </div>
-        <div class="panel-footer">
-            <button type="submit" class="btn btn-default">Submit</button>
-            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button> 
         </div>
         </form>
+    </div>
+        <div class="panel-footer">
+            <button onclick="AddJudgmentCH()" class="btn btn-default">Submit</button>
+            <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button> 
+        </div>
     </div>
 </div>
 </div>
@@ -170,28 +167,25 @@ if(!isset($_SESSION["name"])) :?>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 class="panel-title" id="infoLabel"> Assegna un giudizio al documento</h3>
     </div>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" accept-charset="utf-8">
     <div class="modal-body">
         <h3>Sei un Reviewer</h3>
         <p>Esprimi il tuo giudizio sul documento</p>
-        <input type="hidden" name="type" value="addJudgment">
-        <input name="Doc" type="hidden" class="form-control" id="Doc1" value="">
-        <input name="Event" type="hidden" class="form-control" id="Eventid1" value="">
+        <form id="reviewer">
         <div class="radio">
           <label><input type="radio" name="judgment" value="Rejected">Rejected</label>
         </div>
         <div class="radio">
-          <label><input type="radio" name="judgment" value="Modification Request">Modification Request</label>
+          <label><input type="radio" name="judgment" value="Modification Request" checked>Modification Request</label>
         </div>
         <div class="radio">
           <label><input type="radio" name="judgment" value="Accepted">Accepted</label>
         </div>        
+        </form>
     </div>
         <div class="panel-footer">
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button onclick="AddJudgmentRw()" type="submit" class="btn btn-default">Submit</button>
             <button type="button" style="float: right;" class="btn btn-default btn-close" data-dismiss="modal">Close</button> <!--HO INSERITO STYLE -->
         </div>
-        </form>
     </div>
 </div>
 </div>
