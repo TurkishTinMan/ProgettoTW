@@ -17,15 +17,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
-    <link href='https://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
-
     <script  src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <script src="js/script.js" type="text/javascript"></script>
-
 </head>
 
 <body>
@@ -45,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 if(!isset($_SESSION["name"])) :?>
 
-
+<!--- Home - Login --->
 <div id="logcard" class="container">
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
@@ -126,7 +122,7 @@ if(!isset($_SESSION["name"])) :?>
 
       </div>
     </div>
-</div><!-- /.container -->
+</div><!-- /Home - Login -->
 <script src="js/scriptlog.js" type="text/javascript"></script>
 <?php else: ?>
 <div id="ViewChairJudgment"class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true">
@@ -199,45 +195,42 @@ if(!isset($_SESSION["name"])) :?>
         <h1 class="panel-title" id="infoLabel"><i class="glyphicon glyphicon-info-sign"></i><span>Help</span>
         </h1>
     </div>
+    
     <div class="modal-body">
-      <body>
-    <h4>What is EasyRASH?</h4>
-<p>
-    EasyRASH is an online system to allow the evaluation of articles in RASH, integrating content and comments in one package and easing the peer review process. It focuses on writing and view comments from reviewers, includes some optional modules to handle other functionality such as registration of new users.
-    EasyRASH has two roles:
-</p>
-<p>
-  <ul>
-    <li>Chair: organizer of an event, assign the review and decide the status of an article (rejected or accepted) based on the reviewers' comments;</li>
-    <li>Reviewer: receiving articles to comment and expresses an overall judgment on each item and a series of specific comments on the content.</li>
-  </ul>
-</p>
-<p>
-    In the top left you can see your name, the mode: Reader (passive user): can read the article, Annotator (active user): can make annotations and submit review and your role in the document uploaded.<br>
-    <ul>
-        <li>Chair:<span id="AnnotatorSign"></span></li>
-        <li>Member event:<span id="PCSign"></span></li>
-        <li>Any role:<span id="NoneSign"></span></li>
-    </ul>
-    <script>
-        $("#AnnotatorSign").html(AnnotatorSign);
-        $("#PCSign").html(PC_MemberSign);
-        $("#NoneSign").html(NoneSign);
-    </script>
-  </p>
-    <h4>Annotator mode</h4>
-<p>
-    You can annotate documents which you are the reviewer, giving judgment and leaving a comment on the text sections. Steps:
-    You select the text to be changed, you click on "Add Annotation", you leave your comments and finally you save by clicking <span id="save" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>.
-    To check your own annotations you view the table under the article, in which one can find the record or delete it.
-  </p>
-</body>
-  </div>
+      
+        <h3>What is EasyRASH?</h3>
+        <p>
+            EasyRASH is an online system to allow the evaluation of articles in RASH, integrating content and comments in one package and easing the peer review process. It focuses on writing and view comments from reviewers, includes some optional modules to handle other functionality such as registration of new users.<br />
+            EasyRASH has two roles:
+        </p>
+
+        <ul>
+            <li>Chair: organizer of an event, assign the review and decide the status of an article (rejected or accepted) based on the reviewers' comments;</li>
+            <li>Reviewer: receiving articles to comment and expresses an overall judgment on each item and a series of specific comments on the content.</li>
+        </ul>
+
+        <p>
+            In the top right you can see your name. In Reader mode - passive user - you can read the article; in Annotator mode - active user - you can make annotations and submit review and your role in the document uploaded.
+        </p>
+
+        <ul>
+            <li>Chair <span class="glyphicon glyphicon-pencil"></span></li>
+            <li>Member event <span class="glyphicon glyphicon-eye-open"></span></li>
+            <li>Any role <span class="glyphicon glyphicon-ban-circle"></span></li>
+        </ul>
+
+        <h3>Annotator mode</h3>
+        <p>
+            You can annotate documents which you are the reviewer, giving judgment and leaving a comment on the text sections. Steps:
+            You select the text to be changed, you click on "Add Annotation", you leave your comments and finally you save by clicking <span id="save" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>.
+            To check your own annotations you view the table under the article, in which one can find the record or delete it.
+        </p>
+
+    </div>
     <div class="panel-footer">
         <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
     </div>
 
-</div>
 </div>
 </div>
 </div>
@@ -252,8 +245,9 @@ if(!isset($_SESSION["name"])) :?>
         </h1>
     </div>
     <div class="modal-body">
-      <ul class="list-group" id="contact-list">
-                          <li class="list-group-item">
+      <h4 class="text-center">EasyRush is a project by:</h4><br />
+      <ul  class="list-unstyled" id="contact-list">
+                          <li >
                               <div class="col-xs-12 col-sm-3">
                                   <img src="image/user1.png" alt="Riccardo Salladini" class="img-responsive img-circle" />
                               </div>
@@ -265,8 +259,8 @@ if(!isset($_SESSION["name"])) :?>
                                   <span class="visible-xs"> <span class="text-muted">riccardo.salladini@studio.unibo.it</span><br/></span>
                               </div>
                               <div class="clearfix"></div>
-                          </li>
-                          <li class="list-group-item">
+                          </li><br />
+                          <li >
                               <div class="col-xs-12 col-sm-3">
                                   <img src="image/user1.png" alt="Manuel Felix" class="img-responsive img-circle" />
                               </div>
@@ -278,8 +272,8 @@ if(!isset($_SESSION["name"])) :?>
                                   <span class="visible-xs"> <span class="text-muted">juanmanuel.felix@studio.unibo.it</span><br/></span>
                               </div>
                               <div class="clearfix"></div>
-                          </li>
-                          <li class="list-group-item">
+                          </li><br />
+                          <li >
                               <div class="col-xs-12 col-sm-3">
                                   <img src="image/user2.png" alt="Martina Bergonzoni" class="img-responsive img-circle" />
                               </div>
@@ -291,8 +285,8 @@ if(!isset($_SESSION["name"])) :?>
                                   <span class="visible-xs"> <span class="text-muted">martina.bergonzoni2@studio.unibo.it</span><br/></span>
                               </div>
                               <div class="clearfix"></div>
-                          </li>
-                          <li class="list-group-item">
+                          </li><br />
+                          <li >
                               <div class="col-xs-12 col-sm-3">
                                   <img src="image/user2.png" alt="Raffaella Veneri" class="img-responsive img-circle" />
                               </div>
@@ -316,8 +310,6 @@ if(!isset($_SESSION["name"])) :?>
 </div>
 </div>
 </div>
-</div>
-</div>
 
 <!--Logout Modal-->
 <div id="LogoutModal" class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="infoLabel" aria-hidden="true">
@@ -329,12 +321,10 @@ if(!isset($_SESSION["name"])) :?>
         </h1>
     </div>
     <div class="modal-body">
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="changemode">
-            <input type="hidden" name="type" value="changemode">
-            <input name="Doc" type="hidden" class="form-control" id="Doc3" value="">
-            <input name="Event" type="hidden" class="form-control" id="Eventid3" value="">
-        </form>
-        <p><span class="glyphicon glyphicon-cog button" onclick="$('#changemode').submit();"></span>Cambia Modalità</p>
+        
+        <p>Nome <?php echo $_SESSION["given_name"]; ?></p>          
+        <p>Cognome <?php echo $_SESSION["family_name"]; ?></p>
+        <p>Sesso <?php echo $_SESSION["sex"]; ?></p>
         <p><span class="glyphicon glyphicon-cog button" onclick="ShowHideArea(ChangePass)"></span>Cambia Password</p>
         <form id="ChangePass" style="display:none;" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <input type="hidden" name="type" value="changepassword">
@@ -453,11 +443,11 @@ if(!isset($_SESSION["name"])) :?>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li> <a data-toggle="modal" data-target="#AboutModal" class="pointer">About</li></a>
-        <li> <a data-toggle="modal" data-target="#Help" class="pointer">Help</li></a>
+        <li> <a data-toggle="modal" data-target="#AboutModal" class="pointer">About</a></li>
+        <li> <a data-toggle="modal" data-target="#Help" class="pointer">Help</a></li>
         <?php if ($_SESSION["userrole"] != "Reader") : ?>
         <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">Add Annotation</a></li>
-          <li><a onclick="SaveAnnotation()"><span id="save" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a><li>
+        <li><a onclick="SaveAnnotation()"><span id="save" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a><li>
         <?php endif; ?>
         <li>
            <?php if ($_SESSION["name"] != "Utente") : ?>
@@ -466,12 +456,15 @@ if(!isset($_SESSION["name"])) :?>
            <a data-toggle="modal" data-target="#LoginModal" class="pointer">
            <?php endif; ?>
            <?php
-               echo "<span id='Name'>".$_SESSION["name"]."</span> : <span id='Role'>".$_SESSION["userrole"]."</span> : <span id='eventRole'></span>";
+               echo "<span id='Name'>".$_SESSION["name"]."</span>";
            ?>
            </a>
        </li>
+       <li><a onclick="$('#changemode').submit();"><span id='Role'><?php echo $_SESSION["userrole"]; ?></span></a></li>
+       <li><a><span id='eventRole'></span></a></li>
        <li>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="logout">                           <input type="hidden" name="type" value="logout">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="logout">                           
+                <input type="hidden" name="type" value="logout">
             </form>
 
           <a onclick="$('#logout').submit()"><span class="glyphicon glyphicon-log-out"></span></a>
@@ -539,15 +532,22 @@ if(!isset($_SESSION["name"])) :?>
                 <div class="col-sm-8">
                     <div id="doc" class="well">
                     </div>
-                    <div class="panel panel-primary">
-                      <table id="Anntable" class="table table-bordered table-responsive">                  </table>
+                    <div id="annTabPane" class="panel panel-primary">
+                        <table id="Anntable" class="table table-bordered table-responsive">                  
+                        </table>
                     </div>
 
                 </div>
             </div>
-        </div><!-- END Main Content
-    </div>
-</div>-->
+        </div><!-- END Main Content-->
 </body>
 </html>
+
+
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="changemode">
+            <input type="hidden" name="type" value="changemode">
+            <input name="Doc" type="hidden" class="form-control" id="Doc3" value="">
+            <input name="Event" type="hidden" class="form-control" id="Eventid3" value="">
+        </form>
+
 <?php endif; ?>

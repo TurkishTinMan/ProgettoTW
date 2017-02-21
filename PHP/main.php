@@ -67,6 +67,9 @@ function postManager($type){
             session_unset();
             unset($_SESSION["userrole"]);
             unset($_SESSION["name"]);
+            unset($_SESSION["given_name"]);
+            unset($_SESSION["family_name"]);
+            unset($_SESSION["sex"]);                     
             $success = "Logout complete!";
             break;
         case 'skiplogin':
@@ -82,6 +85,9 @@ function postManager($type){
                     if($person_name['pass'] == $_POST['password']){
                         $_SESSION["name"] = $key;
                         $_SESSION["email"] = $person_name['email'];
+                        $_SESSION["given_name"] = $person_name['given_name'];
+                        $_SESSION["family_name"] = $person_name['family_name'];
+                        $_SESSION["sex"] = $person_name['sex'];                     
                     }else{
                         $error = "Wrong password!";
                     }

@@ -161,6 +161,14 @@ span#Judgment {
     overflow-x: hidden;
 }
 
+#docBody {
+    text-align: left;
+}
+
+#annTabPane {
+    border: 1px solid #ddd;
+}
+
 /* * END Right Coloumn - Document */
 /*
 /*

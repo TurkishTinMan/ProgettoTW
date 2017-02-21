@@ -203,11 +203,11 @@ function LoadDocument(urlDocument,e) {
         dataType:'json',
         success: function(paper_json) {
             //Scrittura del paper nell'apposita sezione
-            paper = "<h1>" + paper_json["title"] + "</h1>";
+            paper = "<div class=\"text-center\"><h1>" + paper_json["title"] + "</h1>";
             if(paper_json["subtitle"]){
-                paper = paper + "<small>"+paper_json["subtitle"]+"</small>";
+                paper = paper + "<h4>"+paper_json["subtitle"]+"</h4></div>";
             }
-            paper = paper + "<div>" + paper_json["body"] + "</div>";
+            paper = paper + "<div id=\"docBody\">" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
             if(urlDocument != helpUrl){
                 
@@ -295,7 +295,7 @@ function ReviewerManager(list){
 
 
 function AuthorManager(list){
-    metadati = " ";
+    metadati = "<p><strong>Authors</strong></p>";
     $.each(list,function(k,v){
         if(v["name"] && v["linked"]!= "true"){
             metadati + "<li>";
@@ -305,13 +305,13 @@ function AuthorManager(list){
                 metadati = metadati + v["name"];
             }
             if(v["affiliation"]){
-                metadati = metadati + "<p>"+v["affiliation"]+"</p>";
+                metadati = metadati + "<br /><small>"+v["affiliation"]+"</small>";
             }
-            metadati = metadati + "</li>";
-            metadati = metadati + "<hr>";
+            metadati = metadati + "</li><br />";
+            
         }
     });
-    metadati = metadati;
+    metadati = metadati + "<hr>";
     $("#ul-authors").append(metadati);
 }
 
