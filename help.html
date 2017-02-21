@@ -2,15 +2,34 @@
     <title>Benvenuti in raschietto!</title>
 </head>
 <body>
-    <p>In alto a sinistra potete vedere il vostro nome, la modalità(Annotator o Reader) e il vostro ruolo all'interno dell'evento caricato</p>
-    <ul>
-        <li>Chair:<span id="AnnotatorSign"></span></li>
-        <li>Membro dell'evento:<span id="PCSign"></span></li>
-        <li>Nessun ruolo:<span id="NoneSign"></span></li>
-    </ul>
-    <script>
-        $("#AnnotatorSign").html(AnnotatorSign);
-        $("#PCSign").html(PC_MemberSign);
-        $("#NoneSign").html(NoneSign);
-    </script>
+<h4>What is EasyRASH?</h4>
+<p>
+    EasyRASH is an online system to allow the evaluation of articles in RASH, integrating content and comments in one package and easing the peer review process. It focuses on writing and view comments from reviewers, includes some optional modules to handle other functionality such as registration of new users.
+    EasyRASH has two roles:
+</p>
+<p>
+  <ul>
+    <li>Chair: organizer of an event, assign the review and decide the status of an article (rejected or accepted) based on the reviewers' comments;</li>
+    <li>Reviewer: receiving articles to comment and expresses an overall judgment on each item and a series of specific comments on the content.</li>
+  </ul>
+</p>
+<p>
+    In the top left you can see your name, the mode: Reader (passive user): can read the article, Annotator (active user): can make annotations and submit review and your role in the document uploaded.<br>
+<ul>
+    <li>Chair:<span id="AnnotatorSign"></span></li>
+    <li>Membro dell'evento:<span id="PCSign"></span></li>
+    <li>Nessun ruolo:<span id="NoneSign"></span></li>
+</ul>
+<script>
+    $("#AnnotatorSign").html(AnnotatorSign);
+    $("#PCSign").html(PC_MemberSign);
+    $("#NoneSign").html(NoneSign);
+</script>
+</p>
+<h4>Annotator mode</h4>
+<p>
+    You can annotate documents which you are the reviewer, giving judgment and leaving a comment on the text sections. Steps:
+    You select the text to be changed, you click on "Add Annotation", you leave your comments and finally you save by clicking .
+    To check your own annotations you view the table under the article, in which one can find the record or delete it.
+</p>
 </body>

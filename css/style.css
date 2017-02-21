@@ -73,9 +73,9 @@ div.text-center {
 #notification {
     left: 35%;
     right: 35%;
-    top: 10%;
+    top: 20%;
     position: fixed;
-    z-index: 100;
+    z-index: 10000;
     text-align: center;        
 }
 
@@ -107,7 +107,7 @@ div.text-center {
 }
 
 .highlight{
-    background-color: yellow;
+    background-color: aliceblue;
 }
 
 #MetaArea {
