@@ -9,7 +9,7 @@ var tempannotations = [];
 
 
 function randomCSS(){
-    return "background-color:#"+Math.floor(Math.random()*16777215).toString(16);
+    return "background-color:yellow;";
 }
 
 //carica il file help.html che contiene la guida
