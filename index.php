@@ -216,8 +216,8 @@ if(!isset($_SESSION["name"])) :?>
     In the top left you can see your name, the mode: Reader (passive user): can read the article, Annotator (active user): can make annotations and submit review and your role in the document uploaded.<br>
     <ul>
         <li>Chair:<span id="AnnotatorSign"></span></li>
-        <li>Membro dell'evento:<span id="PCSign"></span></li>
-        <li>Nessun ruolo:<span id="NoneSign"></span></li>
+        <li>Member event:<span id="PCSign"></span></li>
+        <li>Any role:<span id="NoneSign"></span></li>
     </ul>
     <script>
         $("#AnnotatorSign").html(AnnotatorSign);
@@ -228,7 +228,7 @@ if(!isset($_SESSION["name"])) :?>
     <h4>Annotator mode</h4>
 <p>
     You can annotate documents which you are the reviewer, giving judgment and leaving a comment on the text sections. Steps:
-    You select the text to be changed, you click on "Add Annotation", you leave your comments and finally you save by clicking .
+    You select the text to be changed, you click on "Add Annotation", you leave your comments and finally you save by clicking <span id="save" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>.
     To check your own annotations you view the table under the article, in which one can find the record or delete it.
   </p>
 </body>
