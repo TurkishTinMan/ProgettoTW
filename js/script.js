@@ -21,10 +21,6 @@ function reset(){
 function HighLightEvent(i){
     $("#EventAreaBody > li").removeClass("highlight");
     currentEvent = i;
-    $("#Eventid").val(currentEvent);
-    $("#Eventid1").val(currentEvent);
-    $("#Eventid2").val(currentEvent);
-    $("#Eventid3").val(currentEvent);
     $("#"+currentEvent+"event").parent().addClass("highlight");
 }
 
@@ -32,12 +28,11 @@ function HighLightEvent(i){
 function HighLightDocument(urlDocument,element){
     $("#DocAreaBody > li").removeClass("highlight");
     $(element).parent().addClass("highlight");
-    $("#Doc").val(urlDocument);
-    $("#Doc1").val(urlDocument);
-    $("#Doc2").val(urlDocument);
-    $("#Doc3").val(urlDocument);
     $("#keyWordsList").html("");
     $("#ACM").html("");
+    
+    $("li.hiddenuntilAnnotator").css('display','none');
+    $("#Role").html("Reader");
     
     $("#Anntable").html("");
     $("#chairjudgmentresume").html("");;

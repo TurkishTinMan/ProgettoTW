@@ -415,8 +415,6 @@ if(!isset($_SESSION["name"])) :?>
           <input name="OffsetFromStart" type="hidden" class="form-control" id="OffsetFromStart">
           <input name="LenghtAnnotation" type="hidden" class="form-control" id="LenghtAnnotation">
           <input name="Data" type="hidden" class="form-control" id="Data">
-          <input name="Doc" type="hidden" class="form-control" id="Doc2" value="">
-          <input name="Event" type="hidden" class="form-control" id="Eventid2" value="">
           <input name="Author" type="hidden" class="form-control" id="Author" value="<?php echo $_SESSION['email']; ?>">
       </div>
 
@@ -540,12 +538,4 @@ if(!isset($_SESSION["name"])) :?>
         </div><!-- END Main Content-->
 </body>
 </html>
-
-
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="changemode">
-            <input type="hidden" name="type" value="changemode">
-            <input name="Doc" type="hidden" class="form-control" id="Doc3" value="">
-            <input name="Event" type="hidden" class="form-control" id="Eventid3" value="">
-        </form>
-
 <?php endif; ?>
