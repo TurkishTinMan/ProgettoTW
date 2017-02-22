@@ -476,7 +476,8 @@ function AddAnnotationToTable(date,author,content,check){
     datetoappend = "<tr id='row"+date+"'>";
     datetoappend = datetoappend + "<td>"+author+"</td>";
     dataAnn = new Date(parseInt(date));
-    datetoappend = datetoappend + "<td>"+dataAnn.getDay() + "/" + dataAnn.getMonth() +1 + "/" + dataAnn.getFullYear() + "</td>";
+    month = parseInt(dataAnn.getMonth()) + 1;
+    datetoappend = datetoappend + "<td>"+dataAnn.getDate() + "/" + month + "/" + dataAnn.getFullYear() + "</td>";
     datetoappend= datetoappend +"<td>"+content+"</td>";
     datetoappend= datetoappend +"<td><a onclick='ScrollToAnnotation(\"comment"+date+"\")' class='pointer'><span class='glyphicon glyphicon-search' aria-hidden ='true'></span></a></td>";
     datetoappend= datetoappend +"<td onclick=deleteAnnotationLocal(\""+date+"\",\""+check+"\") class='pointer'><span class='glyphicon glyphicon-trash' aria-hidden ='true'></span></td>";
