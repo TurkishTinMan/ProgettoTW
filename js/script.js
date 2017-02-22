@@ -2,7 +2,7 @@ var urlCurrentDoc = "";
 var currentEvent = -1;
 var eventrole = "";
 var helpUrl = "../help.html";
-var AnnotatorSign = '<span class="glyphicon glyphicon-pencil"></span>';
+var AnnotatorSign = '<span class="glyphicon glyphicon-education"></span>';
 var PC_MemberSign = '<span class="glyphicon glyphicon-eye-open"></span>';
 var NoneSign = '<span class="glyphicon glyphicon-ban-circle"></span>';
 var tempannotations = [];
@@ -32,7 +32,7 @@ function HighLightDocument(urlDocument,element){
     $("#ACM").html("");
     
     $("li.hiddenuntilAnnotator").css('display','none');
-    $("#Role").html("Reader");
+    $("#Role").html("<span id=\"save\" class=\"glyphicon glyphicon-menu-right\" aria-hidden=\"true\"></span> Reader-mode");
     
     $("#Anntable").html("");
     $("#chairjudgmentresume").html("");;
@@ -271,7 +271,7 @@ function ReviewerManager(list){
         judge = x['judge'];
         if(x['own'] == "true"){
             judge = "<a  onclick='JudgmentModal()'>"+judge+"</a>";
-            Notify('info','Sei un revier, il tuo giudizio su questo documento è:'+judge+'.<br>Puoi cambiarlo cliccando vicino al tuo nome nella lista dei reviewer.');
+            Notify('info','Sei un reviwer, il tuo giudizio su questo documento è:'+judge+'.<br>Puoi cambiarlo cliccando vicino al tuo nome nella lista dei reviewer.');
         }                
         start = z.indexOf('<');
         start = start +1;
@@ -476,8 +476,7 @@ function AddAnnotationToTable(date,author,content,check){
     datetoappend = "<tr id='row"+date+"'>";
     datetoappend = datetoappend + "<td>"+author+"</td>";
     dataAnn = new Date(parseInt(date));
-    month = parseInt(dataAnn.getMonth()) + 1;
-    datetoappend = datetoappend + "<td>"+dataAnn.getDate() + "/" + month + "/" + dataAnn.getFullYear() + "</td>";
+    datetoappend = datetoappend + "<td>"+dataAnn.getDay() + "/" + dataAnn.getMonth() +1 + "/" + dataAnn.getFullYear() + "</td>";
     datetoappend= datetoappend +"<td>"+content+"</td>";
     datetoappend= datetoappend +"<td><a onclick='ScrollToAnnotation(\"comment"+date+"\")' class='pointer'><span class='glyphicon glyphicon-search' aria-hidden ='true'></span></a></td>";
     datetoappend= datetoappend +"<td onclick=deleteAnnotationLocal(\""+date+"\",\""+check+"\") class='pointer'><span class='glyphicon glyphicon-trash' aria-hidden ='true'></span></td>";
@@ -533,6 +532,8 @@ function deleteAnnotationLocal(date,author){
                 tempannotations.splice(number,1);
             }
         });
+    }else{
+        Notify('info','Non è una tua annotazione');
     }
 }
 
@@ -601,10 +602,10 @@ function ChangeMode(){
         if(json_data["esito"] == "success"){
             if($("li.hiddenuntilAnnotator").css('display') == "none"){
                 $("li.hiddenuntilAnnotator").css('display','block');
-                $("#Role").html("Annotator");
+                $("#Role").html("<span id=\"save\" class=\"glyphicon glyphicon-menu-left\" aria-hidden=\"true\"></span> Annotator-mode");
             }else{
                 $("li.hiddenuntilAnnotator").css('display','none');
-                $("#Role").html("Reader");
+                $("#Role").html("<span id=\"save\" class=\"glyphicon glyphicon-menu-right\" aria-hidden=\"true\"></span> Reader-mode");
             }
         }
         Notify(json_data["esito"],json_data["contenuto"]);

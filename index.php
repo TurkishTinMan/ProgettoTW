@@ -425,6 +425,7 @@ if(!isset($_SESSION["name"])) :?>
 
   </div>
 </div>
+    
 <!--- Navigation Bar --->
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
@@ -435,14 +436,31 @@ if(!isset($_SESSION["name"])) :?>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" id="homebutton"><img class="img-responsive" id="logo" src="image/logo.png" alt="EasyRush brand"/></a>
+      <a class="navbar-brand" id="homebutton"><img class="img-responsive" id="logo" src="image/logo.png" alt="EasyRash brand"/></a>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
+    <div class="collapse navbar-collapse" id="myNavbar">  
       <ul class="nav navbar-nav navbar-right">
-        <li> <a data-toggle="modal" data-target="#AboutModal" class="pointer">About</a></li>
-        <li> <a data-toggle="modal" data-target="#Help" class="pointer">Help</a></li>
-        <li class="hiddenuntilAnnotator"><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">Add Annotation</a></li>
-        <li class="hiddenuntilAnnotator"><a onclick="SaveAnnotation()"><span id="save" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a><li>
+        <li> 
+            <a data-toggle="modal" data-target="#AboutModal" class="pointer">About</a>
+        </li>
+        <li> 
+            <a data-toggle="modal" data-target="#Help" class="pointer">Help</a>
+        </li>
+        <li class="hiddenuntilAnnotator">
+            <a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">
+              <span class="glyphicon glyphicon-plus"></span> Add Annotation
+            </a>
+        </li>
+        <li class="hiddenuntilAnnotator">
+            <a onclick="SaveAnnotation()">
+              <span id="save" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save Annotations
+            </a>
+        </li>
+        <li>
+            <a onclick="ChangeMode()"><span id='Role'>Reader</span></a>
+        </li>
+        <li><a><span id='eventRole'></span></a></li>
+
         <li>
            <?php if ($_SESSION["name"] != "Utente") : ?>
            <a data-toggle="modal" data-target="#LogoutModal" class="pointer">
@@ -450,17 +468,15 @@ if(!isset($_SESSION["name"])) :?>
            <a data-toggle="modal" data-target="#LoginModal" class="pointer">
            <?php endif; ?>
            <?php
-               echo "<span id='Name'>".$_SESSION["name"]."</span>";
+               echo "<span id='Name' class=\"glyphicon glyphicon-user\"></span> ".$_SESSION["name"];
            ?>
            </a>
-       </li>
-       <li><a onclick="ChangeMode()"><span id='Role'>Reader</span></a></li>
-       <li><a><span id='eventRole'></span></a></li>
-       <li>
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="logout">                           
-            <input type="hidden" name="type" value="logout">
-        </form>
-        <a onclick="$('#logout').submit()"><span class="glyphicon glyphicon-log-out"></span></a>
+        </li>
+        <li>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="logout">                           
+              <input type="hidden" name="type" value="logout">
+            </form>
+            <a onclick="$('#logout').submit()"><span class="glyphicon glyphicon-off"></span> Log-out</a>
         </li>
        </ul>
     </div>
