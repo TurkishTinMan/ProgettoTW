@@ -209,10 +209,7 @@ function LoadDocument(urlDocument,e) {
             }
             paper = paper + "<div id=\"docBody\">" + paper_json["body"] + "</div>";
             $("#doc").html(paper);
-            if(urlDocument != helpUrl){
-                
-                console.log(paper_json);
-                
+            if(urlDocument != helpUrl){                
                 // Keywords    
                 if (paper_json["keyword"].length > 0) {
                     KeyWordManager(paper_json["keyword"]);
@@ -598,4 +595,35 @@ function ScrollToAnnotation(idcomment){
     },200);
 
 }
+
+
+function ChangeMode(){
+    $.ajax({
+      url: "./PHP/changemode.php",
+      type: "POST",
+      data: {localUrl : urlCurrentDoc},
+      dataType: 'json',
+      success: function(json_data){
+        if(json_data["esito"] == "success"){
+            if($("li.hiddenuntilAnnotator").css('display') == "none"){
+                $("li.hiddenuntilAnnotator").css('display','block');
+                $("#Role").html("Annotator");
+            }else{
+                $("li.hiddenuntilAnnotator").css('display','none');
+                $("#Role").html("Reader");
+            }
+        }
+        Notify(json_data["esito"],json_data["contenuto"]);
+      },
+      error: function(jqXHR, status, errorThrown) {
+        Notify('error','Errore interno, impossibile caricare gli eventi!');
+        console.log(jqXHR.responseText);
+        console.log(status);
+        console.log(errorThrown);
+
+      }
+    });  
+}
+
+
 

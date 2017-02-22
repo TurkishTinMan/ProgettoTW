@@ -445,10 +445,8 @@ if(!isset($_SESSION["name"])) :?>
       <ul class="nav navbar-nav navbar-right">
         <li> <a data-toggle="modal" data-target="#AboutModal" class="pointer">About</a></li>
         <li> <a data-toggle="modal" data-target="#Help" class="pointer">Help</a></li>
-        <?php if ($_SESSION["userrole"] != "Reader") : ?>
-        <li><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">Add Annotation</a></li>
-        <li><a onclick="SaveAnnotation()"><span id="save" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a><li>
-        <?php endif; ?>
+        <li class="hiddenuntilAnnotator"><a onclick="AddAnnotation(<?php echo $_SESSION["userrole"] != "Reader" ?>)">Add Annotation</a></li>
+        <li class="hiddenuntilAnnotator"><a onclick="SaveAnnotation()"><span id="save" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a><li>
         <li>
            <?php if ($_SESSION["name"] != "Utente") : ?>
            <a data-toggle="modal" data-target="#LogoutModal" class="pointer">
@@ -460,7 +458,7 @@ if(!isset($_SESSION["name"])) :?>
            ?>
            </a>
        </li>
-       <li><a onclick="$('#changemode').submit();"><span id='Role'><?php echo $_SESSION["userrole"]; ?></span></a></li>
+       <li><a onclick="ChangeMode()"><span id='Role'>Reader</span></a></li>
        <li><a><span id='eventRole'></span></a></li>
        <li>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="logout">                           

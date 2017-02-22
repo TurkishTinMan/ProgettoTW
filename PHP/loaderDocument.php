@@ -134,6 +134,10 @@ if($a >= 0){
     }
     
     $allreviewer = true;
+    $_SESSION['Annotator'] = "false";
+    if(strcmp($_SESSION['eventrole'],"Chair") == 0){
+        $_SESSION['Annotator'] = "true";
+    }
     
     foreach($reviewers as $reviewer){
         if(!array_key_exists($reviewer,$document["reviewersjudge"])){
@@ -142,6 +146,7 @@ if($a >= 0){
         }
         if(strcmp($reviewer,$_SESSION['name']) == 0){
             $document["reviewersjudge"][$reviewer]["own"] = "true";
+            $_SESSION['Annotator'] = "true";
         }else{
             $document["reviewersjudge"][$reviewer]["own"] = "false";
         }
@@ -155,7 +160,6 @@ if($a >= 0){
     }else{
         $document["chairJudgmentvalue"] = "Inespresso";       
     }
-    
 }
 echo json_encode($document);
 ?>

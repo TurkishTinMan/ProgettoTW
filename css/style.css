@@ -349,3 +349,7 @@ th {
     }
 }
 /* * * END Media Queries *****/
+
+li.hiddenuntilAnnotator{
+    display: none;
+}

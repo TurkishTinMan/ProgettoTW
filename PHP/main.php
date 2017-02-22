@@ -11,6 +11,7 @@ $AnnotationFileUrl = "./Dataset/project-files/annotations.json";
 function setting(){
     session_start();
     $_SESSION["eventrole"] = "None";
+    $_SESSION['Annotator'] = "false";
     if(!isset($_SESSION["userrole"])){
         $_SESSION["userrole"] = "Reader";
     }
@@ -35,15 +36,6 @@ function getGUID(){
 
 function postManager($type){
     switch($type){
-        case 'changemode':
-            if(strcmp($_SESSION["userrole"],"Reader")== 0){
-                $_SESSION["userrole"] = "Annotator";
-            }else{
-                $_SESSION["userrole"] = "Reader";
-            }
-            $returnEvent = $_POST['Event'];
-            $returnDoc = $_POST['Doc'];
-            break;
         case 'changepassword':
             if(empty($_POST['oldPass']) || empty($_POST['newPass']) || empty($_POST['newPass2']) || (strcmp($_POST['newPass'],$_POST['newPass2']) != 0)){
                 $error = "Campi immessi non validi";
@@ -69,7 +61,8 @@ function postManager($type){
             unset($_SESSION["name"]);
             unset($_SESSION["given_name"]);
             unset($_SESSION["family_name"]);
-            unset($_SESSION["sex"]);                     
+            unset($_SESSION["sex"]);       
+            unset($_SESSION['Annotator']);
             $success = "Logout complete!";
             break;
         case 'skiplogin':
