@@ -65,7 +65,7 @@ function ChangeRole(role){
 $( document ).ready(function(){
     //Mi permette di cliccare sul menu senza perdere la selezione sul testo
     $("nav>div>div>ul>li").attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
-    loaderEventArea();  
+    loaderEventArea();
     $("#eventRole").html(NoneSign);
 });
 
@@ -331,8 +331,6 @@ function AnnotationManager(json_ann){
         AddAnnotationToText (annotation["Data"],annotation["Target"]["Path"],annotation["Target"]["OffsetFromStart"],annotation["Target"]["LenghtAnnotation"],annotation["Comment"]);
         tempannotations.push(annotation);
     });
-    
-    
 }
 
 
@@ -426,8 +424,8 @@ function Notify(type,text){
 }
 
 
-function AddAnnotation(checklog){
-    if(checklog && (helpUrl != urlCurrentDoc)){
+function AddAnnotation(){
+    if(helpUrl != urlCurrentDoc){
         var selection = window.getSelection();
         if(selection.toString().length != 0){
             var selectedText = selection.toString();

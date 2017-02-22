@@ -387,7 +387,6 @@ if(!isset($_SESSION["name"])) :?>
 </div>
 </div>
 </div>
-<?php if ($_SESSION["userrole"] != "Reader") : ?>
 <!-- Annotation Modal -->
 <div id="AnnotationModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -426,7 +425,6 @@ if(!isset($_SESSION["name"])) :?>
 
   </div>
 </div>
-<?php endif; ?>
 <!--- Navigation Bar --->
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
@@ -459,11 +457,10 @@ if(!isset($_SESSION["name"])) :?>
        <li><a onclick="ChangeMode()"><span id='Role'>Reader</span></a></li>
        <li><a><span id='eventRole'></span></a></li>
        <li>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="logout">                           
-                <input type="hidden" name="type" value="logout">
-            </form>
-
-          <a onclick="$('#logout').submit()"><span class="glyphicon glyphicon-log-out"></span></a>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="logout">                           
+            <input type="hidden" name="type" value="logout">
+        </form>
+        <a onclick="$('#logout').submit()"><span class="glyphicon glyphicon-log-out"></span></a>
         </li>
        </ul>
     </div>
